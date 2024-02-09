@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonjs",
+    "target": "es2021",
+    "lib": ["es2021"],
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "types": ["@citizenfx/server", "@citizenfx/client", "@types/node"]
+  },
+
+  "exclude": ["node_modules"],
+  "include": ["./**/*"]
+}
