@@ -74,7 +74,7 @@ const MenuItem = (props: MenuItemProps) => {
               hidden ? 'max-h-0 ease-out' : 'ease-in max-h-96'
             }`}
           >
-            {options}
+            <div className='flex p-2 gap-2'>{options}</div>
           </div>
         ) : null}
       </div>
