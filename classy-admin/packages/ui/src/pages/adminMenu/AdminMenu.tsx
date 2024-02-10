@@ -18,7 +18,12 @@ const AdminMenu = () => {
       itemFunction: kill,
       functionOptions: (
         <>
-          <input type='text' placeholder='Player ID' id='player-id' className='p-2 rounded' />
+          <input
+            type='text'
+            placeholder='Player ID'
+            id='player-id'
+            className='p-2 rounded shadow-md'
+          />
         </>
       ),
     },
@@ -28,9 +33,19 @@ const AdminMenu = () => {
       itemFunction: kill,
       functionOptions: (
         <>
-          <input type='text' placeholder='Player ID' id='player-id' className='p-2 rounded' />
-          <input type='text' placeholder='Weapon Name' id='weapon-name' className='p-2 rounded' />
-          <input type='text' placeholder='Ammo' id='ammo' className='p-2 rounded' />
+          <input
+            type='text'
+            placeholder='Player ID'
+            id='player-id'
+            className='p-2 rounded shadow-md'
+          />
+          <input
+            type='text'
+            placeholder='Weapon Name'
+            id='weapon-name'
+            className='p-2 rounded shadow-md'
+          />
+          <input type='text' placeholder='Ammo' id='ammo' className='p-2 rounded shadow-md' />
         </>
       ),
     },
@@ -40,7 +55,12 @@ const AdminMenu = () => {
       itemFunction: kill,
       functionOptions: (
         <>
-          <input type='text' placeholder='Vehicle Name' id='vehicle-name' className='p-2 rounded' />
+          <input
+            type='text'
+            placeholder='Vehicle Name'
+            id='vehicle-name'
+            className='p-2 rounded shadow-md'
+          />
         </>
       ),
     },
@@ -50,10 +70,10 @@ const AdminMenu = () => {
       itemFunction: kill,
       functionOptions: (
         <>
-          <input type='text' placeholder='X' id='x' className='p-2 rounded' />
-          <input type='text' placeholder='Y' id='y' className='p-2 rounded' />
-          <input type='text' placeholder='Z' id='z' className='p-2 rounded' />
-          <div className='grow flex place-items-center justify-end gap-2'>
+          <input type='text' placeholder='X' id='x' className='p-2 rounded shadow-md' />
+          <input type='text' placeholder='Y' id='y' className='p-2 rounded shadow-md' />
+          <input type='text' placeholder='Z' id='z' className='p-2 rounded shadow-md' />
+          <div className='flex place-items-center gap-2'>
             <label htmlFor='waypoint'>Waypoint</label>
             <input type='checkbox' name='waypoint' id='waypoint' className='w-6 h-6' />
           </div>
@@ -95,7 +115,7 @@ const AdminMenu = () => {
   return (
     <div className='grid align-items h-screen p-10 overflow-hidden'>
       <div className='bg-black/50 rounded flex flex-col shadow-lg overflow-hidden'>
-        <div className='flex justify-between border-b border-neutral-800/20'>
+        <div className='justify-between flex border-b border-neutral-800/20'>
           <div className='flex p-2 place-items-center gap-2'>
             <h1 className='text-xl font-bold cursor-default select-none'>
               <span className='text-green-500'>Classy</span>Menu
@@ -105,32 +125,32 @@ const AdminMenu = () => {
               name='Search'
               id='search'
               placeholder='Search'
-              className='p-2 rounded'
+              className='p-2 rounded hidden sm:block bg-white/20 shadow-lg border border-neutral-800/20'
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <div className='p-2'>
+          <div className='p-2 flex place-items-center'>
             <button
               onClick={() => {
                 setCollapse(!collapse)
               }}
-              className='hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
+              className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
             >
               <ChevronDoubleUpIcon className='w-6 h-6' />
             </button>
           </div>
-          <div className='p-2'>
+          <div className='p-2 flex place-items-center'>
             <button
               onClick={() => {
                 setExtend(extend + 1)
               }}
-              className='hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
+              className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
             >
               <ChevronDoubleDownIcon className='w-6 h-6' />
             </button>
           </div>
-          <div className='p-2'>
+          <div className='p-2 flex place-items-center'>
             <button
               onClick={close}
               className='hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
@@ -141,7 +161,7 @@ const AdminMenu = () => {
         </div>
         <div
           id='menuItems'
-          className='bg-white/20 divide-y divide-neutral-800/20 shadow-lg overflow-y-auto overflow-x-hidden'
+          className='bg-white/20 divide-y divide-neutral-800/20 shadow-lg overflow-y-auto'
         >
           {filteredItems.map((item, index) => (
             <MenuItem
