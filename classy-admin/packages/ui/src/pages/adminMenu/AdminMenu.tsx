@@ -16,25 +16,49 @@ const AdminMenu = () => {
       itemName: 'Kill Player',
       itemDescription: 'Kill a player.',
       itemFunction: kill,
-      functionOptions: <div>Test</div>,
+      functionOptions: (
+        <>
+          <input type='text' placeholder='Player ID' id='player-id' className='p-2 rounded' />
+        </>
+      ),
     },
     {
       itemName: 'Give Weapon',
       itemDescription: 'Give player a weapon.',
       itemFunction: kill,
-      functionOptions: <div>Test</div>,
+      functionOptions: (
+        <>
+          <input type='text' placeholder='Player ID' id='player-id' className='p-2 rounded' />
+          <input type='text' placeholder='Weapon Name' id='weapon-name' className='p-2 rounded' />
+          <input type='text' placeholder='Ammo' id='ammo' className='p-2 rounded' />
+        </>
+      ),
     },
     {
       itemName: 'Spawn Vehicle',
       itemDescription: 'Spawn a vehicle.',
       itemFunction: kill,
-      functionOptions: <div>Test</div>,
+      functionOptions: (
+        <>
+          <input type='text' placeholder='Vehicle Name' id='vehicle-name' className='p-2 rounded' />
+        </>
+      ),
     },
     {
       itemName: 'Teleport',
       itemDescription: 'Teleport to a location.',
       itemFunction: kill,
-      functionOptions: <div>Test</div>,
+      functionOptions: (
+        <>
+          <input type='text' placeholder='X' id='x' className='p-2 rounded' />
+          <input type='text' placeholder='Y' id='y' className='p-2 rounded' />
+          <input type='text' placeholder='Z' id='z' className='p-2 rounded' />
+          <div className='grow flex place-items-center justify-end gap-2'>
+            <label htmlFor='waypoint'>Waypoint</label>
+            <input type='checkbox' name='waypoint' id='waypoint' className='w-6 h-6' />
+          </div>
+        </>
+      ),
     },
     {
       itemName: 'God Mode',
