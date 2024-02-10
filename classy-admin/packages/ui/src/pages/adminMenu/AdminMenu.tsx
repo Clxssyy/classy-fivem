@@ -1,12 +1,13 @@
-import { useState } from 'react'
 import { usePageContext } from '../../App'
 import { useExitListener } from '../../utils/exitListener'
 import { fetchNui } from '../../utils/nui'
-import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { ChevronDoubleDownIcon, ChevronDoubleUpIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import MenuItem from '../../components/MenuItem'
+import { useState } from 'react'
 
 const AdminMenu = () => {
-  const [hidden, setHidden] = useState(true)
-
+  const [collapse, setCollapse] = useState(true)
+  const [extend, setExtend] = useState(1)
   const { closePage } = usePageContext()
 
   async function close() {
@@ -23,74 +24,91 @@ const AdminMenu = () => {
   })
 
   return (
-    <div className='grid align-items h-screen place-content-center p-10'>
-      <div className='bg-slate-400 p-4 rounded flex flex-col gap-2'>
-        <div className='flex justify-between'>
-          <h1 className='text-xl font-bold'>
-            <span className='text-green-500'>Classy</span> Menu
+    <div className='grid align-items h-screen p-10 overflow-hidden'>
+      <div className='bg-black/50 rounded flex flex-col shadow-lg overflow-hidden'>
+        <div className='flex justify-between border-b border-neutral-800/20'>
+          <h1 className='text-xl font-bold cursor-default select-none p-2'>
+            <span className='text-green-500'>Classy</span>Menu
           </h1>
-          <button onClick={close}>
-            <XMarkIcon className='w-6 h-6' />
-          </button>
+          <div className='p-2'>
+            <button
+              onClick={() => {
+                setCollapse(!collapse)
+              }}
+              className='hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
+            >
+              <ChevronDoubleUpIcon className='w-6 h-6' />
+            </button>
+          </div>
+          <div className='p-2'>
+            <button
+              onClick={() => {
+                setExtend(extend + 1)
+              }}
+              className='hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
+            >
+              <ChevronDoubleDownIcon className='w-6 h-6' />
+            </button>
+          </div>
+          <div className='p-2'>
+            <button
+              onClick={close}
+              className='hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
+            >
+              <XMarkIcon className='w-6 h-6' />
+            </button>
+          </div>
         </div>
-        <div className='bg-white rounded divide-y'>
-          <div className='flex justify-between'>
-            <button onClick={kill} className='p-2 rounded'>
-              Kill
-            </button>
-            <button
-              onClick={() => {
-                setHidden(!hidden)
-              }}
-              className='p-2 rounded'
-            >
-              <ChevronDownIcon className='w-6 h-6' />
-            </button>
-          </div>
-          <div className={`bg-black text-white ${hidden ? 'hidden' : ''}`}>
-            <form action=''>
-              <input
-                type='text'
-                name='name'
-                id='name'
-                className='p-2 rounded bg-gray-200'
-                placeholder='Name'
-              />
-              <input
-                type='text'
-                name='age'
-                id='age'
-                className='p-2 rounded bg-gray-200'
-                placeholder='Age'
-              />
-              <input
-                type='text'
-                name='job'
-                id='job'
-                className='p-2 rounded bg-gray-200'
-                placeholder='Job'
-              />
-              <input
-                type='submit'
-                value='Submit'
-                className='p-2 rounded bg-green-500 text-white cursor-pointer'
-              />
-            </form>
-          </div>
-          <div className='flex justify-between'>
-            <button onClick={kill} className='p-2 rounded'>
-              Kill
-            </button>
-            <button
-              onClick={() => {
-                setHidden(!hidden)
-              }}
-              className='p-2 rounded'
-            >
-              <ChevronDownIcon className='w-6 h-6' />
-            </button>
-          </div>
-          <div className={`bg-black text-white ${hidden ? 'hidden' : ''}`}></div>
+        <div
+          id='menuItems'
+          className='bg-white/20 divide-y divide-neutral-800/20 shadow-lg overflow-y-auto overflow-x-hidden'
+        >
+          <MenuItem
+            itemFunction={kill}
+            itemName='Kill Player'
+            itemDescription='Kill a player.'
+            functionOptions={<div>Test</div>}
+            toggleCollapse={collapse}
+            toggleExtend={extend}
+          />
+          <MenuItem
+            itemFunction={kill}
+            itemName='Give Weapon'
+            itemDescription='Give player a weapon.'
+            functionOptions={<div>Test</div>}
+            toggleCollapse={collapse}
+            toggleExtend={extend}
+          />
+          <MenuItem
+            itemFunction={kill}
+            itemName='Spawn Vehicle'
+            itemDescription='Spawn a vehicle.'
+            functionOptions={<div>Test</div>}
+            toggleCollapse={collapse}
+            toggleExtend={extend}
+          />
+          <MenuItem
+            itemFunction={kill}
+            itemName='Teleport'
+            itemDescription='Teleport to a location.'
+            functionOptions={<div>Test</div>}
+            toggleCollapse={collapse}
+            toggleExtend={extend}
+          />
+          <MenuItem
+            itemFunction={kill}
+            itemName='God Mode'
+            itemDescription='Enable god mode.'
+            toggleCollapse={collapse}
+            toggleExtend={extend}
+          />
+          <MenuItem
+            itemFunction={kill}
+            itemName='No Clip'
+            itemDescription='Enable no clip mode.'
+            toggleCollapse={collapse}
+            toggleExtend={extend}
+          />
         </div>
       </div>
     </div>
