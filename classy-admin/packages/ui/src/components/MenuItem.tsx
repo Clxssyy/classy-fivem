@@ -1,14 +1,16 @@
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { MouseEventHandler, useEffect, useState } from 'react'
 
-const MenuItem = (props: {
+interface MenuItemProps {
   itemName: string
   itemDescription?: string
   itemFunction: MouseEventHandler
   functionOptions?: JSX.Element
   toggleCollapse: boolean
   toggleExtend: number
-}) => {
+}
+
+const MenuItem = (props: MenuItemProps) => {
   const [hidden, setHidden] = useState(true)
   const {
     itemFunction: func,
