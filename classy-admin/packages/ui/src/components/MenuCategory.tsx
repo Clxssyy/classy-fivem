@@ -43,17 +43,15 @@ const MenuCategory = (props: MenuCategoryProps) => {
   return (
     <>
       <div className='flex flex-col'>
-        <div className='flex grow sticky top-0 z-50 bg-neutral-400 group-hover/menu:bg-neutral-600'>
+        <div className='flex grow sticky top-0 z-50 bg-neutral-600/50 group-hover/menu:bg-neutral-600'>
           <button
             onClick={() => setHidden(!hidden)}
-            className='flex grow text-neutral-500 justify-between p-2 border-b border-neutral-800'
+            className='flex grow justify-between p-2 border-b border-neutral-800 text-neutral-400/50 group-hover/menu:text-neutral-400'
           >
-            <h1 className='font-bold text-neutral-600 group-hover/menu:text-neutral-400'>
-              {category}
-            </h1>
+            <h1 className='font-bold'>{category}</h1>
             <div>
               <ChevronDownIcon
-                className={`w-6 h-6 transition-all duration-300 text-neutral-600 group-hover/menu:text-neutral-400 ${
+                className={`w-6 h-6 transition-all duration-300 ${
                   hidden ? 'rotate-0' : 'rotate-180'
                 }`}
               />
@@ -61,7 +59,7 @@ const MenuCategory = (props: MenuCategoryProps) => {
           </button>
         </div>
         <div
-          className={`transition-all duration-300 overflow-hidden bg-white/10 ${
+          className={`transition-all duration-300 overflow-hidden ${
             hidden ? 'max-h-0 ease-out' : 'ease-in max-h-[1000px]'
           }`}
         >
