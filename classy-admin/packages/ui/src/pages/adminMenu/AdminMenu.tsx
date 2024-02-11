@@ -345,10 +345,7 @@ const AdminMenu = () => {
             </button>
           </div>
         </div>
-        <div
-          id='menuItems'
-          className='bg-white/20 shadow-lg overflow-y-auto divide-y divide-neutral-800 '
-        >
+        <div id='menuItems' className='bg-white/20 shadow-lg overflow-y-auto'>
           {filteredItems.map((group, index) => {
             return (
               <MenuCategory

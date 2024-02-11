@@ -46,9 +46,7 @@ const MenuCategory = (props: MenuCategoryProps) => {
         <div className='flex grow'>
           <button
             onClick={() => setHidden(!hidden)}
-            className={`flex grow text-neutral-500 justify-between p-2 ${
-              hidden ? '' : 'border-b border-neutral-800 shadow-lg'
-            }`}
+            className='flex grow text-neutral-500 justify-between p-2 border-b border-neutral-800'
           >
             <h1 className='font-bold text-neutral-600 group-hover/menu:text-neutral-400'>
               {category}
