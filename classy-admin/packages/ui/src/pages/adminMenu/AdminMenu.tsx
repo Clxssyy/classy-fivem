@@ -1,7 +1,13 @@
 import { usePageContext } from '../../App'
 import { useExitListener } from '../../utils/exitListener'
 import { fetchNui } from '../../utils/nui'
-import { ChevronDoubleDownIcon, ChevronDoubleUpIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import {
+  ArrowsPointingInIcon,
+  ArrowsPointingOutIcon,
+  ChevronDoubleDownIcon,
+  ChevronDoubleUpIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline'
 import MenuItem from '../../components/MenuItem'
 import { useEffect, useState } from 'react'
 import MenuCategory from '../../components/MenuCategory'
@@ -13,6 +19,7 @@ const AdminMenu = () => {
   const [search, setSearch] = useState('')
   const [categoryExtend, setCategoryExtend] = useState(1)
   const [categoryCollapse, setCategoryCollapse] = useState(true)
+  const [expandMenu, setExpandMenu] = useState(false)
 
   const menuItems = [
     {
@@ -324,8 +331,14 @@ const AdminMenu = () => {
   }, [search])
 
   return (
-    <div className='grid align-items h-screen p-10 overflow-hidden'>
-      <div className='bg-neutral-700/50 border border-neutral-800 rounded flex flex-col shadow-lg overflow-hidden hover:bg-neutral-700 group/menu'>
+    <div className='grid p-10 h-screen overflow-hidden place-items-start'>
+      <div
+        className={`transition-all bg-neutral-700/50 border border-neutral-800 rounded flex flex-col shadow-lg overflow-hidden hover:bg-neutral-700 group/menu ${
+          expandMenu
+            ? 'max-w-full max-h-full min-h-full min-w-full ease-out'
+            : 'ease-out min-w-[25%] min-h-[75%] max-h-[75%] max-w-[25%]'
+        }`}
+      >
         <div className='justify-between flex border-b border-neutral-800'>
           <div className='flex p-2 place-items-center gap-2'>
             <h1 className='text-xl font-bold cursor-default select-none'>
@@ -336,32 +349,50 @@ const AdminMenu = () => {
               name='Search'
               id='search'
               placeholder='Search'
-              className='p-2 rounded hidden sm:block text-neutral-400/50 bg-neutral-600/50 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
+              className={`p-2 rounded text-neutral-400/50 bg-neutral-600/50 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400 ${
+                expandMenu ? '' : 'hidden'
+              }`}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <div className='p-2 flex place-items-center'>
+          {expandMenu ? (
+            <>
+              <div className='p-2 flex place-items-center'>
+                <button
+                  onClick={() => {
+                    setCollapse(!collapse)
+                  }}
+                  className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
+                >
+                  <ChevronDoubleUpIcon className='w-6 h-6' />
+                </button>
+              </div>
+              <div className='p-2 flex place-items-center'>
+                <button
+                  onClick={() => {
+                    setExtend(extend + 1)
+                  }}
+                  className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
+                >
+                  <ChevronDoubleDownIcon className='w-6 h-6' />
+                </button>
+              </div>
+            </>
+          ) : null}
+          <div className='p-2 flex place-items-center gap-2'>
             <button
               onClick={() => {
-                setCollapse(!collapse)
+                setExpandMenu(!expandMenu)
               }}
-              className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
+              className='hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
             >
-              <ChevronDoubleUpIcon className='w-6 h-6' />
+              {expandMenu ? (
+                <ArrowsPointingInIcon className='w-6 h-6' />
+              ) : (
+                <ArrowsPointingOutIcon className='w-6 h-6' />
+              )}
             </button>
-          </div>
-          <div className='p-2 flex place-items-center'>
-            <button
-              onClick={() => {
-                setExtend(extend + 1)
-              }}
-              className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
-            >
-              <ChevronDoubleDownIcon className='w-6 h-6' />
-            </button>
-          </div>
-          <div className='p-2 flex place-items-center'>
             <button
               onClick={close}
               className='hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
@@ -385,12 +416,14 @@ const AdminMenu = () => {
                     functionOptions={item.functionOptions}
                     toggleCollapse={collapse}
                     toggleExtend={extend}
+                    menuExpanded={expandMenu}
                   />
                 ))}
                 toggleCollapse={collapse}
                 toggleExtend={extend}
                 toggleCategoryExtend={categoryExtend}
                 toggleCatergoryCollapse={categoryCollapse}
+                menuExpanded={expandMenu}
               />
             )
           })}
