@@ -4,93 +4,258 @@ import { fetchNui } from '../../utils/nui'
 import { ChevronDoubleDownIcon, ChevronDoubleUpIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import MenuItem from '../../components/MenuItem'
 import { useEffect, useState } from 'react'
+import MenuCategory from '../../components/MenuCategory'
 
 const AdminMenu = () => {
   const { closePage } = usePageContext()
   const [collapse, setCollapse] = useState(true)
   const [extend, setExtend] = useState(1)
   const [search, setSearch] = useState('')
+  const [categoryExtend, setCategoryExtend] = useState(1)
+  const [categoryCollapse, setCategoryCollapse] = useState(true)
 
   const menuItems = [
     {
-      itemName: 'Kill Player',
-      itemDescription: 'Kill a player.',
-      itemFunction: kill,
-      functionOptions: (
-        <>
-          <input
-            type='text'
-            placeholder='Player ID'
-            id='player-id'
-            className='p-2 rounded shadow-md'
-          />
-        </>
-      ),
+      category: 'Player',
+      items: [
+        {
+          itemName: 'Kill Player',
+          itemDescription: 'Kill a player.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input
+                type='text'
+                placeholder='Player ID'
+                id='player-id'
+                className='p-2 rounded shadow-md'
+              />
+            </>
+          ),
+        },
+        {
+          itemName: 'Give Weapon',
+          itemDescription: 'Give player a weapon.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input
+                type='text'
+                placeholder='Player ID'
+                id='player-id'
+                className='p-2 rounded shadow-md'
+              />
+              <input
+                type='text'
+                placeholder='Weapon Name'
+                id='weapon-name'
+                className='p-2 rounded shadow-md'
+              />
+              <input type='text' placeholder='Ammo' id='ammo' className='p-2 rounded shadow-md' />
+            </>
+          ),
+        },
+        {
+          itemName: 'God Mode',
+          itemDescription: 'Enable god mode.',
+          itemFunction: kill,
+        },
+        {
+          itemName: 'No Clip',
+          itemDescription: 'Enable no clip mode.',
+          itemFunction: kill,
+        },
+        {
+          itemName: 'Spawn Vehicle',
+          itemDescription: 'Spawn a vehicle.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input
+                type='text'
+                placeholder='Vehicle Name'
+                id='vehicle-name'
+                className='p-2 rounded shadow-md'
+              />
+            </>
+          ),
+        },
+        {
+          itemName: 'Teleport',
+          itemDescription: 'Teleport to a location.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input type='text' placeholder='X' id='x' className='p-2 rounded shadow-md' />
+              <input type='text' placeholder='Y' id='y' className='p-2 rounded shadow-md' />
+              <input type='text' placeholder='Z' id='z' className='p-2 rounded shadow-md' />
+              <div className='flex place-items-center gap-2'>
+                <label htmlFor='waypoint'>Waypoint</label>
+                <input type='checkbox' name='waypoint' id='waypoint' className='w-6 h-6' />
+              </div>
+            </>
+          ),
+        },
+      ],
     },
     {
-      itemName: 'Give Weapon',
-      itemDescription: 'Give player a weapon.',
-      itemFunction: kill,
-      functionOptions: (
-        <>
-          <input
-            type='text'
-            placeholder='Player ID'
-            id='player-id'
-            className='p-2 rounded shadow-md'
-          />
-          <input
-            type='text'
-            placeholder='Weapon Name'
-            id='weapon-name'
-            className='p-2 rounded shadow-md'
-          />
-          <input type='text' placeholder='Ammo' id='ammo' className='p-2 rounded shadow-md' />
-        </>
-      ),
+      category: 'Server',
+      items: [
+        {
+          itemName: 'Kick Player',
+          itemDescription: 'Kick a player.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input
+                type='text'
+                placeholder='Player ID'
+                id='player-id'
+                className='p-2 rounded shadow-md'
+              />
+            </>
+          ),
+        },
+        {
+          itemName: 'Ban Player',
+          itemDescription: 'Ban a player.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input
+                type='text'
+                placeholder='Player ID'
+                id='player-id'
+                className='p-2 rounded shadow-md'
+              />
+              <input
+                type='text'
+                placeholder='Reason'
+                id='reason'
+                className='p-2 rounded shadow-md'
+              />
+              <input
+                type='text'
+                placeholder='Duration'
+                id='duration'
+                className='p-2 rounded shadow-md'
+              />
+            </>
+          ),
+        },
+        {
+          itemName: 'Announce',
+          itemDescription: 'Send an announcement.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input
+                type='text'
+                placeholder='Message'
+                id='message'
+                className='p-2 rounded shadow-md'
+              />
+            </>
+          ),
+        },
+        {
+          itemName: 'Set Weather',
+          itemDescription: 'Set the weather.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input
+                type='text'
+                placeholder='Weather Name'
+                id='weather-name'
+                className='p-2 rounded shadow-md'
+              />
+            </>
+          ),
+        },
+        {
+          itemName: 'Set Time',
+          itemDescription: 'Set the time.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input type='text' placeholder='Time' id='time' className='p-2 rounded shadow-md' />
+            </>
+          ),
+        },
+      ],
     },
     {
-      itemName: 'Spawn Vehicle',
-      itemDescription: 'Spawn a vehicle.',
-      itemFunction: kill,
-      functionOptions: (
-        <>
-          <input
-            type='text'
-            placeholder='Vehicle Name'
-            id='vehicle-name'
-            className='p-2 rounded shadow-md'
-          />
-        </>
-      ),
+      category: 'Inventory',
+      items: [
+        {
+          itemName: 'Give Item',
+          itemDescription: 'Give a player an item.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input
+                type='text'
+                placeholder='Player ID'
+                id='player-id'
+                className='p-2 rounded shadow-md'
+              />
+              <input
+                type='text'
+                placeholder='Item Name'
+                id='item-name'
+                className='p-2 rounded shadow-md'
+              />
+              <input
+                type='text'
+                placeholder='Amount'
+                id='amount'
+                className='p-2 rounded shadow-md'
+              />
+            </>
+          ),
+        },
+        {
+          itemName: 'Remove Item',
+          itemDescription: 'Remove an item from a player.',
+          itemFunction: kill,
+          functionOptions: (
+            <>
+              <input
+                type='text'
+                placeholder='Player ID'
+                id='player-id'
+                className='p-2 rounded shadow-md'
+              />
+              <input
+                type='text'
+                placeholder='Item Name'
+                id='item-name'
+                className='p-2 rounded shadow-md'
+              />
+              <input
+                type='text'
+                placeholder='Amount'
+                id='amount'
+                className='p-2 rounded shadow-md'
+              />
+            </>
+          ),
+        },
+      ],
     },
     {
-      itemName: 'Teleport',
-      itemDescription: 'Teleport to a location.',
-      itemFunction: kill,
-      functionOptions: (
-        <>
-          <input type='text' placeholder='X' id='x' className='p-2 rounded shadow-md' />
-          <input type='text' placeholder='Y' id='y' className='p-2 rounded shadow-md' />
-          <input type='text' placeholder='Z' id='z' className='p-2 rounded shadow-md' />
-          <div className='flex place-items-center gap-2'>
-            <label htmlFor='waypoint'>Waypoint</label>
-            <input type='checkbox' name='waypoint' id='waypoint' className='w-6 h-6' />
-          </div>
-        </>
-      ),
-    },
-    {
-      itemName: 'God Mode',
-      itemDescription: 'Enable god mode.',
-      itemFunction: kill,
-    },
-    {
-      itemName: 'No Clip',
-      itemDescription: 'Enable no clip mode.',
-      itemFunction: kill,
+      category: 'Misc',
+      items: [
+        {
+          itemName: 'Close Menu',
+          itemDescription: 'Close the menu.',
+          itemFunction: close,
+        },
+      ],
     },
   ]
+
   const [filteredItems, setFilteredItems] = useState(menuItems)
 
   async function close() {
@@ -107,9 +272,30 @@ const AdminMenu = () => {
   })
 
   useEffect(() => {
-    setFilteredItems(
-      menuItems.filter((item) => item.itemName.toLowerCase().includes(search.toLowerCase())),
-    )
+    if (search !== '') setCategoryExtend(categoryExtend + 1)
+    if (search === '') setCategoryCollapse(!categoryCollapse)
+
+    setFilteredItems(() => {
+      if (search === '') return menuItems
+
+      let searchResults = menuItems.map((group) => {
+        return {
+          category: group.category,
+          items: group.items.filter((item) => {
+            return item.itemName.toLowerCase().includes(search.toLowerCase())
+          }),
+        }
+      })
+
+      // Sort by most items
+      searchResults = searchResults.sort((a, b) => {
+        if (a.items.length > b.items.length) return -1
+        if (a.items.length < b.items.length) return 1
+        return 0
+      })
+
+      return searchResults
+    })
   }, [search])
 
   return (
@@ -161,19 +347,31 @@ const AdminMenu = () => {
         </div>
         <div
           id='menuItems'
-          className='divide-y bg-white/20 divide-neutral-800 shadow-lg overflow-y-auto'
+          className='bg-white/20 shadow-lg overflow-y-auto divide-y divide-neutral-800 '
         >
-          {filteredItems.map((item, index) => (
-            <MenuItem
-              key={index}
-              itemName={item.itemName}
-              itemDescription={item.itemDescription}
-              itemFunction={item.itemFunction}
-              functionOptions={item.functionOptions}
-              toggleCollapse={collapse}
-              toggleExtend={extend}
-            />
-          ))}
+          {filteredItems.map((group, index) => {
+            return (
+              <MenuCategory
+                key={index}
+                category={group.category}
+                children={group.items.map((item, index) => (
+                  <MenuItem
+                    key={index}
+                    itemName={item.itemName}
+                    itemDescription={item.itemDescription}
+                    itemFunction={item.itemFunction}
+                    functionOptions={item.functionOptions}
+                    toggleCollapse={collapse}
+                    toggleExtend={extend}
+                  />
+                ))}
+                toggleCollapse={collapse}
+                toggleExtend={extend}
+                toggleCategoryExtend={categoryExtend}
+                toggleCatergoryCollapse={categoryCollapse}
+              />
+            )
+          })}
         </div>
       </div>
     </div>
