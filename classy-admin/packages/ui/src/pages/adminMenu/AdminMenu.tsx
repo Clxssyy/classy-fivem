@@ -114,8 +114,8 @@ const AdminMenu = () => {
 
   return (
     <div className='grid align-items h-screen p-10 overflow-hidden'>
-      <div className='bg-black/50 rounded flex flex-col shadow-lg overflow-hidden'>
-        <div className='justify-between flex border-b border-neutral-800/20'>
+      <div className='bg-black/50 rounded flex flex-col shadow-lg overflow-hidden hover:bg-neutral-700 group/menu'>
+        <div className='justify-between flex border-b border-neutral-800'>
           <div className='flex p-2 place-items-center gap-2'>
             <h1 className='text-xl font-bold cursor-default select-none'>
               <span className='text-green-500'>Classy</span>Menu
@@ -125,7 +125,7 @@ const AdminMenu = () => {
               name='Search'
               id='search'
               placeholder='Search'
-              className='p-2 rounded hidden sm:block bg-white/20 shadow-lg border border-neutral-800/20'
+              className='p-2 rounded hidden sm:block bg-neutral-600 shadow-lg border border-neutral-800'
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -135,7 +135,7 @@ const AdminMenu = () => {
               onClick={() => {
                 setCollapse(!collapse)
               }}
-              className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
+              className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-500 bg-neutral-600 rounded p-1 px-2 shadow-lg border border-neutral-800'
             >
               <ChevronDoubleUpIcon className='w-6 h-6' />
             </button>
@@ -145,7 +145,7 @@ const AdminMenu = () => {
               onClick={() => {
                 setExtend(extend + 1)
               }}
-              className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
+              className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-500 bg-neutral-600 rounded p-1 px-2 shadow-lg border border-neutral-800'
             >
               <ChevronDoubleDownIcon className='w-6 h-6' />
             </button>
@@ -153,7 +153,7 @@ const AdminMenu = () => {
           <div className='p-2 flex place-items-center'>
             <button
               onClick={close}
-              className='hover:scale-105 transition-all active:scale-95 text-neutral-500/80 bg-white/20 rounded p-1 px-2 shadow-lg border border-neutral-800/20'
+              className='hover:scale-105 transition-all active:scale-95 text-neutral-500 bg-neutral-600 rounded p-1 px-2 shadow-lg border border-neutral-800'
             >
               <XMarkIcon className='w-6 h-6' />
             </button>
@@ -161,7 +161,7 @@ const AdminMenu = () => {
         </div>
         <div
           id='menuItems'
-          className='bg-white/20 divide-y divide-neutral-800/20 shadow-lg overflow-y-auto'
+          className='divide-y bg-white/20 divide-neutral-800 shadow-lg overflow-y-auto'
         >
           {filteredItems.map((item, index) => (
             <MenuItem
