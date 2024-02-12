@@ -52,10 +52,22 @@ RegisterNuiCB('closeMenu', (data: { pageName: string }, cb) => {
   cb(true)
 })
 
-RegisterNuiCB('kill', (_, cb) => {
-  SetEntityHealth(PlayerPedId(), 0)
+RegisterNuiCB('kill', (data: { playerId: number }, cb) => {
+  if (data) {
+    const player = GetPlayerFromServerId(data.playerId)
 
-  cb({})
+    if (player === -1) {
+      return cb({ playerId: data.playerId, success: false, error: 'Player not found' })
+    }
+
+    const ped = GetPlayerPed(player)
+
+    SetEntityHealth(ped, 0)
+    cb({ playerId: data.playerId, success: true })
+  } else {
+    SetEntityHealth(PlayerPedId(), 0)
+    cb({ playerId: false, success: true })
+  }
 })
 
 RegisterNuiCB('getDemoData', (data, cb) => {
