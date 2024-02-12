@@ -9,6 +9,8 @@ interface MenuItemProps {
   toggleCollapse: boolean
   toggleExtend: number
   menuExpanded: boolean
+  openItem: (item: string) => Promise<void>
+  openedItem: string
   id: string
 }
 
@@ -23,7 +25,17 @@ const MenuItem = (props: MenuItemProps) => {
     toggleExtend: extend,
     menuExpanded: expanded,
     id: id,
+    openedItem: openItem,
+    openItem: setOpenItem,
   } = props
+
+  useEffect(() => {
+    if (openItem === id) {
+      setHidden(false)
+    } else {
+      setHidden(true)
+    }
+  }, [openItem])
 
   useEffect(() => {
     setHidden(true)
@@ -38,7 +50,7 @@ const MenuItem = (props: MenuItemProps) => {
     return (
       <section id={id} className='flex'>
         <button
-          onClick={func}
+          onClick={options ? () => setOpenItem(id) : func}
           className='grow font-bold hover:scale-105 active:scale-95 transition-all bg-neutral-700/50 px-2 shadow-lg text-neutral-400/50 group-hover/menu:text-neutral-400 group-hover/menu:bg-neutral-700'
         >
           {name}

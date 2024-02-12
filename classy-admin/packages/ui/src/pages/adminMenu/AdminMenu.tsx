@@ -20,6 +20,7 @@ const AdminMenu = () => {
   const [categoryExtend, setCategoryExtend] = useState(1)
   const [categoryCollapse, setCategoryCollapse] = useState(true)
   const [expandMenu, setExpandMenu] = useState(false)
+  const [openedItem, setOpenedItem] = useState('')
 
   const menuItems = [
     {
@@ -317,6 +318,13 @@ const AdminMenu = () => {
     })
   }, [search])
 
+  useEffect(() => {
+    if (expandMenu === false) {
+      setCollapse(!collapse)
+      setOpenedItem('')
+    }
+  }, [expandMenu])
+
   async function close() {
     closePage('AdminMenu')
     await fetchNui('closeMenu', { pageName: 'AdminMenu' })
@@ -329,10 +337,12 @@ const AdminMenu = () => {
       const playerID = (options[0] as HTMLInputElement).value
       console.log('Player ID:', playerID)
       await fetchNui('kill', { playerID: Number(playerID) })
-    } else {
-      console.log('No options found')
-      await fetchNui('kill')
     }
+  }
+
+  async function openItem(item: string) {
+    if (!expandMenu) await setExpandMenu(true)
+    await setOpenedItem(item)
   }
 
   useExitListener(async () => {
@@ -349,7 +359,7 @@ const AdminMenu = () => {
             : 'ease-out min-w-[25%] min-h-min max-h-[75%] max-w-[25%]'
         }`}
       >
-        <header className='justify-between flex border-b border-neutral-800'>
+        <header className='justify-between flex'>
           <div className='flex p-2 place-items-center gap-2'>
             <h1 className='text-xl font-bold cursor-default select-none'>
               <span className='text-green-500'>Classy</span>Menu
@@ -372,6 +382,7 @@ const AdminMenu = () => {
                 <button
                   onClick={() => {
                     setCollapse(!collapse)
+                    setCategoryCollapse(!categoryCollapse)
                   }}
                   className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
                 >
@@ -382,6 +393,7 @@ const AdminMenu = () => {
                 <button
                   onClick={() => {
                     setExtend(extend + 1)
+                    setCategoryExtend(categoryExtend + 1)
                   }}
                   className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
                 >
@@ -394,6 +406,7 @@ const AdminMenu = () => {
             <button
               onClick={() => {
                 setExpandMenu(!expandMenu)
+                setCollapse(!collapse)
               }}
               className='hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
             >
@@ -429,13 +442,14 @@ const AdminMenu = () => {
                     toggleCollapse={collapse}
                     toggleExtend={extend}
                     menuExpanded={expandMenu}
+                    openItem={openItem}
+                    openedItem={openedItem}
                   />
                 ))}
                 toggleCollapse={collapse}
                 toggleExtend={extend}
                 toggleCategoryExtend={categoryExtend}
                 toggleCatergoryCollapse={categoryCollapse}
-                menuExpanded={expandMenu}
               />
             )
           })}
