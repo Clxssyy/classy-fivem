@@ -14,8 +14,8 @@ import MenuCategory from '../../components/MenuCategory'
 
 const AdminMenu = () => {
   const { closePage } = usePageContext()
-  const [collapse, setCollapse] = useState(true)
-  const [extend, setExtend] = useState(1)
+  const [collapsed, setCollapse] = useState(true)
+  const [extended, setExtend] = useState(1)
   const [search, setSearch] = useState('')
   const [categoryExtend, setCategoryExtend] = useState(1)
   const [categoryCollapse, setCategoryCollapse] = useState(true)
@@ -27,9 +27,9 @@ const AdminMenu = () => {
       category: 'Player',
       items: [
         {
-          itemName: 'Kill Player',
-          itemDescription: 'Kill a player.',
-          itemFunction: kill,
+          name: 'Kill Player',
+          description: 'Kill a player.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -42,9 +42,9 @@ const AdminMenu = () => {
           ),
         },
         {
-          itemName: 'Give Weapon',
-          itemDescription: 'Give player a weapon.',
-          itemFunction: kill,
+          name: 'Give Weapon',
+          description: 'Give player a weapon.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -69,19 +69,19 @@ const AdminMenu = () => {
           ),
         },
         {
-          itemName: 'God Mode',
-          itemDescription: 'Enable god mode.',
-          itemFunction: kill,
+          name: 'God Mode',
+          description: 'Enable god mode.',
+          function: kill,
         },
         {
-          itemName: 'No Clip',
-          itemDescription: 'Enable no clip mode.',
-          itemFunction: kill,
+          name: 'No Clip',
+          description: 'Enable no clip mode.',
+          function: kill,
         },
         {
-          itemName: 'Spawn Vehicle',
-          itemDescription: 'Spawn a vehicle.',
-          itemFunction: kill,
+          name: 'Spawn Vehicle',
+          description: 'Spawn a vehicle.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -94,9 +94,9 @@ const AdminMenu = () => {
           ),
         },
         {
-          itemName: 'Teleport',
-          itemDescription: 'Teleport to a location.',
-          itemFunction: kill,
+          name: 'Teleport',
+          description: 'Teleport to a location.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -130,9 +130,9 @@ const AdminMenu = () => {
       category: 'Server',
       items: [
         {
-          itemName: 'Kick Player',
-          itemDescription: 'Kick a player.',
-          itemFunction: kill,
+          name: 'Kick Player',
+          description: 'Kick a player.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -145,9 +145,9 @@ const AdminMenu = () => {
           ),
         },
         {
-          itemName: 'Ban Player',
-          itemDescription: 'Ban a player.',
-          itemFunction: kill,
+          name: 'Ban Player',
+          description: 'Ban a player.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -172,9 +172,9 @@ const AdminMenu = () => {
           ),
         },
         {
-          itemName: 'Announce',
-          itemDescription: 'Send an announcement.',
-          itemFunction: kill,
+          name: 'Announce',
+          description: 'Send an announcement.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -187,9 +187,9 @@ const AdminMenu = () => {
           ),
         },
         {
-          itemName: 'Set Weather',
-          itemDescription: 'Set the weather.',
-          itemFunction: kill,
+          name: 'Set Weather',
+          description: 'Set the weather.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -202,9 +202,9 @@ const AdminMenu = () => {
           ),
         },
         {
-          itemName: 'Set Time',
-          itemDescription: 'Set the time.',
-          itemFunction: kill,
+          name: 'Set Time',
+          description: 'Set the time.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -222,9 +222,9 @@ const AdminMenu = () => {
       category: 'Inventory',
       items: [
         {
-          itemName: 'Give Item',
-          itemDescription: 'Give a player an item.',
-          itemFunction: kill,
+          name: 'Give Item',
+          description: 'Give a player an item.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -249,9 +249,9 @@ const AdminMenu = () => {
           ),
         },
         {
-          itemName: 'Remove Item',
-          itemDescription: 'Remove an item from a player.',
-          itemFunction: kill,
+          name: 'Remove Item',
+          description: 'Remove an item from a player.',
+          function: kill,
           functionOptions: (
             <>
               <input
@@ -281,9 +281,9 @@ const AdminMenu = () => {
       category: 'Misc',
       items: [
         {
-          itemName: 'Close Menu',
-          itemDescription: 'Close the menu.',
-          itemFunction: close,
+          name: 'Close Menu',
+          description: 'Close the menu.',
+          function: close,
         },
       ],
     },
@@ -302,7 +302,7 @@ const AdminMenu = () => {
         return {
           category: group.category,
           items: group.items.filter((item) => {
-            return item.itemName.toLowerCase().includes(search.toLowerCase())
+            return item.name.toLowerCase().includes(search.toLowerCase())
           }),
         }
       })
@@ -320,7 +320,7 @@ const AdminMenu = () => {
 
   useEffect(() => {
     if (expandMenu === false) {
-      setCollapse(!collapse)
+      setCollapse(!collapsed)
       setOpenedItem('')
     }
   }, [expandMenu])
@@ -381,7 +381,7 @@ const AdminMenu = () => {
               <div className='p-2 flex place-items-center'>
                 <button
                   onClick={() => {
-                    setCollapse(!collapse)
+                    setCollapse(!collapsed)
                     setCategoryCollapse(!categoryCollapse)
                   }}
                   className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
@@ -392,7 +392,7 @@ const AdminMenu = () => {
               <div className='p-2 flex place-items-center'>
                 <button
                   onClick={() => {
-                    setExtend(extend + 1)
+                    setExtend(extended + 1)
                     setCategoryExtend(categoryExtend + 1)
                   }}
                   className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
@@ -406,7 +406,7 @@ const AdminMenu = () => {
             <button
               onClick={() => {
                 setExpandMenu(!expandMenu)
-                setCollapse(!collapse)
+                setCollapse(!collapsed)
               }}
               className='hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
             >
@@ -434,13 +434,13 @@ const AdminMenu = () => {
                 children={group.items.map((item, index) => (
                   <MenuItem
                     key={index}
-                    id={item.itemName}
-                    itemName={item.itemName}
-                    itemDescription={item.itemDescription}
-                    itemFunction={item.itemFunction}
+                    id={item.name}
+                    name={item.name}
+                    description={item.description}
+                    function={item.function}
                     functionOptions={item.functionOptions}
-                    toggleCollapse={collapse}
-                    toggleExtend={extend}
+                    collapsed={collapsed}
+                    extended={extended}
                     menuExpanded={expandMenu}
                     openItem={openItem}
                     openedItem={openedItem}

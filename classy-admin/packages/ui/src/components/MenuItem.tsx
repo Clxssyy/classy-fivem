@@ -2,12 +2,12 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { MouseEventHandler, useEffect, useState } from 'react'
 
 interface MenuItemProps {
-  itemName: string
-  itemDescription?: string
-  itemFunction: MouseEventHandler
+  name: string
+  description?: string
+  function: MouseEventHandler
   functionOptions?: JSX.Element
-  toggleCollapse: boolean
-  toggleExtend: number
+  collapsed: boolean
+  extended: number
   menuExpanded: boolean
   openItem: (item: string) => Promise<void>
   openedItem: string
@@ -17,12 +17,12 @@ interface MenuItemProps {
 const MenuItem = (props: MenuItemProps) => {
   const [hidden, setHidden] = useState(true)
   const {
-    itemFunction: func,
-    itemName: name,
-    itemDescription: description,
-    functionOptions: options,
-    toggleCollapse: collapse,
-    toggleExtend: extend,
+    name: name,
+    description: description,
+    function: func,
+    functionOptions: functionOptions,
+    collapsed: collapsed,
+    extended: extended,
     menuExpanded: expanded,
     id: id,
     openedItem: openItem,
@@ -39,18 +39,18 @@ const MenuItem = (props: MenuItemProps) => {
 
   useEffect(() => {
     setHidden(true)
-  }, [collapse])
+  }, [collapsed])
 
   useEffect(() => {
-    if (extend === 1) return
+    if (extended === 1) return
     setHidden(false)
-  }, [extend])
+  }, [extended])
 
   if (!expanded) {
     return (
       <section id={id} className='flex'>
         <button
-          onClick={options ? () => setOpenItem(id) : func}
+          onClick={functionOptions ? () => setOpenItem(id) : func}
           className='grow font-bold hover:scale-105 active:scale-95 transition-all bg-neutral-700/50 px-2 shadow-lg text-neutral-400/50 group-hover/menu:text-neutral-400 group-hover/menu:bg-neutral-700'
         >
           {name}
@@ -70,7 +70,7 @@ const MenuItem = (props: MenuItemProps) => {
                 {name}
               </button>
             </div>
-            {options ? (
+            {functionOptions ? (
               <button
                 onClick={() => setHidden(!hidden)}
                 className={`flex grow place-items-center overflow-hidden gap-2 text-neutral-400/50 ${
@@ -98,14 +98,14 @@ const MenuItem = (props: MenuItemProps) => {
               </div>
             ) : null}
           </div>
-          {options ? (
+          {functionOptions ? (
             <div
               className={`transition-all duration-300 overflow-hidden ${
                 hidden ? 'max-h-0 ease-out' : 'ease-in max-h-96'
               }`}
             >
               <div id={id + '-options'} className='flex gap-2 p-2 flex-wrap'>
-                {options}
+                {functionOptions}
               </div>
             </div>
           ) : null}
