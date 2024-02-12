@@ -446,10 +446,8 @@ const AdminMenu = () => {
                     openedItem={openedItem}
                   />
                 ))}
-                toggleCollapse={collapse}
-                toggleExtend={extend}
-                toggleCategoryExtend={categoryExtend}
-                toggleCatergoryCollapse={categoryCollapse}
+                categoryExtend={categoryExtend}
+                catergoryCollapse={categoryCollapse}
               />
             )
           })}

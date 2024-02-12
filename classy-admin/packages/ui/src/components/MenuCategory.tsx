@@ -3,10 +3,8 @@ import { useEffect, useState } from 'react'
 interface MenuCategoryProps {
   category: string
   children: JSX.Element[] | JSX.Element
-  toggleCollapse: boolean
-  toggleExtend: number
-  toggleCategoryExtend: number
-  toggleCatergoryCollapse: boolean
+  categoryExtend: number
+  catergoryCollapse: boolean
   id: string
 }
 
@@ -14,10 +12,8 @@ const MenuCategory = (props: MenuCategoryProps) => {
   const {
     category: category,
     children: children,
-    toggleCollapse: collapse,
-    toggleExtend: extend,
-    toggleCategoryExtend: categoryExtend,
-    toggleCatergoryCollapse: categoryCollapse,
+    categoryExtend: categoryExtend,
+    catergoryCollapse: categoryCollapse,
     id: id,
   } = props
 
