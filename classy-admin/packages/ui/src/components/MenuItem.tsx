@@ -86,7 +86,7 @@ const MenuItem = (props: MenuItemProps) => {
                 ) : null}
                 <div className='p-2'>
                   <ChevronDownIcon
-                    className={`w-6 h-6 transition-all duration-300 text-neutral-400/50 group-hover/menu:text-neutral-400 ${
+                    className={`w-6 h-6 transition-all text-neutral-400/50 group-hover/menu:text-neutral-400 ${
                       hidden ? 'rotate-0' : 'rotate-180'
                     }`}
                   />
@@ -100,8 +100,8 @@ const MenuItem = (props: MenuItemProps) => {
           </div>
           {functionOptions ? (
             <div
-              className={`transition-all duration-300 overflow-hidden ${
-                hidden ? 'max-h-0 ease-out' : 'ease-in max-h-96'
+              className={`transition-all ease-in-out overflow-hidden ${
+                hidden ? 'max-h-0' : 'max-h-96'
               }`}
             >
               <div id={id + '-options'} className='flex gap-2 p-2 flex-wrap'>

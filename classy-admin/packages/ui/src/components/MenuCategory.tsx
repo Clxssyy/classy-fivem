@@ -39,17 +39,15 @@ const MenuCategory = (props: MenuCategoryProps) => {
             <h1 className='font-bold'>{category}</h1>
             <div>
               <ChevronDownIcon
-                className={`w-6 h-6 transition-all duration-300 ${
-                  hidden ? 'rotate-0' : 'rotate-180'
-                }`}
+                className={`w-6 h-6 transition-all ${hidden ? 'rotate-0' : 'rotate-180'}`}
               />
             </div>
           </button>
         </header>
         <section
           id={id + '-items'}
-          className={`flex flex-col divide-y divide-neutral-800 transition-all duration-300 overflow-hidden ${
-            hidden ? 'max-h-0 ease-out' : 'ease-in max-h-[1000px]'
+          className={`flex flex-col divide-y divide-neutral-800 transition-all ease-in-out overflow-hidden ${
+            hidden ? 'max-h-0' : 'max-h-[1000px]'
           }`}
         >
           {children}

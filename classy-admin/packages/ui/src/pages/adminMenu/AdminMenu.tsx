@@ -353,10 +353,10 @@ const AdminMenu = () => {
     <div className='grid p-10 h-screen overflow-hidden place-items-start'>
       <main
         id='menu'
-        className={`transition-all bg-neutral-700/50 border border-neutral-800 rounded flex flex-col shadow-lg overflow-hidden hover:bg-neutral-700 group/menu ${
+        className={`transition-all ease-in-out bg-neutral-700/50 border border-neutral-800 rounded flex flex-col shadow-lg overflow-hidden hover:bg-neutral-700 group/menu ${
           expandMenu
-            ? 'max-w-full max-h-full min-h-full min-w-full ease-out'
-            : 'ease-out min-w-[25%] min-h-min max-h-[75%] max-w-[25%]'
+            ? 'max-w-full max-h-full min-h-full min-w-full'
+            : 'min-w-[25%] min-h-min max-h-[75%] max-w-[25%]'
         }`}
       >
         <header className='justify-between flex'>
