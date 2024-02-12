@@ -1,11 +1,13 @@
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { MouseEventHandler, useEffect, useState } from 'react'
+import { ItemOption } from '../.config'
+import FunctionOption from './FunctionOption'
 
 interface MenuItemProps {
   name: string
   description?: string
   function: MouseEventHandler
-  functionOptions?: JSX.Element
+  functionOptions?: ItemOption[]
   collapsed: boolean
   extended: number
   menuExpanded: boolean
@@ -78,7 +80,7 @@ const MenuItem = (props: MenuItemProps) => {
                 }`}
               >
                 {description ? (
-                  <div className='overflow-hidden'>
+                  <div className='overflow-hidden flex'>
                     <p className='text-xs truncate text-neutral-400/50 group-hover/menu:text-neutral-400'>
                       {description}
                     </p>
@@ -105,7 +107,14 @@ const MenuItem = (props: MenuItemProps) => {
               }`}
             >
               <div id={id + '-options'} className='flex gap-2 p-2 flex-wrap'>
-                {functionOptions}
+                {functionOptions.map((option) => (
+                  <FunctionOption
+                    key={option.id}
+                    name={option.name}
+                    id={option.id}
+                    toggle={option.toggle}
+                  />
+                ))}
               </div>
             </div>
           ) : null}

@@ -8,9 +8,12 @@ import {
   ChevronDoubleUpIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import MenuItem from '../../components/MenuItem'
+import MenuItem from './components/MenuItem'
 import { useEffect, useState } from 'react'
-import MenuCategory from '../../components/MenuCategory'
+import MenuCategory from './components/MenuCategory'
+import cfg from './.config'
+
+const categories = cfg.categories
 
 const AdminMenu = () => {
   const { closePage } = usePageContext()
@@ -22,283 +25,16 @@ const AdminMenu = () => {
   const [expandMenu, setExpandMenu] = useState(false)
   const [openedItem, setOpenedItem] = useState('')
 
-  const menuItems = [
-    {
-      category: 'Player',
-      items: [
-        {
-          name: 'Kill Player',
-          description: 'Kill a player.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='Player ID'
-                id='player-id'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-            </>
-          ),
-        },
-        {
-          name: 'Give Weapon',
-          description: 'Give player a weapon.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='Player ID'
-                id='player-id'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <input
-                type='text'
-                placeholder='Weapon Name'
-                id='weapon-name'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <input
-                type='text'
-                placeholder='Ammo'
-                id='ammo'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-            </>
-          ),
-        },
-        {
-          name: 'God Mode',
-          description: 'Enable god mode.',
-          function: kill,
-        },
-        {
-          name: 'No Clip',
-          description: 'Enable no clip mode.',
-          function: kill,
-        },
-        {
-          name: 'Spawn Vehicle',
-          description: 'Spawn a vehicle.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='Vehicle Name'
-                id='vehicle-name'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-            </>
-          ),
-        },
-        {
-          name: 'Teleport',
-          description: 'Teleport to a location.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='X'
-                id='x'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <input
-                type='text'
-                placeholder='Y'
-                id='y'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <input
-                type='text'
-                placeholder='Z'
-                id='z'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <div className='flex place-items-center gap-2'>
-                <label htmlFor='waypoint'>Waypoint</label>
-                <input type='checkbox' name='waypoint' id='waypoint' className='w-6 h-6' />
-              </div>
-            </>
-          ),
-        },
-      ],
-    },
-    {
-      category: 'Server',
-      items: [
-        {
-          name: 'Kick Player',
-          description: 'Kick a player.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='Player ID'
-                id='player-id'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-            </>
-          ),
-        },
-        {
-          name: 'Ban Player',
-          description: 'Ban a player.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='Player ID'
-                id='player-id'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <input
-                type='text'
-                placeholder='Reason'
-                id='reason'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <input
-                type='text'
-                placeholder='Duration'
-                id='duration'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-            </>
-          ),
-        },
-        {
-          name: 'Announce',
-          description: 'Send an announcement.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='Message'
-                id='message'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-            </>
-          ),
-        },
-        {
-          name: 'Set Weather',
-          description: 'Set the weather.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='Weather Name'
-                id='weather-name'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-            </>
-          ),
-        },
-        {
-          name: 'Set Time',
-          description: 'Set the time.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='Time'
-                id='time'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-            </>
-          ),
-        },
-      ],
-    },
-    {
-      category: 'Inventory',
-      items: [
-        {
-          name: 'Give Item',
-          description: 'Give a player an item.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='Player ID'
-                id='player-id'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <input
-                type='text'
-                placeholder='Item Name'
-                id='item-name'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <input
-                type='text'
-                placeholder='Amount'
-                id='amount'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-            </>
-          ),
-        },
-        {
-          name: 'Remove Item',
-          description: 'Remove an item from a player.',
-          function: kill,
-          functionOptions: (
-            <>
-              <input
-                type='text'
-                placeholder='Player ID'
-                id='player-id'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <input
-                type='text'
-                placeholder='Item Name'
-                id='item-name'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-              <input
-                type='text'
-                placeholder='Amount'
-                id='amount'
-                className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
-              />
-            </>
-          ),
-        },
-      ],
-    },
-    {
-      category: 'Misc',
-      items: [
-        {
-          name: 'Close Menu',
-          description: 'Close the menu.',
-          function: close,
-        },
-      ],
-    },
-  ]
-
-  const [filteredItems, setFilteredItems] = useState(menuItems)
+  const [filteredItems, setFilteredItems] = useState(categories)
 
   useEffect(() => {
     if (search !== '') setCategoryExtended(categoryExtended + 1)
     if (search === '') setCategoryCollapsed(!categoryCollapsed)
 
     setFilteredItems(() => {
-      if (search === '') return menuItems
+      if (search === '') return categories
 
-      let searchResults = menuItems.map((group) => {
+      let searchResults = categories.map((group) => {
         return {
           category: group.category,
           items: group.items.filter((item) => {
@@ -332,11 +68,22 @@ const AdminMenu = () => {
 
   async function kill() {
     const options = document.getElementById('Kill Player-options')?.children
+    const playerID = options && (options[0] as HTMLInputElement).value
+
+    if (playerID !== '') {
+      await fetchNui('kill', { playerId: Number(playerID) }).then((res) => {
+        console.log(JSON.stringify(res))
+      })
+    } else {
+      await fetchNui('kill').then((res) => {
+        console.log(JSON.stringify(res))
+      })
+    }
 
     if (options) {
-      const playerID = (options[0] as HTMLInputElement).value
-      console.log('Player ID:', playerID)
-      await fetchNui('kill', { playerID: Number(playerID) })
+      for (let i = 0; i < options.length; i++) {
+        ;(options[i] as HTMLInputElement).value = ''
+      }
     }
   }
 
