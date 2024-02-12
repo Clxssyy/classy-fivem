@@ -14,11 +14,11 @@ import MenuCategory from '../../components/MenuCategory'
 
 const AdminMenu = () => {
   const { closePage } = usePageContext()
-  const [collapsed, setCollapse] = useState(true)
-  const [extended, setExtend] = useState(1)
+  const [collapsed, setCollapsed] = useState(true)
+  const [extended, setExtended] = useState(1)
   const [search, setSearch] = useState('')
-  const [categoryExtend, setCategoryExtend] = useState(1)
-  const [categoryCollapse, setCategoryCollapse] = useState(true)
+  const [categoryExtended, setCategoryExtended] = useState(1)
+  const [categoryCollapsed, setCategoryCollapsed] = useState(true)
   const [expandMenu, setExpandMenu] = useState(false)
   const [openedItem, setOpenedItem] = useState('')
 
@@ -292,8 +292,8 @@ const AdminMenu = () => {
   const [filteredItems, setFilteredItems] = useState(menuItems)
 
   useEffect(() => {
-    if (search !== '') setCategoryExtend(categoryExtend + 1)
-    if (search === '') setCategoryCollapse(!categoryCollapse)
+    if (search !== '') setCategoryExtended(categoryExtended + 1)
+    if (search === '') setCategoryCollapsed(!categoryCollapsed)
 
     setFilteredItems(() => {
       if (search === '') return menuItems
@@ -320,7 +320,7 @@ const AdminMenu = () => {
 
   useEffect(() => {
     if (expandMenu === false) {
-      setCollapse(!collapsed)
+      setCollapsed(!collapsed)
       setOpenedItem('')
     }
   }, [expandMenu])
@@ -381,8 +381,8 @@ const AdminMenu = () => {
               <div className='p-2 flex place-items-center'>
                 <button
                   onClick={() => {
-                    setCollapse(!collapsed)
-                    setCategoryCollapse(!categoryCollapse)
+                    setCollapsed(!collapsed)
+                    setCategoryCollapsed(!categoryCollapsed)
                   }}
                   className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
                 >
@@ -392,8 +392,8 @@ const AdminMenu = () => {
               <div className='p-2 flex place-items-center'>
                 <button
                   onClick={() => {
-                    setExtend(extended + 1)
-                    setCategoryExtend(categoryExtend + 1)
+                    setExtended(extended + 1)
+                    setCategoryExtended(categoryExtended + 1)
                   }}
                   className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
                 >
@@ -406,7 +406,7 @@ const AdminMenu = () => {
             <button
               onClick={() => {
                 setExpandMenu(!expandMenu)
-                setCollapse(!collapsed)
+                setCollapsed(!collapsed)
               }}
               className='hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
             >
@@ -446,8 +446,8 @@ const AdminMenu = () => {
                     openedItem={openedItem}
                   />
                 ))}
-                categoryExtend={categoryExtend}
-                catergoryCollapse={categoryCollapse}
+                categoryExtend={categoryExtended}
+                catergoryCollapse={categoryCollapsed}
               />
             )
           })}
