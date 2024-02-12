@@ -290,19 +290,6 @@ const AdminMenu = () => {
 
   const [filteredItems, setFilteredItems] = useState(menuItems)
 
-  async function close() {
-    closePage('AdminMenu')
-    await fetchNui('closeMenu', { pageName: 'AdminMenu' })
-  }
-
-  async function kill() {
-    await fetchNui('kill')
-  }
-
-  useExitListener(async () => {
-    await close()
-  })
-
   useEffect(() => {
     if (search !== '') setCategoryExtend(categoryExtend + 1)
     if (search === '') setCategoryCollapse(!categoryCollapse)
@@ -330,16 +317,39 @@ const AdminMenu = () => {
     })
   }, [search])
 
+  async function close() {
+    closePage('AdminMenu')
+    await fetchNui('closeMenu', { pageName: 'AdminMenu' })
+  }
+
+  async function kill() {
+    const options = document.getElementById('Kill Player-options')?.children
+
+    if (options) {
+      const playerID = (options[0] as HTMLInputElement).value
+      console.log('Player ID:', playerID)
+      await fetchNui('kill', { playerID: Number(playerID) })
+    } else {
+      console.log('No options found')
+      await fetchNui('kill')
+    }
+  }
+
+  useExitListener(async () => {
+    await close()
+  })
+
   return (
     <div className='grid p-10 h-screen overflow-hidden place-items-start'>
-      <div
+      <main
+        id='menu'
         className={`transition-all bg-neutral-700/50 border border-neutral-800 rounded flex flex-col shadow-lg overflow-hidden hover:bg-neutral-700 group/menu ${
           expandMenu
             ? 'max-w-full max-h-full min-h-full min-w-full ease-out'
-            : 'ease-out min-w-[25%] min-h-[75%] max-h-[75%] max-w-[25%]'
+            : 'ease-out min-w-[25%] min-h-min max-h-[75%] max-w-[25%]'
         }`}
       >
-        <div className='justify-between flex border-b border-neutral-800'>
+        <header className='justify-between flex border-b border-neutral-800'>
           <div className='flex p-2 place-items-center gap-2'>
             <h1 className='text-xl font-bold cursor-default select-none'>
               <span className='text-green-500'>Classy</span>Menu
@@ -400,16 +410,18 @@ const AdminMenu = () => {
               <XMarkIcon className='w-6 h-6' />
             </button>
           </div>
-        </div>
-        <div id='menuItems' className='shadow-lg overflow-y-auto'>
+        </header>
+        <section id='categories' className='shadow-lg overflow-y-auto'>
           {filteredItems.map((group, index) => {
             return (
               <MenuCategory
                 key={index}
+                id={group.category}
                 category={group.category}
                 children={group.items.map((item, index) => (
                   <MenuItem
                     key={index}
+                    id={item.itemName}
                     itemName={item.itemName}
                     itemDescription={item.itemDescription}
                     itemFunction={item.itemFunction}
@@ -427,8 +439,8 @@ const AdminMenu = () => {
               />
             )
           })}
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   )
 }

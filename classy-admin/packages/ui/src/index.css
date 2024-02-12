@@ -2,14 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-#menuItems::-webkit-scrollbar {
+#categories::-webkit-scrollbar {
   @apply w-3;
 }
 
-#menuItems::-webkit-scrollbar-thumb {
+#categories::-webkit-scrollbar-thumb {
   @apply rounded bg-black/40 hover:bg-neutral-700;
 }
 
-#menuItems::-webkit-scrollbar-track {
+#categories::-webkit-scrollbar-track {
   @apply rounded-br;
 }

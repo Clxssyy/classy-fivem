@@ -9,6 +9,7 @@ interface MenuItemProps {
   toggleCollapse: boolean
   toggleExtend: number
   menuExpanded: boolean
+  id: string
 }
 
 const MenuItem = (props: MenuItemProps) => {
@@ -21,6 +22,7 @@ const MenuItem = (props: MenuItemProps) => {
     toggleCollapse: collapse,
     toggleExtend: extend,
     menuExpanded: expanded,
+    id: id,
   } = props
 
   useEffect(() => {
@@ -34,17 +36,19 @@ const MenuItem = (props: MenuItemProps) => {
 
   if (!expanded) {
     return (
-      <button
-        onClick={func}
-        className='font-bold hover:scale-105 active:scale-95 transition-all bg-neutral-600/50 rounded px-2 shadow-lg border border-neutral-800 text-neutral-400/50 group-hover/menu:text-neutral-400 group-hover/menu:bg-neutral-600'
-      >
-        {name}
-      </button>
+      <section id={id} className='flex'>
+        <button
+          onClick={func}
+          className='grow font-bold hover:scale-105 active:scale-95 transition-all bg-neutral-700/50 px-2 shadow-lg text-neutral-400/50 group-hover/menu:text-neutral-400 group-hover/menu:bg-neutral-700'
+        >
+          {name}
+        </button>
+      </section>
     )
   } else {
     return (
       <>
-        <div className='flex flex-col'>
+        <div id={id} className='flex flex-col'>
           <div className='flex'>
             <div className='p-2 min-w-fit'>
               <button
@@ -88,7 +92,9 @@ const MenuItem = (props: MenuItemProps) => {
                 hidden ? 'max-h-0 ease-out' : 'ease-in max-h-96'
               }`}
             >
-              <div className='flex gap-2 p-2 flex-wrap'>{options}</div>
+              <div id={id + '-options'} className='flex gap-2 p-2 flex-wrap'>
+                {options}
+              </div>
             </div>
           ) : null}
         </div>

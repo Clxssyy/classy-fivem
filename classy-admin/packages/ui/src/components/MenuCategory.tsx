@@ -1,6 +1,5 @@
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react'
-
 interface MenuCategoryProps {
   category: string
   children: JSX.Element[] | JSX.Element
@@ -9,6 +8,7 @@ interface MenuCategoryProps {
   toggleCategoryExtend: number
   toggleCatergoryCollapse: boolean
   menuExpanded: boolean
+  id: string
 }
 
 const MenuCategory = (props: MenuCategoryProps) => {
@@ -20,6 +20,7 @@ const MenuCategory = (props: MenuCategoryProps) => {
     toggleCategoryExtend: categoryExtend,
     toggleCatergoryCollapse: categoryCollapse,
     menuExpanded: expanded,
+    id: id,
   } = props
 
   const [hidden, setHidden] = useState(true)
@@ -44,8 +45,8 @@ const MenuCategory = (props: MenuCategoryProps) => {
 
   return (
     <>
-      <div className='flex flex-col'>
-        <div className='flex grow sticky top-0 z-10 bg-neutral-600/50 group-hover/menu:bg-neutral-600'>
+      <section id={id} className='flex flex-col'>
+        <header className='flex grow sticky top-0 z-10 bg-neutral-600/50 group-hover/menu:bg-neutral-600'>
           <button
             onClick={() => setHidden(!hidden)}
             className='flex grow justify-between p-2 border-b border-neutral-800 text-neutral-400/50 group-hover/menu:text-neutral-400'
@@ -59,19 +60,16 @@ const MenuCategory = (props: MenuCategoryProps) => {
               />
             </div>
           </button>
-        </div>
-        <div
-          className={`transition-all duration-300 overflow-hidden ${
+        </header>
+        <section
+          id={id + '-items'}
+          className={`flex flex-col divide-y divide-neutral-800 transition-all duration-300 overflow-hidden ${
             hidden ? 'max-h-0 ease-out' : 'ease-in max-h-[1000px]'
           }`}
         >
-          <div
-            className={`flex flex-col p-2 divide-y divide-neutral-800 ${expanded ? '' : 'gap-2'}`}
-          >
-            {children}
-          </div>
-        </div>
-      </div>
+          {children}
+        </section>
+      </section>
     </>
   )
 }
