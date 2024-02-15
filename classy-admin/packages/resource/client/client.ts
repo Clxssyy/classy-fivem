@@ -1,5 +1,7 @@
 import { ClientUtils, RegisterNuiCB } from '@project-error/pe-utils'
 
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
+
 const rpc = new ClientUtils()
 
 async function main() {
@@ -75,6 +77,33 @@ RegisterNuiCB('giveWeapon', (data: { playerId: number; weaponName: string; ammo:
 
   GiveWeaponToPed(ped, data.weaponName, data.ammo, false, true)
   cb({ playerId: data.playerId, success: true, weapon: data.weaponName, ammo: data.ammo })
+})
+
+RegisterNuiCB('spawnVehicle', async (data: { model: string; insideVeh: boolean }, cb) => {
+  const model = data.model
+  const insideVeh = data.insideVeh
+
+  if (IsModelValid(model)) {
+    RequestModel(model)
+    while (!HasModelLoaded(model)) {
+      await delay(500)
+    }
+
+    const pos = GetEntityCoords(PlayerPedId())
+    const heading = GetEntityHeading(PlayerPedId())
+
+    const veh = CreateVehicle(model, pos[0], pos[1], pos[2], heading, true, false)
+
+    if (insideVeh) {
+      SetPedIntoVehicle(PlayerPedId(), veh, -1)
+    }
+
+    SetModelAsNoLongerNeeded(model)
+
+    cb({ success: true, model })
+  } else {
+    cb({ success: false, error: 'Model not found' })
+  }
 })
 
 main()

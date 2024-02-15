@@ -110,7 +110,27 @@ const cfg: { categories: Category[] } = {
         {
           name: 'Spawn Vehicle',
           description: 'Spawn a vehicle.',
-          function: async () => {},
+          function: async () => {
+            const options = document.getElementById('Spawn Vehicle-options')?.children
+            const vehicle = options && (options[0] as HTMLInputElement).value
+            const inVehicle = options && options[1].children
+            const inVehicleValue = inVehicle && (inVehicle[1] as HTMLInputElement).checked
+
+            if (vehicle !== '') {
+              await fetchNui('spawnVehicle', {
+                model: vehicle,
+                insideVeh: inVehicleValue,
+              }).then((res) => {
+                console.log(JSON.stringify(res))
+              })
+            }
+
+            if (options) {
+              for (let i = 0; i < options.length; i++) {
+                ;(options[i] as HTMLInputElement).value = ''
+              }
+            }
+          },
           functionOptions: [
             {
               name: 'Vehicle Name',
