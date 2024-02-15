@@ -11,7 +11,7 @@ async function main() {
 }
 
 RegisterCommand(
-  'adminmenu',
+  'menu',
   () => {
     SendNUIMessage({
       action: 'openPage',
@@ -53,6 +53,11 @@ RegisterNuiCB('kill', (data: { playerId: number }, cb) => {
     SetEntityHealth(PlayerPedId(), 0)
     cb({ playerId: false, success: true })
   }
+})
+
+RegisterNuiCB('godmode', (_, cb) => {
+  SetPlayerInvincible(PlayerId(), true)
+  cb({ success: true })
 })
 
 main()

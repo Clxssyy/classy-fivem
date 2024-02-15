@@ -75,7 +75,11 @@ const cfg: { categories: Category[] } = {
         {
           name: 'God Mode',
           description: 'Enable god mode.',
-          function: async () => {},
+          function: async () => {
+            await fetchNui('godmode').then((res) => {
+              console.log(JSON.stringify(res))
+            })
+          },
         },
         {
           name: 'No Clip',
