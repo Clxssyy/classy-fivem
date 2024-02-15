@@ -56,7 +56,28 @@ const cfg: { categories: Category[] } = {
         {
           name: 'Give Weapon',
           description: 'Give player a weapon.',
-          function: async () => {},
+          function: async () => {
+            const options = document.getElementById('Give Weapon-options')?.children
+            const playerID = options && (options[0] as HTMLInputElement).value
+            const weaponName = options && (options[1] as HTMLInputElement).value
+            const ammo = (options && (options[2] as HTMLInputElement).value) || '999'
+
+            if (weaponName !== '' && playerID !== '') {
+              await fetchNui('giveWeapon', {
+                playerId: Number(playerID),
+                weaponName,
+                ammo: Number(ammo),
+              }).then((res) => {
+                console.log(JSON.stringify(res))
+              })
+            }
+
+            if (options) {
+              for (let i = 0; i < options.length; i++) {
+                ;(options[i] as HTMLInputElement).value = ''
+              }
+            }
+          },
           functionOptions: [
             {
               name: 'Player ID',

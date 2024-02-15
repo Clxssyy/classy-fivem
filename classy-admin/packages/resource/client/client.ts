@@ -60,4 +60,21 @@ RegisterNuiCB('godmode', (_, cb) => {
   cb({ success: true })
 })
 
+RegisterNuiCB('giveWeapon', (data: { playerId: number; weaponName: string; ammo: number }, cb) => {
+  const player = GetPlayerFromServerId(data.playerId)
+
+  if (player === -1) {
+    return cb({ playerId: data.playerId, success: false, error: 'Player not found' })
+  }
+
+  const ped = GetPlayerPed(player)
+
+  if (!IsWeaponValid(data.weaponName)) {
+    return cb({ playerId: data.playerId, success: false, error: 'Weapon not valid' })
+  }
+
+  GiveWeaponToPed(ped, data.weaponName, data.ammo, false, true)
+  cb({ playerId: data.playerId, success: true, weapon: data.weaponName, ammo: data.ammo })
+})
+
 main()
