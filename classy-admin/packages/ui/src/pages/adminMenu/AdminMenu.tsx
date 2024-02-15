@@ -66,27 +66,6 @@ const AdminMenu = () => {
     await fetchNui('closeMenu', { pageName: 'AdminMenu' })
   }
 
-  async function kill() {
-    const options = document.getElementById('Kill Player-options')?.children
-    const playerID = options && (options[0] as HTMLInputElement).value
-
-    if (playerID !== '') {
-      await fetchNui('kill', { playerId: Number(playerID) }).then((res) => {
-        console.log(JSON.stringify(res))
-      })
-    } else {
-      await fetchNui('kill').then((res) => {
-        console.log(JSON.stringify(res))
-      })
-    }
-
-    if (options) {
-      for (let i = 0; i < options.length; i++) {
-        ;(options[i] as HTMLInputElement).value = ''
-      }
-    }
-  }
-
   async function openItem(item: string) {
     if (!expandMenu) await setExpandMenu(true)
     await setOpenedItem(item)

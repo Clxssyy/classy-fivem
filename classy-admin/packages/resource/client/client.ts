@@ -11,21 +11,6 @@ async function main() {
 }
 
 RegisterCommand(
-  'nuitest',
-  () => {
-    SendNUIMessage({
-      action: 'openPage',
-      data: {
-        pageName: 'HelloWorld',
-      },
-    })
-
-    SetNuiFocus(true, true)
-  },
-  false,
-)
-
-RegisterCommand(
   'adminmenu',
   () => {
     SendNUIMessage({
@@ -68,12 +53,6 @@ RegisterNuiCB('kill', (data: { playerId: number }, cb) => {
     SetEntityHealth(PlayerPedId(), 0)
     cb({ playerId: false, success: true })
   }
-})
-
-RegisterNuiCB('getDemoData', (data, cb) => {
-  console.log(data)
-
-  cb({ demo: true, inBrowser: false })
 })
 
 main()

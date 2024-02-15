@@ -1,8 +1,6 @@
 import AdminMenu from './adminMenu/AdminMenu'
-import HelloWorld from './helloWorld/HelloWorld'
 
 const appPages = {
-  HelloWorld: HelloWorld,
   AdminMenu: AdminMenu,
 }
 
