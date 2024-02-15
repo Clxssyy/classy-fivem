@@ -31,10 +31,10 @@ const MenuCategory = (props: MenuCategoryProps) => {
   return (
     <>
       <section id={id} className='flex flex-col'>
-        <header className='flex grow sticky top-0 z-10 bg-neutral-600/50 group-hover/menu:bg-neutral-600'>
+        <header className='flex grow sticky top-0 z-10 bg-neutral-600/80 group-hover/menu:bg-neutral-600'>
           <button
             onClick={() => setHidden(!hidden)}
-            className='flex grow justify-between p-2 border-t border-b border-neutral-800 text-neutral-400/50 group-hover/menu:text-neutral-400'
+            className='flex grow justify-between p-2 border-t border-b border-neutral-800 text-neutral-400/80 group-hover/menu:text-neutral-400'
           >
             <h1 className='font-bold'>{category}</h1>
             <div>

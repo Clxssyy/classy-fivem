@@ -79,7 +79,7 @@ const AdminMenu = () => {
     <div className='grid p-10 h-screen overflow-hidden place-items-start'>
       <main
         id='menu'
-        className={`transition-all ease-in-out bg-neutral-700/50 border border-neutral-800 rounded flex flex-col shadow-lg overflow-hidden hover:bg-neutral-700 group/menu ${
+        className={`transition-all ease-in-out bg-neutral-700/80 border border-neutral-800 rounded flex flex-col shadow-lg overflow-hidden hover:bg-neutral-700 group/menu ${
           expandMenu
             ? 'max-w-full max-h-full min-h-full min-w-full'
             : 'min-w-[25%] min-h-min max-h-[75%] max-w-[25%]'
@@ -95,7 +95,7 @@ const AdminMenu = () => {
               name='Search'
               id='search'
               placeholder='Search'
-              className={`p-2 rounded text-neutral-400/50 bg-neutral-600/50 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400 ${
+              className={`p-2 rounded text-neutral-400/80 bg-neutral-600/80 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400 ${
                 expandMenu ? '' : 'hidden'
               }`}
               value={search}
@@ -110,7 +110,7 @@ const AdminMenu = () => {
                     setCollapsed(!collapsed)
                     setCategoryCollapsed(!categoryCollapsed)
                   }}
-                  className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
+                  className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/80 bg-neutral-600/80 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
                 >
                   <ChevronDoubleUpIcon className='w-6 h-6' />
                 </button>
@@ -121,7 +121,7 @@ const AdminMenu = () => {
                     setExtended(extended + 1)
                     setCategoryExtended(categoryExtended + 1)
                   }}
-                  className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
+                  className='hidden sm:block hover:scale-105 transition-all active:scale-95 text-neutral-400/80 bg-neutral-600/80 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
                 >
                   <ChevronDoubleDownIcon className='w-6 h-6' />
                 </button>
@@ -134,7 +134,7 @@ const AdminMenu = () => {
                 setExpandMenu(!expandMenu)
                 setCollapsed(!collapsed)
               }}
-              className='hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
+              className='hover:scale-105 transition-all active:scale-95 text-neutral-400/80 bg-neutral-600/80 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
             >
               {expandMenu ? (
                 <ArrowsPointingInIcon className='w-6 h-6' />
@@ -144,7 +144,7 @@ const AdminMenu = () => {
             </button>
             <button
               onClick={close}
-              className='hover:scale-105 transition-all active:scale-95 text-neutral-400/50 bg-neutral-600/50 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
+              className='hover:scale-105 transition-all active:scale-95 text-neutral-400/80 bg-neutral-600/80 rounded p-1 px-2 shadow-lg border border-neutral-800 group-hover/menu:bg-neutral-600 group-hover/menu:text-neutral-400'
             >
               <XMarkIcon className='w-6 h-6' />
             </button>

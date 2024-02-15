@@ -4,7 +4,7 @@ const FunctionOption = (props: { name: string; id: string; toggle?: boolean }) =
   return (
     <>
       {toggle ? (
-        <div className='flex place-items-center gap-2 group-hover/menu:text-neutral-400 text-neutral-400/50'>
+        <div className='flex place-items-center gap-2 group-hover/menu:text-neutral-400 text-neutral-400/80'>
           <label htmlFor={id}>{name}</label>
           <input type='checkbox' id={id} name={id} />
         </div>
@@ -13,7 +13,7 @@ const FunctionOption = (props: { name: string; id: string; toggle?: boolean }) =
           type='text'
           id={id}
           placeholder={name}
-          className='p-2 rounded shadow-md bg-white/50 group-hover/menu:bg-white'
+          className='p-2 rounded shadow-md bg-white/80 group-hover/menu:bg-white'
         />
       )}
     </>
