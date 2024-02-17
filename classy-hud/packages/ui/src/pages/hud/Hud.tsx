@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import HudSettings from '../hudSettings/HudSettings'
+import { useExitListener } from '../../utils/exitListener'
+import { fetchNui } from '../../utils/nui'
 
 const Hud = () => {
   const [health, setHealth] = useState<number>(100)
-  const [draggable, setDraggable] = useState<boolean>(false)
+  const [editMode, setEditMode] = useState<boolean>(false)
   const [settings, setSettings] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (editMode) {
+      setSettings(!settings)
+    }
+  }, [editMode])
 
   useEffect(() => {
     window.addEventListener('message', (event) => {
@@ -19,6 +27,20 @@ const Hud = () => {
       })
     })
   }, [])
+
+  const returnHandler = async () => {
+    setEditMode(!editMode)
+    await fetchNui('settingsReturn')
+  }
+
+  useExitListener(async () => {
+    await returnHandler()
+  })
+
+  const exitSettings = async () => {
+    setSettings(!settings)
+    await fetchNui('exitSettings')
+  }
 
   function dragElement(elmnt: HTMLElement) {
     var pos1 = 0,
@@ -74,7 +96,7 @@ const Hud = () => {
     }
   }
 
-  if (draggable) {
+  if (editMode) {
     const drag = document.getElementById('stats')
     if (drag) {
       dragElement(drag)
@@ -97,12 +119,14 @@ const Hud = () => {
   }
 
   return (
-    <main className='h-screen w-screen bg-black/70 absolute'>
-      {settings ? <HudSettings /> : null}
+    <main className={`h-screen w-screen absolute ${editMode ? 'bg-black/70' : 'bg-black/0'}`}>
+      {settings ? (
+        <HudSettings editMode={editMode} setEditMode={setEditMode} exit={exitSettings} />
+      ) : null}
       <section
         id='stats'
         className='bg-blue-400/50 border-2 border-dashed border-blue-600 max-w-max cursor-move select-none absolute'
-        draggable={draggable}
+        draggable={editMode}
       >
         <div className='flex gap-2'>
           <div className='flex items-center justify-center gap-2'>
@@ -118,9 +142,6 @@ const Hud = () => {
       <section id='test' className='bg-red-400 p-2 absolute'>
         sfsf
       </section>
-      <button className='absolute top-12' onClick={() => setDraggable(!draggable)}>
-        dddd
-      </button>
     </main>
   )
 }

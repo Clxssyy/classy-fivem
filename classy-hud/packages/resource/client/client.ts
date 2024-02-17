@@ -1,3 +1,5 @@
+import { RegisterNuiCB } from '@project-error/pe-utils'
+
 on('playerSpawned', () => {
   SendNUIMessage({
     action: 'openPage',
@@ -25,6 +27,20 @@ RegisterCommand(
   },
   false,
 )
+
+RegisterNuiCB('settingsReturn', (_, cb) => {
+  SendNUIMessage({
+    action: 'toggleSettings',
+  })
+
+  cb({})
+})
+
+RegisterNuiCB('exitSettings', (_, cb) => {
+  SetNuiFocus(false, false)
+
+  cb({})
+})
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
