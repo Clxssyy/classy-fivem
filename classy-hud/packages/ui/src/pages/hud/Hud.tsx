@@ -1,74 +1,110 @@
 import { useEffect, useState } from 'react'
 import { HeartIcon } from '@heroicons/react/24/solid'
+import HudSettings from '../hudSettings/HudSettings'
 
 const Hud = () => {
   const [health, setHealth] = useState<number>(100)
-  const [draggable, setDraggable] = useState<boolean>(true)
+  const [draggable, setDraggable] = useState<boolean>(false)
+  const [settings, setSettings] = useState<boolean>(false)
 
   useEffect(() => {
     window.addEventListener('message', (event) => {
+      if (event.data.action === 'toggleSettings') {
+        setSettings(!settings)
+        return
+      }
+
       setHealth(() => {
         return Math.floor((event.data.data.health / event.data.data.total) * 100)
       })
     })
-
-    return () => {
-      window.removeEventListener('message', (event) => {
-        setHealth(() => {
-          return Math.floor((event.data.data.health / event.data.data.total) * 100)
-        })
-      })
-    }
   }, [])
 
-  useEffect(() => {
-    let offsetX: number
-    let offsetY: number
-
-    window.addEventListener('dragstart', (event) => {
-      const rect = event.target as HTMLElement
-      const dragged = rect.getBoundingClientRect()
-
-      offsetX = event.clientX - dragged.x
-      offsetY = event.clientY - dragged.y
-    })
-
-    window.addEventListener('dragend', (event) => {
-      event.preventDefault()
-      console.log('dragend', event.clientX, event.clientY)
-      if (event.target && draggable) {
-        const targetElement = event.target as HTMLElement
-
-        const X = event.clientX - offsetX
-        const Y = event.clientY - offsetY
-
-        if (X < 0) {
-          targetElement.style.left = '0px'
-        } else if (X > window.innerWidth - targetElement.offsetWidth) {
-          targetElement.style.left = `${window.innerWidth - targetElement.offsetWidth}px`
-        } else {
-          targetElement.style.left = `${X}px`
-        }
-
-        if (Y < 0) {
-          targetElement.style.top = '0px'
-        } else if (Y > window.innerHeight - targetElement.offsetHeight) {
-          targetElement.style.top = `${window.innerHeight - targetElement.offsetHeight}px`
-        } else {
-          targetElement.style.top = `${Y}px`
-        }
+  function dragElement(elmnt: HTMLElement) {
+    var pos1 = 0,
+      pos2 = 0,
+      pos3 = 0,
+      pos4 = 0
+    if (document.getElementById(elmnt.id)) {
+      const element = document.getElementById(elmnt.id)
+      if (element) {
+        element.onmousedown = dragMouseDown
       }
-    })
-  }, [])
+    } else {
+      elmnt.onmousedown = dragMouseDown
+    }
+
+    function dragMouseDown(e: MouseEvent) {
+      e.preventDefault()
+
+      pos3 = e.clientX
+      pos4 = e.clientY
+
+      document.onmouseup = closeDragElement
+      document.onmousemove = elementDrag
+    }
+
+    function elementDrag(e: MouseEvent) {
+      e.preventDefault()
+
+      pos1 = pos3 - e.clientX
+      pos2 = pos4 - e.clientY
+      pos3 = e.clientX
+      pos4 = e.clientY
+
+      if (elmnt.offsetTop - pos2 < 0) {
+        elmnt.style.top = 0 + 'px'
+      } else if (elmnt.offsetTop - pos2 > window.innerHeight - elmnt.offsetHeight) {
+        elmnt.style.top = window.innerHeight - elmnt.offsetHeight + 'px'
+      } else {
+        elmnt.style.top = elmnt.offsetTop - pos2 + 'px'
+      }
+      if (elmnt.offsetLeft - pos1 < 0) {
+        elmnt.style.left = 0 + 'px'
+      } else if (elmnt.offsetLeft - pos1 > window.innerWidth - elmnt.offsetWidth) {
+        elmnt.style.left = window.innerWidth - elmnt.offsetWidth + 'px'
+      } else {
+        elmnt.style.left = elmnt.offsetLeft - pos1 + 'px'
+      }
+    }
+
+    function closeDragElement() {
+      document.onmouseup = null
+      document.onmousemove = null
+    }
+  }
+
+  if (draggable) {
+    const drag = document.getElementById('stats')
+    if (drag) {
+      dragElement(drag)
+    }
+
+    const element = document.getElementById('test')
+    if (element) {
+      dragElement(element)
+    }
+  } else {
+    const drag = document.getElementById('stats')
+    if (drag) {
+      drag.onmousedown = null
+    }
+
+    const element = document.getElementById('test')
+    if (element) {
+      element.onmousedown = null
+    }
+  }
 
   return (
-    <main className='h-screen bg-black/70'>
+    <main className='h-screen w-screen bg-black/70 absolute'>
+      {settings ? <HudSettings /> : null}
       <section
         id='stats'
-        className='bg-blue-400/50 border-2 border-dashed border-blue-600 max-w-max cursor-move z-12 select-none absolute'
+        className='bg-blue-400/50 border-2 border-dashed border-blue-600 max-w-max cursor-move select-none absolute'
         draggable={draggable}
       >
-        <div className='flex gap-2 z-10'>
+        <div className='flex gap-2'>
           <div className='flex items-center justify-center gap-2'>
             <HeartIcon className='w-6 h-6' />
             <p>{health}%</p>
@@ -79,6 +115,12 @@ const Hud = () => {
           </div>
         </div>
       </section>
+      <section id='test' className='bg-red-400 p-2 absolute'>
+        sfsf
+      </section>
+      <button className='absolute top-12' onClick={() => setDraggable(!draggable)}>
+        dddd
+      </button>
     </main>
   )
 }

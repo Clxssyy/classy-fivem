@@ -15,6 +15,17 @@ RegisterCommand(
   false,
 )
 
+RegisterCommand(
+  'hud',
+  () => {
+    SendNUIMessage({
+      action: 'toggleSettings',
+    })
+    SetNuiFocus(true, true)
+  },
+  false,
+)
+
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const updateHealth = async () => {
