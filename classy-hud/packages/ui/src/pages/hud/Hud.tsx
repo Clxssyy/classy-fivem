@@ -5,6 +5,7 @@ import { useExitListener } from '../../utils/exitListener'
 import { fetchNui } from '../../utils/nui'
 import DragWrapper from './components/DragWrapper'
 import StatBar from './components/StatBar'
+import StatCircle from './components/StatCircle'
 
 const Hud = () => {
   const [health, setHealth] = useState<number>(100)
@@ -62,31 +63,11 @@ const Hud = () => {
           <p className='font-bold text-5xl select-none'>Edit Mode</p>
         </div>
       ) : null}
-      <DragWrapper id='stats' editMode={editMode}>
-        <div className='flex items-center justify-center gap-2'>
-          <HeartIcon className='w-6 h-6' />
-          <p>{health}%</p>
-        </div>
-        <div className='flex items-center justify-center gap-2'>
-          <HeartIcon className='w-6 h-6' />
-          <p>{health}%</p>
-        </div>
-      </DragWrapper>
       <DragWrapper id='health-bar' editMode={editMode}>
         <StatBar statPercent={health} />
       </DragWrapper>
       <DragWrapper id='health-circle' editMode={editMode}>
-        <div className='w-10 h-10 rounded-full overflow-hidden bg-green-400/50 flex place-items-center justify-center'>
-          <HeartIcon className='w-6 h-6 absolute' />
-          <div
-            style={{ height: `${health}%` }}
-            className='bg-green-400 w-full place-self-end'
-          ></div>
-        </div>
-      </DragWrapper>
-      <DragWrapper editMode={editMode} id='test'>
-        <div>test</div>
-        <div>test</div>
+        <StatCircle statPercent={health} />
       </DragWrapper>
     </main>
   )
