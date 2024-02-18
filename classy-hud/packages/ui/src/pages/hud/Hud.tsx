@@ -7,7 +7,7 @@ import { fetchNui } from '../../utils/nui'
 const Hud = () => {
   const [health, setHealth] = useState<number>(100)
   const [editMode, setEditMode] = useState<boolean>(false)
-  const [settings, setSettings] = useState<boolean>(false)
+  const [settings, setSettings] = useState<boolean>(true)
 
   useEffect(() => {
     if (editMode) {
@@ -30,7 +30,7 @@ const Hud = () => {
 
   const returnHandler = async () => {
     setEditMode(!editMode)
-    await fetchNui('settingsReturn')
+    setSettings(!settings)
   }
 
   useExitListener(async () => {
@@ -119,13 +119,17 @@ const Hud = () => {
   }
 
   return (
-    <main className={`h-screen w-screen absolute ${editMode ? 'bg-black/70' : 'bg-black/0'}`}>
+    <main
+      className={`h-screen w-screen absolute ${
+        editMode || settings ? 'bg-black/70' : 'bg-black/0'
+      }`}
+    >
       {settings ? (
         <HudSettings editMode={editMode} setEditMode={setEditMode} exit={exitSettings} />
       ) : null}
       <section
         id='stats'
-        className='bg-blue-400/50 border-2 border-dashed border-blue-600 max-w-max cursor-move select-none absolute'
+        className='bg-blue-400/50 border-2 border-dashed border-blue-600 max-w-max cursor-grab select-none absolute'
         draggable={editMode}
       >
         <div className='flex gap-2'>
@@ -138,9 +142,6 @@ const Hud = () => {
             <p>{health}%</p>
           </div>
         </div>
-      </section>
-      <section id='test' className='bg-red-400 p-2 absolute'>
-        sfsf
       </section>
     </main>
   )

@@ -1,3 +1,5 @@
+import { PencilIcon, XMarkIcon } from '@heroicons/react/24/solid'
+
 interface HudSettingsProps {
   editMode: boolean
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>
@@ -7,11 +9,31 @@ interface HudSettingsProps {
 const HudSettings = ({ editMode, setEditMode, exit }: HudSettingsProps) => {
   return (
     <div className='absolute grid place-items-center h-screen w-screen'>
-      <div className='w-1/2 h-3/4 bg-neutral-700 rounded p-4 shadow-lg'>
-        <button className='' onClick={() => setEditMode(!editMode)}>
-          dddd
-        </button>
-        <button onClick={exit}>Close</button>
+      <div className='w-1/2 h-3/4 bg-neutral-700 rounded shadow-lg flex-col flex divide-y divide-neutral-800'>
+        <header className='flex justify-between text-neutral-600'>
+          <h1 className='p-2 font-bold text-3xl'>Settings</h1>
+          <button className='p-2' onClick={exit}>
+            <XMarkIcon className='h-6 w-6' />
+          </button>
+        </header>
+        <section className='grow flex divide-x divide-neutral-800'>
+          <div className='flex flex-col divide-y divide-neutral-800 w-1/6'>
+            <div>
+              <button className='p-2'>Layout</button>
+            </div>
+            <div>
+              <button className='p-2'>Stats</button>
+            </div>
+            <div>
+              <button className='p-2'>Navigation</button>
+            </div>
+          </div>
+          <div className='grow'>
+            <button className='p-2' onClick={() => setEditMode(!editMode)}>
+              <PencilIcon className='h-6 w-6' />
+            </button>
+          </div>
+        </section>
       </div>
     </div>
   )

@@ -28,14 +28,6 @@ RegisterCommand(
   false,
 )
 
-RegisterNuiCB('settingsReturn', (_, cb) => {
-  SendNUIMessage({
-    action: 'toggleSettings',
-  })
-
-  cb({})
-})
-
 RegisterNuiCB('exitSettings', (_, cb) => {
   SetNuiFocus(false, false)
 
