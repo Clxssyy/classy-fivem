@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { HeartIcon } from '@heroicons/react/24/solid'
-import HudSettings from '../hudSettings/HudSettings'
+import HudSettings from './components/HudSettings'
 import { useExitListener } from '../../utils/exitListener'
 import { fetchNui } from '../../utils/nui'
 
@@ -37,6 +37,7 @@ const Hud = () => {
   }
 
   useExitListener(async () => {
+    if (!editMode) return
     await returnHandler()
   })
 
@@ -45,6 +46,7 @@ const Hud = () => {
     await fetchNui('exitSettings')
   }
 
+  // TODO: change the drag and drop logic specifically how to add / remove from elements
   function dragElement(elmnt: HTMLElement) {
     var pos1 = 0,
       pos2 = 0,
@@ -99,15 +101,21 @@ const Hud = () => {
     }
   }
 
+  // Improve this
   if (editMode) {
     const drag = document.getElementById('stats')
     if (drag) {
       dragElement(drag)
     }
 
-    const element = document.getElementById('test')
+    const element = document.getElementById('health')
     if (element) {
       dragElement(element)
+    }
+
+    const element2 = document.getElementById('health-circle')
+    if (element2) {
+      dragElement(element2)
     }
   } else {
     const drag = document.getElementById('stats')
@@ -115,9 +123,14 @@ const Hud = () => {
       drag.onmousedown = null
     }
 
-    const element = document.getElementById('test')
+    const element = document.getElementById('health')
     if (element) {
       element.onmousedown = null
+    }
+
+    const element2 = document.getElementById('health-circle')
+    if (element2) {
+      element2.onmousedown = null
     }
   }
 
@@ -130,12 +143,19 @@ const Hud = () => {
       {settings ? (
         <HudSettings editMode={editMode} setEditMode={setEditMode} exit={exitSettings} />
       ) : null}
+      {editMode ? (
+        <div className='w-full h-full absolute flex place-items-center justify-center text-neutral-600'>
+          <p className='font-bold text-5xl select-none'>Edit Mode</p>
+        </div>
+      ) : null}
       <section
         id='stats'
-        className='bg-blue-400/50 border-2 border-dashed border-blue-600 max-w-max cursor-grab select-none absolute'
-        draggable={editMode}
+        className={`${
+          editMode ? 'bg-blue-400/50 border-2 border-dashed border-blue-700 cursor-grab' : ''
+        } select-none absolute grid place-items-center text-center`}
       >
-        <div className='flex gap-2'>
+        <p className={`${editMode ? '' : 'hidden'} absolute text-blue-700 font-bold`}>Stats</p>
+        <div className={`flex gap-2 ${editMode ? 'invisible' : ''}`}>
           <div className='flex items-center justify-center gap-2'>
             <HeartIcon className='w-6 h-6' />
             <p>{health}%</p>
@@ -143,6 +163,36 @@ const Hud = () => {
           <div className='flex items-center justify-center gap-2'>
             <HeartIcon className='w-6 h-6' />
             <p>{health}%</p>
+          </div>
+        </div>
+      </section>
+      <section
+        id='health'
+        className={`${
+          editMode ? 'bg-blue-400/50 border-2 border-dashed border-blue-700 cursor-grab' : ''
+        } select-none absolute grid place-items-center text-center`}
+      >
+        <p className={`${editMode ? '' : 'hidden'} absolute text-blue-700 font-bold`}>Stats</p>
+        <div className={`flex gap-2 ${editMode ? 'invisible' : ''}`}>
+          <div className='w-96 h-10 bg-green-400/50'>
+            <div style={{ width: `${health}%` }} className='bg-green-400 h-full'></div>
+          </div>
+        </div>
+      </section>
+      <section
+        id='health-circle'
+        className={`${
+          editMode ? 'bg-blue-400/50 border-2 border-dashed border-blue-700 cursor-grab' : ''
+        } select-none absolute grid place-items-center text-center`}
+      >
+        <p className={`${editMode ? '' : 'hidden'} absolute text-blue-700 font-bold`}>Stats</p>
+        <div className={`flex gap-2 ${editMode ? 'invisible' : ''}`}>
+          <div className='w-10 h-10 rounded-full overflow-hidden bg-green-400/50 flex place-items-center justify-center'>
+            <HeartIcon className='w-6 h-6 absolute' />
+            <div
+              style={{ height: `${health}%` }}
+              className='bg-green-400 w-full place-self-end'
+            ></div>
           </div>
         </div>
       </section>
