@@ -4,6 +4,7 @@ import HudSettings from './components/HudSettings'
 import { useExitListener } from '../../utils/exitListener'
 import { fetchNui } from '../../utils/nui'
 import DragWrapper from './components/DragWrapper'
+import StatBar from './components/StatBar'
 
 const Hud = () => {
   const [health, setHealth] = useState<number>(100)
@@ -72,11 +73,9 @@ const Hud = () => {
         </div>
       </DragWrapper>
       <DragWrapper id='health-bar' editMode={editMode}>
-        <div className='w-96 h-10 bg-green-400/50'>
-          <div style={{ width: `${health}%` }} className='bg-green-400 h-full'></div>
-        </div>
+        <StatBar statPercent={health} />
       </DragWrapper>
-      <DragWrapper id='health circle' editMode={editMode}>
+      <DragWrapper id='health-circle' editMode={editMode}>
         <div className='w-10 h-10 rounded-full overflow-hidden bg-green-400/50 flex place-items-center justify-center'>
           <HeartIcon className='w-6 h-6 absolute' />
           <div
