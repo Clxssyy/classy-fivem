@@ -1,6 +1,8 @@
 import { RegisterNuiCB } from '@project-error/pe-utils'
 
 on('playerSpawned', () => {
+  SetEntityMaxHealth(PlayerPedId(), 200)
+  SetEntityHealth(PlayerPedId(), 200)
   SendNUIMessage({
     action: 'openPage',
     data: {
@@ -12,7 +14,7 @@ on('playerSpawned', () => {
 RegisterCommand(
   'kill',
   () => {
-    SetEntityHealth(PlayerPedId(), 49)
+    SetEntityHealth(PlayerPedId(), 0)
   },
   false,
 )
@@ -36,18 +38,20 @@ RegisterNuiCB('exitSettings', (_, cb) => {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const updateHealth = async () => {
+const updateStats = async () => {
   while (true) {
-    await delay(1000)
+    await delay(100)
 
     SendNUIMessage({
-      action: 'updateHealth',
+      action: 'updateStats',
       data: {
         health: GetEntityHealth(PlayerPedId()),
-        total: GetEntityMaxHealth(PlayerPedId()),
+        armor: GetPedArmour(PlayerPedId()),
+        stamina: GetPlayerSprintStaminaRemaining(PlayerId()),
+        oxygen: GetPlayerUnderwaterTimeRemaining(PlayerId()),
       },
     })
   }
 }
 
-updateHealth()
+updateStats()

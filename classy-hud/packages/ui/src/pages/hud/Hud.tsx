@@ -7,7 +7,7 @@ import { fetchNui } from '../../utils/nui'
 const Hud = () => {
   const [health, setHealth] = useState<number>(100)
   const [editMode, setEditMode] = useState<boolean>(false)
-  const [settings, setSettings] = useState<boolean>(true)
+  const [settings, setSettings] = useState<boolean>(false)
 
   useEffect(() => {
     if (editMode) {
@@ -22,9 +22,12 @@ const Hud = () => {
         return
       }
 
-      setHealth(() => {
-        return Math.floor((event.data.data.health / event.data.data.total) * 100)
-      })
+      if (event.data.action === 'updateStats') {
+        const healthPercent = Math.floor(((event.data.data.health - 100) / 100) * 100)
+        setHealth(() => {
+          return healthPercent <= 0 ? 0 : healthPercent
+        })
+      }
     })
   }, [])
 
