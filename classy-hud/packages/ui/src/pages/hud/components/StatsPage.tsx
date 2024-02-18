@@ -1,4 +1,23 @@
+const Bars = ['health', 'armor', 'stamina', 'oxygen']
 const StatsPage = () => {
+  const handleBarWidth: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value
+
+    Bars.map((bar) => {
+      const id = document.getElementById(bar + '-' + e.target.id.replace('width', 'backdrop'))
+      if (id) id.style.width = value + 'px'
+    })
+  }
+
+  const handleBarHeight: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value
+
+    Bars.map((bar) => {
+      const id = document.getElementById(bar + '-' + e.target.id.replace('height', 'backdrop'))
+      if (id) id.style.height = value + 'px'
+    })
+  }
+
   return (
     <>
       <section className='divide-y-2 divide-neutral-600'>
@@ -48,11 +67,11 @@ const StatsPage = () => {
               </div>
               <div className='flex flex-col'>
                 <label htmlFor=''>Width</label>
-                <input type='range' name='' id='' />
+                <input type='range' name='' id='bar-width' onChange={handleBarWidth} />
               </div>
               <div className='flex flex-col'>
                 <label htmlFor=''>Height</label>
-                <input type='range' name='' id='' />
+                <input type='range' name='' id='bar-height' onChange={handleBarHeight} />
               </div>
             </div>
             <div className='flex gap-2'>

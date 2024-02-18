@@ -81,7 +81,7 @@ const Hud = () => {
           <p className='font-bold text-5xl select-none'>Edit Mode</p>
         </div>
       ) : null}
-      <DragWrapper id='health-bar-container' editMode={editMode}>
+      <DragWrapper id='stat-bar-container' editMode={editMode}>
         <StatBar statPercent={stats.health} id='health-bar' />
 
         <StatBar statPercent={stats.armor} id='armor-bar' />

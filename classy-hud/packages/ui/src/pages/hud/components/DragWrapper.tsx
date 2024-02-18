@@ -79,7 +79,7 @@ const DragWrapper = ({ children, editMode, id }: DragWrapperProps) => {
       >
         {id}
       </p>
-      <div className={`flex gap-2 ${editMode ? 'invisible' : ''}`}>{children}</div>
+      <div className={`flex gap-2 flex-wrap ${editMode ? 'invisible' : ''}`}>{children}</div>
     </div>
   )
 }
