@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities
+@tailwind utilities;
+
+#activeSettings::-webkit-scrollbar {
+  @apply w-3;
+}
+
+#activeSettings::-webkit-scrollbar-thumb {
+  @apply rounded bg-black/40 hover:bg-neutral-700;
+}
+
+#activeSettings::-webkit-scrollbar-track {
+  @apply rounded-br;
+}

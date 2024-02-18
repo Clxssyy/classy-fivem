@@ -1,12 +1,18 @@
 interface StatBarProps {
   text?: string
+  color?: string
   statPercent: number
+  id: string
 }
 
-const StatBar = ({ statPercent }: StatBarProps) => {
+const StatBar = ({ statPercent, id }: StatBarProps) => {
   return (
-    <div className='w-96 h-10 bg-green-400/50'>
-      <div style={{ width: `${statPercent}%` }} className='bg-green-400 h-full'></div>
+    <div id={id + '-backdrop'} className='w-96 h-10 bg-green-400/50'>
+      <div
+        id={id}
+        style={{ width: `${statPercent}%` }}
+        className='bg-green-400 h-full transition-all'
+      ></div>
     </div>
   )
 }

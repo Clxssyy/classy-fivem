@@ -81,17 +81,14 @@ const Hud = () => {
           <p className='font-bold text-5xl select-none'>Edit Mode</p>
         </div>
       ) : null}
-      <DragWrapper id='health-bar' editMode={editMode}>
-        <StatBar statPercent={stats.health} />
-      </DragWrapper>
-      <DragWrapper id='armor-bar' editMode={editMode}>
-        <StatBar statPercent={stats.armor} />
-      </DragWrapper>
-      <DragWrapper id='stamina-bar' editMode={editMode}>
-        <StatBar statPercent={stats.stamina} />
-      </DragWrapper>
-      <DragWrapper id='oxygen-bar' editMode={editMode}>
-        <StatBar statPercent={stats.oxygen} />
+      <DragWrapper id='health-bar-container' editMode={editMode}>
+        <StatBar statPercent={stats.health} id='health-bar' />
+
+        <StatBar statPercent={stats.armor} id='armor-bar' />
+
+        <StatBar statPercent={stats.stamina} id='stamina-bar' />
+
+        <StatBar statPercent={stats.oxygen} id='oxygen-bar' />
       </DragWrapper>
       <DragWrapper id='health-circle' editMode={editMode}>
         <StatCircle statPercent={stats.health} />
