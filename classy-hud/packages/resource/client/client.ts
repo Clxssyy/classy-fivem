@@ -44,7 +44,7 @@ const updateStats = async () => {
 
     SendNUIMessage({
       action: 'updateStats',
-      data: {
+      stats: {
         health: GetEntityHealth(PlayerPedId()),
         armor: GetPedArmour(PlayerPedId()),
         stamina: GetPlayerSprintStaminaRemaining(PlayerId()),
