@@ -22,10 +22,12 @@ export interface group {
     stat: string
     styles?: {
       backdrop: {
-        [key: string]: string
+        backgroundColor?: string
+        width?: string
+        height?: string
       }
       bar: {
-        [key: string]: string
+        backgroundColor: string
       }
     }
   }[]
