@@ -3,12 +3,20 @@ import { useEffect } from 'react'
 interface StatsPageProps {
   statBars: string[]
   setStatBars: React.Dispatch<React.SetStateAction<string[]>>
+  statCircles: string[]
+  setStatCircles: React.Dispatch<React.SetStateAction<string[]>>
 }
 
-const StatsPage = ({ statBars, setStatBars }: StatsPageProps) => {
+const StatsPage = ({ statBars, setStatBars, statCircles, setStatCircles }: StatsPageProps) => {
   useEffect(() => {
     statBars.map((bar) => {
       const id = document.getElementById(bar + '-bar-toggle') as HTMLInputElement
+
+      if (id) id.checked = true
+    })
+
+    statCircles.map((circle) => {
+      const id = document.getElementById(circle + '-circle-toggle') as HTMLInputElement
 
       if (id) id.checked = true
     })
@@ -42,6 +50,30 @@ const StatsPage = ({ statBars, setStatBars }: StatsPageProps) => {
     } else {
       setStatBars((prevStatBars) => prevStatBars.filter((bar) => bar !== id))
     }
+  }
+
+  const handleCircleToggle: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const id = e.target.id.replace('-circle-toggle', '')
+
+    if (e.target.checked) {
+      if (!statCircles.includes(id)) {
+        setStatCircles((prevStatCircles) => [...prevStatCircles, id])
+      }
+    } else {
+      setStatCircles((prevStatCircles) => prevStatCircles.filter((circle) => circle !== id))
+    }
+  }
+
+  const handleCircleSize: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value
+
+    statCircles.map((circle) => {
+      const id = document.getElementById(circle + '-' + e.target.id.replace('size', 'backdrop'))
+      if (id) {
+        id.style.width = value + 'px'
+        id.style.height = value + 'px'
+      }
+    })
   }
 
   return (
@@ -157,19 +189,39 @@ const StatsPage = ({ statBars, setStatBars }: StatsPageProps) => {
             <div className='flex gap-2 justify-between'>
               <div className='gap-2 flex'>
                 <label htmlFor=''>Health</label>
-                <input type='checkbox' name='' id='' />
+                <input
+                  type='checkbox'
+                  name=''
+                  id='health-circle-toggle'
+                  onChange={handleCircleToggle}
+                />
               </div>
               <div className='gap-2 flex'>
                 <label htmlFor=''>Armor</label>
-                <input type='checkbox' name='' id='' />
+                <input
+                  type='checkbox'
+                  name=''
+                  id='armor-circle-toggle'
+                  onChange={handleCircleToggle}
+                />
               </div>
               <div className='gap-2 flex'>
                 <label htmlFor=''>Stamina</label>
-                <input type='checkbox' name='' id='' />
+                <input
+                  type='checkbox'
+                  name=''
+                  id='stamina-circle-toggle'
+                  onChange={handleCircleToggle}
+                />
               </div>
               <div className='gap-2 flex'>
                 <label htmlFor=''>Oxygen</label>
-                <input type='checkbox' name='' id='' />
+                <input
+                  type='checkbox'
+                  name=''
+                  id='oxygen-circle-toggle'
+                  onChange={handleCircleToggle}
+                />
               </div>
             </div>
           </div>
@@ -195,12 +247,8 @@ const StatsPage = ({ statBars, setStatBars }: StatsPageProps) => {
                 <input type='range' name='' id='' />
               </div>
               <div className='flex flex-col'>
-                <label htmlFor=''>Width</label>
-                <input type='range' name='' id='' />
-              </div>
-              <div className='flex flex-col'>
-                <label htmlFor=''>Height</label>
-                <input type='range' name='' id='' />
+                <label htmlFor=''>Size</label>
+                <input type='range' name='' id='circle-size' onChange={handleCircleSize} />
               </div>
             </div>
             <div className='flex gap-2'>

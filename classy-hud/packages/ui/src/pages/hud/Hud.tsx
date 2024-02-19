@@ -24,6 +24,7 @@ const Hud = () => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [settings, setSettings] = useState<boolean>(true)
   const [statBars, setStatBars] = useState<string[]>([])
+  const [statCircles, setStatCircles] = useState<string[]>([])
 
   useEffect(() => {
     if (editMode) {
@@ -82,6 +83,8 @@ const Hud = () => {
           exit={exitSettings}
           statBars={statBars}
           setStatBars={setStatBars}
+          statCircles={statCircles}
+          setStatCircles={setStatCircles}
         />
       ) : null}
       {editMode ? (
@@ -90,12 +93,14 @@ const Hud = () => {
         </div>
       ) : null}
       <DragWrapper id='stat-bar-container' editMode={editMode}>
-        {statBars.map((bar, index) => {
-          return <StatBar key={index} statPercent={stats[bar]} id={bar + '-bar'} />
+        {statBars.map((stat, index) => {
+          return <StatBar key={index} statPercent={stats[stat]} id={stat + '-bar'} />
         })}
       </DragWrapper>
-      <DragWrapper id='health-circle' editMode={editMode}>
-        <StatCircle statPercent={stats.health} />
+      <DragWrapper id='stat-circle-container' editMode={editMode}>
+        {statCircles.map((stat, index) => {
+          return <StatCircle key={index} statPercent={stats[stat]} id={stat + '-circle'} />
+        })}
       </DragWrapper>
     </main>
   )

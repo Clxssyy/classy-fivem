@@ -8,6 +8,8 @@ interface HudSettingsProps {
   exit: () => Promise<void>
   statBars: string[]
   setStatBars: React.Dispatch<React.SetStateAction<string[]>>
+  statCircles: string[]
+  setStatCircles: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 const LayoutPage = ({
@@ -24,7 +26,15 @@ const LayoutPage = ({
   )
 }
 
-const HudSettings = ({ editMode, setEditMode, exit, statBars, setStatBars }: HudSettingsProps) => {
+const HudSettings = ({
+  editMode,
+  setEditMode,
+  exit,
+  statBars,
+  setStatBars,
+  statCircles,
+  setStatCircles,
+}: HudSettingsProps) => {
   const [activePage, setActivePage] = useState<JSX.Element>(
     <LayoutPage editMode={editMode} setEditMode={setEditMode} />,
   )
@@ -54,7 +64,14 @@ const HudSettings = ({ editMode, setEditMode, exit, statBars, setStatBars }: Hud
               <button
                 className='p-2'
                 onClick={() =>
-                  setActivePage(<StatsPage statBars={statBars} setStatBars={setStatBars} />)
+                  setActivePage(
+                    <StatsPage
+                      statBars={statBars}
+                      setStatBars={setStatBars}
+                      statCircles={statCircles}
+                      setStatCircles={setStatCircles}
+                    />,
+                  )
                 }
               >
                 Stats
