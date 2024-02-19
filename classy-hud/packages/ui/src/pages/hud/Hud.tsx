@@ -21,7 +21,12 @@ export interface group {
     id: string
     stat: string
     styles?: {
-      [key: string]: string
+      backdrop: {
+        [key: string]: string
+      }
+      bar: {
+        [key: string]: string
+      }
     }
   }[]
 }
@@ -36,20 +41,51 @@ const exmapleSettings = {
           id: 'health',
           stat: 'health',
           styles: {
-            backgroundColor: '#ff0000',
-            width: '96px',
-            height: '10px',
+            backdrop: {
+              backgroundColor: '#ff0000',
+              width: '96px',
+              height: '10px',
+            },
           },
         },
         {
           type: 'bar',
           id: 'armor',
           stat: 'armor',
+          styles: {
+            backdrop: {
+              backgroundColor: '#ff0000',
+              width: '96px',
+              height: '10px',
+            },
+          },
         },
         {
           type: 'bar',
           id: 'stamina',
           stat: 'stamina',
+          styles: {
+            backdrop: {
+              backgroundColor: '#ff0000',
+              width: '96px',
+              height: '10px',
+            },
+          },
+        },
+        {
+          type: 'bar',
+          id: 'health2',
+          stat: 'health',
+          styles: {
+            backdrop: {
+              backgroundColor: '#ff0000',
+              width: '96px',
+              height: '10px',
+            },
+            bar: {
+              backgroundColor: '#00ff00',
+            },
+          },
         },
       ],
     },
@@ -61,7 +97,7 @@ const Hud = () => {
     health: 100,
     armor: 0,
     stamina: 100,
-    oxygen: 100,
+    oxygen: 10,
   })
   const [editMode, setEditMode] = useState<boolean>(false)
   const [settings, setSettings] = useState<boolean>(true)
@@ -74,7 +110,7 @@ const Hud = () => {
   }, [editMode])
 
   useEffect(() => {
-    setGroups(exmapleSettings.groups)
+    setGroups(exmapleSettings.groups as group[])
 
     window.addEventListener('message', (event) => {
       if (event.data.action === 'toggleSettings') {

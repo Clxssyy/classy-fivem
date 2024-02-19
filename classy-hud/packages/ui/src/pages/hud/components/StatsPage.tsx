@@ -95,7 +95,6 @@ const StatsPage = ({ groups, setGroups }: StatsPageProps) => {
                   name='health'
                   id='health'
                   onChange={(e) => {
-                    console.log(groups[0].items[0].styles)
                     setGroups((prev) => {
                       return prev.map((group) => {
                         return {
@@ -104,7 +103,14 @@ const StatsPage = ({ groups, setGroups }: StatsPageProps) => {
                             if (item.stat === 'health') {
                               return {
                                 ...item,
-                                styles: { ...item.styles, backgroundColor: e.target.value },
+                                styles: {
+                                  ...item.styles,
+                                  bar: { backgroundColor: e.target.value },
+                                  backdrop: {
+                                    ...item.styles?.backdrop,
+                                    backgroundColor: e.target.value + '80',
+                                  },
+                                },
                               }
                             }
                             return item
