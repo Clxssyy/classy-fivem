@@ -33,6 +33,7 @@ export interface group {
     x: string
     y: string
   }
+  vertical?: boolean
 }
 
 const exmapleSettings = {
@@ -96,6 +97,7 @@ const exmapleSettings = {
         x: '200',
         y: '300',
       },
+      vertical: true,
     },
     {
       name: 'test',
@@ -149,7 +151,7 @@ const Hud = () => {
     oxygen: 10,
   })
   const [editMode, setEditMode] = useState<boolean>(false)
-  const [settings, setSettings] = useState<boolean>(false)
+  const [settings, setSettings] = useState<boolean>(true)
   const [groups, setGroups] = useState<group[]>([])
 
   useEffect(() => {
@@ -220,7 +222,13 @@ const Hud = () => {
       ) : null}
       {groups.map((group, index) => {
         return (
-          <DragWrapper key={index} editMode={editMode} id={group.name} position={group.position}>
+          <DragWrapper
+            key={index}
+            editMode={editMode}
+            id={group.name}
+            position={group.position}
+            vertical={group.vertical}
+          >
             {group.items.map((item, index) => {
               if (item.type === 'bar') {
                 return (

@@ -6,6 +6,7 @@ interface DragWrapperProps {
     x: string
     y: string
   }
+  vertical?: boolean
 }
 
 function dragElement(elmnt: HTMLElement) {
@@ -62,7 +63,7 @@ function dragElement(elmnt: HTMLElement) {
   }
 }
 
-const DragWrapper = ({ children, editMode, id, position }: DragWrapperProps) => {
+const DragWrapper = ({ children, editMode, id, position, vertical }: DragWrapperProps) => {
   const element = document.getElementById(id)
 
   if (element) {
@@ -83,7 +84,13 @@ const DragWrapper = ({ children, editMode, id, position }: DragWrapperProps) => 
       >
         {id}
       </p>
-      <div className={`flex gap-2 flex-wrap ${editMode ? 'invisible' : ''}`}>{children}</div>
+      <div
+        className={`flex gap-2 flex-wrap ${editMode ? 'invisible' : ''} ${
+          vertical ? 'flex-col' : ''
+        }`}
+      >
+        {children}
+      </div>
     </div>
   )
 }
