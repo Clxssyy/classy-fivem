@@ -2,11 +2,13 @@ interface StatBarProps {
   statPercent: number
   id: string
   styles?: {
-    backdrop: {
-      [key: string]: string
+    backdrop?: {
+      backgroundColor?: string
+      width?: string
+      height?: string
     }
-    bar: {
-      [key: string]: string
+    bar?: {
+      backgroundColor: string
     }
   }
 }

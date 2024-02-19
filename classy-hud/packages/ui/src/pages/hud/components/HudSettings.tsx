@@ -1,6 +1,6 @@
 import { PencilIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
-import StatsPage from './StatsPage'
+import GroupsPage from './GroupsPage'
 import { group } from '../Hud'
 
 interface HudSettingsProps {
@@ -54,13 +54,13 @@ const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSett
             <div>
               <button
                 className='p-2'
-                onClick={() => setActivePage(<StatsPage groups={groups} setGroups={setGroups} />)}
+                onClick={() => setActivePage(<GroupsPage groups={groups} setGroups={setGroups} />)}
               >
-                Stats
+                Groups
               </button>
             </div>
           </div>
-          <div className='grow flex flex-col overflow-y-scroll custom-scroll'>{activePage}</div>
+          <div className='grow overflow-y-auto custom-scroll'>{activePage}</div>
         </section>
       </div>
     </div>

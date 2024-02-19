@@ -21,12 +21,12 @@ export interface group {
     id: string
     stat: string
     styles?: {
-      backdrop: {
+      backdrop?: {
         backgroundColor?: string
         width?: string
         height?: string
       }
-      bar: {
+      bar?: {
         backgroundColor: string
       }
     }
