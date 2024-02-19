@@ -11,6 +11,7 @@ interface PlayerStats {
   armor: number
   stamina: number
   oxygen: number
+  [key: string]: number
 }
 
 const Hud = () => {
@@ -21,7 +22,8 @@ const Hud = () => {
     oxygen: 100,
   })
   const [editMode, setEditMode] = useState<boolean>(false)
-  const [settings, setSettings] = useState<boolean>(false)
+  const [settings, setSettings] = useState<boolean>(true)
+  const [statBars, setStatBars] = useState<string[]>([])
 
   useEffect(() => {
     if (editMode) {
@@ -74,7 +76,13 @@ const Hud = () => {
       }`}
     >
       {settings ? (
-        <HudSettings editMode={editMode} setEditMode={setEditMode} exit={exitSettings} />
+        <HudSettings
+          editMode={editMode}
+          setEditMode={setEditMode}
+          exit={exitSettings}
+          statBars={statBars}
+          setStatBars={setStatBars}
+        />
       ) : null}
       {editMode ? (
         <div className='w-full h-full absolute flex place-items-center justify-center text-neutral-600'>
@@ -82,13 +90,9 @@ const Hud = () => {
         </div>
       ) : null}
       <DragWrapper id='stat-bar-container' editMode={editMode}>
-        <StatBar statPercent={stats.health} id='health-bar' />
-
-        <StatBar statPercent={stats.armor} id='armor-bar' />
-
-        <StatBar statPercent={stats.stamina} id='stamina-bar' />
-
-        <StatBar statPercent={stats.oxygen} id='oxygen-bar' />
+        {statBars.map((bar, index) => {
+          return <StatBar key={index} statPercent={stats[bar]} id={bar + '-bar'} />
+        })}
       </DragWrapper>
       <DragWrapper id='health-circle' editMode={editMode}>
         <StatCircle statPercent={stats.health} />

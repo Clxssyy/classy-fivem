@@ -1,5 +1,5 @@
 interface DragWrapperProps {
-  children: JSX.Element | JSX.Element[]
+  children: JSX.Element | JSX.Element[] | any
   editMode: boolean
   id: string
 }

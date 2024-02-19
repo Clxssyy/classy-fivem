@@ -1,9 +1,23 @@
-const Bars = ['health', 'armor', 'stamina', 'oxygen']
-const StatsPage = () => {
+import { useEffect } from 'react'
+
+interface StatsPageProps {
+  statBars: string[]
+  setStatBars: React.Dispatch<React.SetStateAction<string[]>>
+}
+
+const StatsPage = ({ statBars, setStatBars }: StatsPageProps) => {
+  useEffect(() => {
+    statBars.map((bar) => {
+      const id = document.getElementById(bar + '-bar-toggle') as HTMLInputElement
+
+      if (id) id.checked = true
+    })
+  }, [])
+
   const handleBarWidth: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value
 
-    Bars.map((bar) => {
+    statBars.map((bar) => {
       const id = document.getElementById(bar + '-' + e.target.id.replace('width', 'backdrop'))
       if (id) id.style.width = value + 'px'
     })
@@ -12,10 +26,22 @@ const StatsPage = () => {
   const handleBarHeight: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value
 
-    Bars.map((bar) => {
+    statBars.map((bar) => {
       const id = document.getElementById(bar + '-' + e.target.id.replace('height', 'backdrop'))
       if (id) id.style.height = value + 'px'
     })
+  }
+
+  const handleBarToggle: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const id = e.target.id.replace('-bar-toggle', '')
+
+    if (e.target.checked) {
+      if (!statBars.includes(id)) {
+        setStatBars((prevStatBars) => [...prevStatBars, id])
+      }
+    } else {
+      setStatBars((prevStatBars) => prevStatBars.filter((bar) => bar !== id))
+    }
   }
 
   return (
@@ -28,19 +54,19 @@ const StatsPage = () => {
             <div className='flex gap-2 justify-between'>
               <div className='gap-2 flex'>
                 <label htmlFor=''>Health</label>
-                <input type='checkbox' name='' id='' />
+                <input type='checkbox' name='' id='health-bar-toggle' onChange={handleBarToggle} />
               </div>
               <div className='gap-2 flex'>
                 <label htmlFor=''>Armor</label>
-                <input type='checkbox' name='' id='' />
+                <input type='checkbox' name='' id='armor-bar-toggle' onChange={handleBarToggle} />
               </div>
               <div className='gap-2 flex'>
                 <label htmlFor=''>Stamina</label>
-                <input type='checkbox' name='' id='' />
+                <input type='checkbox' name='' id='stamina-bar-toggle' onChange={handleBarToggle} />
               </div>
               <div className='gap-2 flex'>
                 <label htmlFor=''>Oxygen</label>
-                <input type='checkbox' name='' id='' />
+                <input type='checkbox' name='' id='oxygen-bar-toggle' onChange={handleBarToggle} />
               </div>
             </div>
           </div>

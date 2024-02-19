@@ -6,6 +6,8 @@ interface HudSettingsProps {
   editMode: boolean
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>
   exit: () => Promise<void>
+  statBars: string[]
+  setStatBars: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 const LayoutPage = ({
@@ -22,7 +24,7 @@ const LayoutPage = ({
   )
 }
 
-const HudSettings = ({ editMode, setEditMode, exit }: HudSettingsProps) => {
+const HudSettings = ({ editMode, setEditMode, exit, statBars, setStatBars }: HudSettingsProps) => {
   const [activePage, setActivePage] = useState<JSX.Element>(
     <LayoutPage editMode={editMode} setEditMode={setEditMode} />,
   )
@@ -49,7 +51,12 @@ const HudSettings = ({ editMode, setEditMode, exit }: HudSettingsProps) => {
               </button>
             </div>
             <div>
-              <button className='p-2' onClick={() => setActivePage(<StatsPage />)}>
+              <button
+                className='p-2'
+                onClick={() =>
+                  setActivePage(<StatsPage statBars={statBars} setStatBars={setStatBars} />)
+                }
+              >
                 Stats
               </button>
             </div>
