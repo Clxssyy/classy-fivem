@@ -1,3 +1,4 @@
+import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { useEffect } from 'react'
 
 interface StatsPageProps {
@@ -79,8 +80,26 @@ const StatsPage = ({ statBars, setStatBars, statCircles, setStatCircles }: Stats
   return (
     <>
       <section className='divide-y-2 divide-neutral-600'>
-        <h2 className='font-bold text-2xl p-2 text-neutral-600'>Stat Bars</h2>
-        <div className='p-2 divide-y divide-neutral-600'>
+        <h1 className='font-bold text-2xl p-2 text-neutral-600'>Stat Bars</h1>
+        <section className='p-2'>
+          <h2 className='font-bold text-2xl text-neutral-600'>Groups</h2>
+          <div
+            id='stat-bar-groups-container'
+            className='rounded overflow-hidden bg-neutral-600 flex flex-col divide-y divide-neutral-900 shadow-lg'
+          >
+            <div id='stat-bar-groups' className='overflow-y-scroll custom-scroll h-48'>
+              <div>default</div>
+            </div>
+            <div id='stat-bar-groups-options' className='flex divide-x divide-neutral-900'>
+              <button className='p-2'>
+                <PlusIcon className='h-6 w-6' />
+              </button>
+
+              <button className='p-2'>
+                <MinusIcon className='h-6 w-6' />
+              </button>
+            </div>
+          </div>
           <div>
             <p className='underline'>Toggle stat bars:</p>
             <div className='flex gap-2 justify-between'>
@@ -179,7 +198,7 @@ const StatsPage = ({ statBars, setStatBars, statCircles, setStatCircles }: Stats
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </section>
       <section className='divide-y-2 divide-neutral-600'>
         <h2 className='font-bold text-neutral-600 text-2xl p-2'>Stat Circles</h2>

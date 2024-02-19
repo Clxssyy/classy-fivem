@@ -81,9 +81,7 @@ const HudSettings = ({
               <button className='p-2'>Navigation</button>
             </div>
           </div>
-          <div id='activeSettings' className='grow flex flex-col overflow-y-scroll'>
-            {activePage}
-          </div>
+          <div className='grow flex flex-col overflow-y-scroll custom-scroll'>{activePage}</div>
         </section>
       </div>
     </div>
