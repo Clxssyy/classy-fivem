@@ -2,11 +2,14 @@ interface DragWrapperProps {
   children: JSX.Element | JSX.Element[] | any
   editMode: boolean
   id: string
-  position?: {
-    x: string
-    y: string
+  options?: {
+    position?: {
+      x: string
+      y: string
+    }
+    vertical?: boolean
+    gap?: string
   }
-  vertical?: boolean
 }
 
 function dragElement(elmnt: HTMLElement) {
@@ -63,7 +66,7 @@ function dragElement(elmnt: HTMLElement) {
   }
 }
 
-const DragWrapper = ({ children, editMode, id, position, vertical }: DragWrapperProps) => {
+const DragWrapper = ({ children, editMode, id, options }: DragWrapperProps) => {
   const element = document.getElementById(id)
 
   if (element) {
@@ -77,7 +80,7 @@ const DragWrapper = ({ children, editMode, id, position, vertical }: DragWrapper
       className={`${
         editMode ? 'bg-blue-400/50 border-2 border-dashed border-blue-700 cursor-grab' : ''
       } select-none absolute grid place-items-center text-center`}
-      style={{ top: position?.y + 'px', left: position?.x + 'px' }}
+      style={{ top: options?.position?.y + 'px', left: options?.position?.x + 'px' }}
     >
       <p
         className={`${editMode ? '' : 'hidden'} absolute text-blue-400 font-bold whitespace-nowrap`}
@@ -86,8 +89,9 @@ const DragWrapper = ({ children, editMode, id, position, vertical }: DragWrapper
       </p>
       <div
         className={`flex gap-2 flex-wrap ${editMode ? 'invisible' : ''} ${
-          vertical ? 'flex-col' : ''
+          options?.vertical ? 'flex-col' : ''
         }`}
+        style={{ gap: options?.gap + 'px' }}
       >
         {children}
       </div>

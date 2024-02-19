@@ -35,6 +35,7 @@ export interface group {
       y: string
     }
     vertical?: boolean
+    gap?: string
   }
 }
 
@@ -101,6 +102,7 @@ const exmapleSettings = {
           y: '300',
         },
         vertical: true,
+        gap: '8',
       },
     },
     {
@@ -226,13 +228,7 @@ const Hud = () => {
       ) : null}
       {groups.map((group, index) => {
         return (
-          <DragWrapper
-            key={index}
-            editMode={editMode}
-            id={group.name}
-            position={group.options?.position}
-            vertical={group.options?.vertical}
-          >
+          <DragWrapper key={index} editMode={editMode} id={group.name} options={group.options}>
             {group.items.map((item, index) => {
               if (item.type === 'bar') {
                 return (
