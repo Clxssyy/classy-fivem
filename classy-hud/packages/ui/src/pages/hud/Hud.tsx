@@ -46,7 +46,7 @@ const exmapleSettings = {
           stat: 'health',
           styles: {
             backdrop: {
-              backgroundColor: '#ff0000',
+              backgroundColor: '#ff000080',
               width: '96px',
               height: '10px',
             },
@@ -58,7 +58,7 @@ const exmapleSettings = {
           stat: 'armor',
           styles: {
             backdrop: {
-              backgroundColor: '#ff0000',
+              backgroundColor: '#ff000080',
               width: '96px',
               height: '10px',
             },
@@ -70,7 +70,7 @@ const exmapleSettings = {
           stat: 'stamina',
           styles: {
             backdrop: {
-              backgroundColor: '#ff0000',
+              backgroundColor: '#ff000080',
               width: '96px',
               height: '10px',
             },
@@ -82,7 +82,7 @@ const exmapleSettings = {
           stat: 'health',
           styles: {
             backdrop: {
-              backgroundColor: '#ff0000',
+              backgroundColor: '#ff000080',
               width: '96px',
               height: '10px',
             },
@@ -97,6 +97,47 @@ const exmapleSettings = {
         y: '300',
       },
     },
+    {
+      name: 'test',
+      items: [
+        {
+          type: 'bar',
+          id: 'health',
+          stat: 'health',
+          styles: {
+            backdrop: {
+              backgroundColor: '#ff000080',
+              width: '96px',
+              height: '10px',
+            },
+          },
+        },
+        {
+          type: 'bar',
+          id: 'armor',
+          stat: 'armor',
+          styles: {
+            backdrop: {
+              backgroundColor: '#ff000080',
+              width: '96px',
+              height: '10px',
+            },
+          },
+        },
+        {
+          type: 'bar',
+          id: 'stamina',
+          stat: 'stamina',
+          styles: {
+            backdrop: {
+              backgroundColor: '#ff000080',
+              width: '96px',
+              height: '10px',
+            },
+          },
+        },
+      ],
+    },
   ],
 }
 
@@ -108,7 +149,7 @@ const Hud = () => {
     oxygen: 10,
   })
   const [editMode, setEditMode] = useState<boolean>(false)
-  const [settings, setSettings] = useState<boolean>(true)
+  const [settings, setSettings] = useState<boolean>(false)
   const [groups, setGroups] = useState<group[]>([])
 
   useEffect(() => {
