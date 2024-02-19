@@ -20,6 +20,9 @@ export interface group {
     type: string
     id: string
     stat: string
+    styles?: {
+      [key: string]: string
+    }
   }[]
 }
 
@@ -29,17 +32,22 @@ const exmapleSettings = {
       name: 'default',
       items: [
         {
-          type: 'circle',
+          type: 'bar',
           id: 'health',
           stat: 'health',
+          styles: {
+            backgroundColor: '#ff0000',
+            width: '96px',
+            height: '10px',
+          },
         },
         {
-          type: 'circle',
+          type: 'bar',
           id: 'armor',
           stat: 'armor',
         },
         {
-          type: 'circle',
+          type: 'bar',
           id: 'stamina',
           stat: 'stamina',
         },
@@ -130,7 +138,14 @@ const Hud = () => {
           <DragWrapper key={index} editMode={editMode} id={group.name}>
             {group.items.map((item, index) => {
               if (item.type === 'bar') {
-                return <StatBar key={index} statPercent={stats[item.stat]} id={item.id + '-bar'} />
+                return (
+                  <StatBar
+                    key={index}
+                    statPercent={stats[item.stat]}
+                    id={item.id + '-bar'}
+                    styles={item.styles}
+                  />
+                )
               } else if (item.type === 'circle') {
                 return (
                   <StatCircle key={index} statPercent={stats[item.stat]} id={item.id + '-circle'} />

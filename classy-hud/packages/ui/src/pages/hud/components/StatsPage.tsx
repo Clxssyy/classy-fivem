@@ -90,7 +90,30 @@ const StatsPage = ({ groups, setGroups }: StatsPageProps) => {
             <div className='flex gap-2'>
               <div>
                 <h3>Health</h3>
-                <input type='color' name='health' id='health' />
+                <input
+                  type='color'
+                  name='health'
+                  id='health'
+                  onChange={(e) => {
+                    console.log(groups[0].items[0].styles)
+                    setGroups((prev) => {
+                      return prev.map((group) => {
+                        return {
+                          ...group,
+                          items: group.items.map((item) => {
+                            if (item.stat === 'health') {
+                              return {
+                                ...item,
+                                styles: { ...item.styles, backgroundColor: e.target.value },
+                              }
+                            }
+                            return item
+                          }),
+                        }
+                      })
+                    })
+                  }}
+                />
               </div>
               <div>
                 <h3>Armor</h3>
