@@ -59,9 +59,6 @@ const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSett
                 Stats
               </button>
             </div>
-            <div>
-              <button className='p-2'>Navigation</button>
-            </div>
           </div>
           <div className='grow flex flex-col overflow-y-scroll custom-scroll'>{activePage}</div>
         </section>
