@@ -29,11 +29,13 @@ export interface group {
       }
     }
   }[]
-  position?: {
-    x: string
-    y: string
+  options?: {
+    position?: {
+      x: string
+      y: string
+    }
+    vertical?: boolean
   }
-  vertical?: boolean
 }
 
 const exmapleSettings = {
@@ -93,11 +95,13 @@ const exmapleSettings = {
           },
         },
       ],
-      position: {
-        x: '200',
-        y: '300',
+      options: {
+        position: {
+          x: '200',
+          y: '300',
+        },
+        vertical: true,
       },
-      vertical: true,
     },
     {
       name: 'test',
@@ -226,8 +230,8 @@ const Hud = () => {
             key={index}
             editMode={editMode}
             id={group.name}
-            position={group.position}
-            vertical={group.vertical}
+            position={group.options?.position}
+            vertical={group.options?.vertical}
           >
             {group.items.map((item, index) => {
               if (item.type === 'bar') {
