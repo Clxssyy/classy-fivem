@@ -1,7 +1,6 @@
 import { HeartIcon } from '@heroicons/react/24/solid'
 
 interface StatCircleProps {
-  text?: string
   statPercent: number
   id: string
 }

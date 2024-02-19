@@ -7,10 +7,6 @@ interface HudSettingsProps {
   editMode: boolean
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>
   exit: () => Promise<void>
-  statBars: string[]
-  setStatBars: React.Dispatch<React.SetStateAction<string[]>>
-  statCircles: string[]
-  setStatCircles: React.Dispatch<React.SetStateAction<string[]>>
   groups: group[]
   setGroups: React.Dispatch<React.SetStateAction<group[]>>
 }
@@ -29,17 +25,7 @@ const LayoutPage = ({
   )
 }
 
-const HudSettings = ({
-  editMode,
-  setEditMode,
-  exit,
-  statBars,
-  setStatBars,
-  statCircles,
-  setStatCircles,
-  groups,
-  setGroups,
-}: HudSettingsProps) => {
+const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSettingsProps) => {
   const [activePage, setActivePage] = useState<JSX.Element>(
     <LayoutPage editMode={editMode} setEditMode={setEditMode} />,
   )
@@ -68,18 +54,7 @@ const HudSettings = ({
             <div>
               <button
                 className='p-2'
-                onClick={() =>
-                  setActivePage(
-                    <StatsPage
-                      statBars={statBars}
-                      setStatBars={setStatBars}
-                      statCircles={statCircles}
-                      setStatCircles={setStatCircles}
-                      groups={groups}
-                      setGroups={setGroups}
-                    />,
-                  )
-                }
+                onClick={() => setActivePage(<StatsPage groups={groups} setGroups={setGroups} />)}
               >
                 Stats
               </button>

@@ -26,17 +26,22 @@ export interface group {
 const exmapleSettings = {
   groups: [
     {
-      name: 'Health and Armor',
+      name: 'default',
       items: [
         {
-          type: 'bar',
+          type: 'circle',
           id: 'health',
           stat: 'health',
         },
         {
-          type: 'bar',
-          id: 'health',
-          stat: 'health',
+          type: 'circle',
+          id: 'armor',
+          stat: 'armor',
+        },
+        {
+          type: 'circle',
+          id: 'stamina',
+          stat: 'stamina',
         },
       ],
     },
@@ -52,8 +57,6 @@ const Hud = () => {
   })
   const [editMode, setEditMode] = useState<boolean>(false)
   const [settings, setSettings] = useState<boolean>(true)
-  const [statBars, setStatBars] = useState<string[]>([])
-  const [statCircles, setStatCircles] = useState<string[]>([])
   const [groups, setGroups] = useState<group[]>([])
 
   useEffect(() => {
@@ -113,10 +116,6 @@ const Hud = () => {
           editMode={editMode}
           setEditMode={setEditMode}
           exit={exitSettings}
-          statBars={statBars}
-          setStatBars={setStatBars}
-          statCircles={statCircles}
-          setStatCircles={setStatCircles}
           groups={groups}
           setGroups={setGroups}
         />
@@ -126,16 +125,6 @@ const Hud = () => {
           <p className='font-bold text-5xl select-none'>Edit Mode</p>
         </div>
       ) : null}
-      <DragWrapper id='stat-bar-container' editMode={editMode}>
-        {statBars.map((stat, index) => {
-          return <StatBar key={index} statPercent={stats[stat]} id={stat + '-bar'} />
-        })}
-      </DragWrapper>
-      <DragWrapper id='stat-circle-container' editMode={editMode}>
-        {statCircles.map((stat, index) => {
-          return <StatCircle key={index} statPercent={stats[stat]} id={stat + '-circle'} />
-        })}
-      </DragWrapper>
       {groups.map((group, index) => {
         return (
           <DragWrapper key={index} editMode={editMode} id={group.name}>

@@ -1,6 +1,4 @@
 interface StatBarProps {
-  text?: string
-  color?: string
   statPercent: number
   id: string
 }
