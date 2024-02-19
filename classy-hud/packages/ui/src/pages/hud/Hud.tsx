@@ -14,6 +14,35 @@ interface PlayerStats {
   [key: string]: number
 }
 
+export interface group {
+  name: string
+  items: {
+    type: string
+    id: string
+    stat: string
+  }[]
+}
+
+const exmapleSettings = {
+  groups: [
+    {
+      name: 'Health and Armor',
+      items: [
+        {
+          type: 'bar',
+          id: 'health',
+          stat: 'health',
+        },
+        {
+          type: 'bar',
+          id: 'health',
+          stat: 'health',
+        },
+      ],
+    },
+  ],
+}
+
 const Hud = () => {
   const [stats, setStats] = useState<PlayerStats>({
     health: 100,
@@ -25,6 +54,7 @@ const Hud = () => {
   const [settings, setSettings] = useState<boolean>(true)
   const [statBars, setStatBars] = useState<string[]>([])
   const [statCircles, setStatCircles] = useState<string[]>([])
+  const [groups, setGroups] = useState<group[]>([])
 
   useEffect(() => {
     if (editMode) {
@@ -33,6 +63,8 @@ const Hud = () => {
   }, [editMode])
 
   useEffect(() => {
+    setGroups(exmapleSettings.groups)
+
     window.addEventListener('message', (event) => {
       if (event.data.action === 'toggleSettings') {
         setSettings(!settings)
@@ -85,6 +117,8 @@ const Hud = () => {
           setStatBars={setStatBars}
           statCircles={statCircles}
           setStatCircles={setStatCircles}
+          groups={groups}
+          setGroups={setGroups}
         />
       ) : null}
       {editMode ? (
@@ -102,6 +136,21 @@ const Hud = () => {
           return <StatCircle key={index} statPercent={stats[stat]} id={stat + '-circle'} />
         })}
       </DragWrapper>
+      {groups.map((group, index) => {
+        return (
+          <DragWrapper key={index} editMode={editMode} id={group.name}>
+            {group.items.map((item, index) => {
+              if (item.type === 'bar') {
+                return <StatBar key={index} statPercent={stats[item.stat]} id={item.id + '-bar'} />
+              } else if (item.type === 'circle') {
+                return (
+                  <StatCircle key={index} statPercent={stats[item.stat]} id={item.id + '-circle'} />
+                )
+              }
+            })}
+          </DragWrapper>
+        )
+      })}
     </main>
   )
 }

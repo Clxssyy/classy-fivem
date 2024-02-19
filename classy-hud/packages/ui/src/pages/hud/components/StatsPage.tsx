@@ -1,14 +1,24 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { useEffect } from 'react'
+import { group } from '../Hud'
 
 interface StatsPageProps {
   statBars: string[]
   setStatBars: React.Dispatch<React.SetStateAction<string[]>>
   statCircles: string[]
   setStatCircles: React.Dispatch<React.SetStateAction<string[]>>
+  groups: group[]
+  setGroups: React.Dispatch<React.SetStateAction<group[]>>
 }
 
-const StatsPage = ({ statBars, setStatBars, statCircles, setStatCircles }: StatsPageProps) => {
+const StatsPage = ({
+  statBars,
+  setStatBars,
+  statCircles,
+  setStatCircles,
+  groups,
+  setGroups,
+}: StatsPageProps) => {
   useEffect(() => {
     statBars.map((bar) => {
       const id = document.getElementById(bar + '-bar-toggle') as HTMLInputElement
@@ -88,7 +98,13 @@ const StatsPage = ({ statBars, setStatBars, statCircles, setStatCircles }: Stats
             className='rounded overflow-hidden bg-neutral-600 flex flex-col divide-y divide-neutral-900 shadow-lg'
           >
             <div id='stat-bar-groups' className='overflow-y-scroll custom-scroll h-48'>
-              <div>default</div>
+              {groups.map((group, index) => {
+                return (
+                  <div key={index}>
+                    <h3 className='p-2'>{group.name}</h3>
+                  </div>
+                )
+              })}
             </div>
             <div id='stat-bar-groups-options' className='flex divide-x divide-neutral-900'>
               <button className='p-2'>

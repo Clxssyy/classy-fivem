@@ -1,6 +1,7 @@
 import { PencilIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
 import StatsPage from './StatsPage'
+import { group } from '../Hud'
 
 interface HudSettingsProps {
   editMode: boolean
@@ -10,6 +11,8 @@ interface HudSettingsProps {
   setStatBars: React.Dispatch<React.SetStateAction<string[]>>
   statCircles: string[]
   setStatCircles: React.Dispatch<React.SetStateAction<string[]>>
+  groups: group[]
+  setGroups: React.Dispatch<React.SetStateAction<group[]>>
 }
 
 const LayoutPage = ({
@@ -34,6 +37,8 @@ const HudSettings = ({
   setStatBars,
   statCircles,
   setStatCircles,
+  groups,
+  setGroups,
 }: HudSettingsProps) => {
   const [activePage, setActivePage] = useState<JSX.Element>(
     <LayoutPage editMode={editMode} setEditMode={setEditMode} />,
@@ -70,6 +75,8 @@ const HudSettings = ({
                       setStatBars={setStatBars}
                       statCircles={statCircles}
                       setStatCircles={setStatCircles}
+                      groups={groups}
+                      setGroups={setGroups}
                     />,
                   )
                 }
