@@ -2,9 +2,12 @@ interface DragWrapperProps {
   children: JSX.Element | JSX.Element[] | any
   editMode: boolean
   id: string
+  position?: {
+    x: string
+    y: string
+  }
 }
 
-// TODO: change the drag and drop logic
 function dragElement(elmnt: HTMLElement) {
   var pos1 = 0,
     pos2 = 0,
@@ -59,7 +62,7 @@ function dragElement(elmnt: HTMLElement) {
   }
 }
 
-const DragWrapper = ({ children, editMode, id }: DragWrapperProps) => {
+const DragWrapper = ({ children, editMode, id, position }: DragWrapperProps) => {
   const element = document.getElementById(id)
 
   if (element) {
@@ -73,6 +76,7 @@ const DragWrapper = ({ children, editMode, id }: DragWrapperProps) => {
       className={`${
         editMode ? 'bg-blue-400/50 border-2 border-dashed border-blue-700 cursor-grab' : ''
       } select-none absolute grid place-items-center text-center`}
+      style={{ top: position?.y + 'px', left: position?.x + 'px' }}
     >
       <p
         className={`${editMode ? '' : 'hidden'} absolute text-blue-400 font-bold whitespace-nowrap`}

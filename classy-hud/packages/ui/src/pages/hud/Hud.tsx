@@ -29,6 +29,10 @@ export interface group {
       }
     }
   }[]
+  position?: {
+    x: string
+    y: string
+  }
 }
 
 const exmapleSettings = {
@@ -88,6 +92,10 @@ const exmapleSettings = {
           },
         },
       ],
+      position: {
+        x: '200',
+        y: '300',
+      },
     },
   ],
 }
@@ -171,7 +179,7 @@ const Hud = () => {
       ) : null}
       {groups.map((group, index) => {
         return (
-          <DragWrapper key={index} editMode={editMode} id={group.name}>
+          <DragWrapper key={index} editMode={editMode} id={group.name} position={group.position}>
             {group.items.map((item, index) => {
               if (item.type === 'bar') {
                 return (
