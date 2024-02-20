@@ -5,13 +5,14 @@ interface StatBarProps {
     type: string
     name: string
     stat: string
-    styles?: {
-      backdrop?: {
-        backgroundColor?: string
-        width?: string
-        height?: string
+    statDirection: string
+    styles: {
+      backdrop: {
+        backgroundColor: string
+        width: string
+        height: string
       }
-      bar?: {
+      bar: {
         backgroundColor: string
       }
     }
@@ -20,10 +21,17 @@ interface StatBarProps {
 
 const StatBar = ({ statPercent, item }: StatBarProps) => {
   return (
-    <div className='w-96 h-10 bg-green-400/50' style={item.styles?.backdrop}>
+    <div className='flex' style={item.styles.backdrop}>
       <div
-        style={{ width: `${statPercent}%`, ...item.styles?.bar }}
-        className='bg-green-400 h-full transition-all'
+        style={{
+          ...(item.statDirection === 'r-l'
+            ? { width: `${statPercent}%` }
+            : { height: `${statPercent}%` }),
+          ...item.styles.bar,
+        }}
+        className={`${
+          item.statDirection === 'r-l' ? 'h-full' : 'w-full place-self-end'
+        } transition-all`}
       ></div>
     </div>
   )

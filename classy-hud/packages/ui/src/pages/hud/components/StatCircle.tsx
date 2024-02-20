@@ -10,13 +10,14 @@ interface StatCircleProps {
     type: string
     name: string
     stat: string
-    styles?: {
-      backdrop?: {
-        backgroundColor?: string
-        width?: string
-        height?: string
+    statDirection: string
+    styles: {
+      backdrop: {
+        backgroundColor: string
+        width: string
+        height: string
       }
-      bar?: {
+      bar: {
         backgroundColor: string
       }
     }
@@ -25,10 +26,7 @@ interface StatCircleProps {
 
 const StatCircle = ({ statPercent, item }: StatCircleProps) => {
   return (
-    <div
-      className='w-10 h-10 rounded-full overflow-hidden flex place-items-center justify-center'
-      style={item.styles?.backdrop}
-    >
+    <div className='flex place-items-center justify-center'>
       {
         {
           health: <HeartIcon className='w-6 h-6 absolute' />,
@@ -37,10 +35,19 @@ const StatCircle = ({ statPercent, item }: StatCircleProps) => {
           oxygen: <RiBubbleChartFill className='w-6 h-6 absolute' />,
         }[item.stat]
       }
-      <div
-        style={{ height: `${statPercent}%`, ...item.styles?.bar }}
-        className='w-full place-self-end'
-      ></div>
+      <div className='rounded-full overflow-hidden flex' style={item.styles.backdrop}>
+        <div
+          style={{
+            ...(item.statDirection === 'r-l'
+              ? { width: `${statPercent}%` }
+              : { height: `${statPercent}%` }),
+            ...item.styles.bar,
+          }}
+          className={`${
+            item.statDirection === 'r-l' ? 'h-full' : 'w-full place-self-end'
+          } transition-all`}
+        ></div>
+      </div>
     </div>
   )
 }

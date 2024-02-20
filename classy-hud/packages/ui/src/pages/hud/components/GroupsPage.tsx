@@ -105,6 +105,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
         name: 'New Item',
         type: 'bar',
         stat: 'health',
+        statDirection: 'r-l',
         styles: {
           bar: { backgroundColor: randomColor },
           backdrop: { backgroundColor: randomColor + '80', width: '120px', height: '10px' },
@@ -337,7 +338,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                           id='item-name'
                           placeholder='Name'
                           className='rounded grow'
-                          value={activeItem?.name}
+                          value={activeItem.name}
                           onChange={(e) => {
                             setActiveItem({ ...activeItem, name: e.target.value })
                           }}
@@ -379,6 +380,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                           name='stat'
                           id='stat'
                           className='rounded grow'
+                          value={activeItem.stat}
                           onChange={(e) => {
                             setActiveItem({ ...activeItem, stat: e.target.value })
                           }}
@@ -387,6 +389,24 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                           <option value='armor'>Armor</option>
                           <option value='stamina'>Stamina</option>
                           <option value='oxygen'>Oxygen</option>
+                        </select>
+                      </div>
+                      <div className='flex justify-center gap-1'>
+                        <label htmlFor='stat-direction'>Stat Drain:</label>
+                        <select
+                          name='stat'
+                          id='stat-direction'
+                          className='rounded grow'
+                          value={activeItem.statDirection || 'r-l'}
+                          onChange={(e) => {
+                            setActiveItem({
+                              ...activeItem,
+                              statDirection: e.target.value,
+                            })
+                          }}
+                        >
+                          <option value='t-b'>Top down</option>
+                          <option value='r-l'>Right left</option>
                         </select>
                       </div>
                       {activeItem.type === 'bar' ? (
