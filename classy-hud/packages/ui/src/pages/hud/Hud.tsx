@@ -113,8 +113,8 @@ const exmapleSettings = {
         },
       ],
       position: {
-        x: '200',
-        y: '300',
+        x: '200px',
+        y: '300px',
       },
       vertical: true,
       gap: '8',
@@ -173,8 +173,8 @@ const exmapleSettings = {
         },
       ],
       position: {
-        x: '0',
-        y: '0',
+        x: '0px',
+        y: '0px',
       },
       vertical: false,
       gap: '8',
@@ -261,7 +261,13 @@ const Hud = () => {
       ) : null}
       {groups.map((group, index) => {
         return (
-          <DragWrapper key={index} editMode={editMode} id={group.name} group={group}>
+          <DragWrapper
+            key={index}
+            editMode={editMode}
+            id={group.name}
+            group={group}
+            setGroups={setGroups}
+          >
             {group.items.map((item, index) => {
               if (item.type === 'bar') {
                 return (

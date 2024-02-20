@@ -194,7 +194,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                 name='x-pos'
                 id='x-pos'
                 placeholder='X Position'
-                value={activeGroup?.position?.x}
+                value={activeGroup?.position.x.replace('px', '')}
                 onChange={(e) => {
                   setActiveGroup({
                     ...activeGroup,
@@ -209,7 +209,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                 name='y-pos'
                 id='y-pos'
                 placeholder='Y Position'
-                value={activeGroup?.position?.y}
+                value={activeGroup?.position.y.replace('px', '')}
                 onChange={(e) => {
                   setActiveGroup({
                     ...activeGroup,
