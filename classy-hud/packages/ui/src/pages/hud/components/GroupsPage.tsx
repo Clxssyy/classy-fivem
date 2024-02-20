@@ -165,8 +165,8 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                 type='checkbox'
                 min={0}
                 max={window.innerHeight}
-                name='x-pos'
-                id='x-pos'
+                name='vertical'
+                id='vertical'
                 checked={activeGroup?.vertical}
                 onChange={(e) => {
                   setActiveGroup({
@@ -177,8 +177,8 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
               />
               <input
                 type='range'
-                name='x-pos'
-                id='x-pos'
+                name='gap'
+                id='gap'
                 value={activeGroup?.gap}
                 onChange={(e) => {
                   setActiveGroup({
