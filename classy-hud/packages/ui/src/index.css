@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 .custom-scroll::-webkit-scrollbar {
-  @apply w-3;
+  @apply w-2;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
-  @apply rounded bg-black/40 hover:bg-neutral-700;
+  @apply rounded bg-neutral-600;
 }
 
 .custom-scroll::-webkit-scrollbar-track {
