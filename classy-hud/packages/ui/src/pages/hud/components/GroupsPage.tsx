@@ -97,14 +97,17 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
 
   const handleItemAdd = () => {
     if (activeGroup) {
+      const randomColor = '#000000'.replace(/0/g, function () {
+        return (~~(Math.random() * 16)).toString(16)
+      })
       const newItem = {
         id: activeGroup.items.length,
         name: 'New Item',
         type: 'bar',
         stat: 'health',
         styles: {
-          bar: { backgroundColor: '#000000' },
-          backdrop: { backgroundColor: '#00000080', width: '10px', height: '10px' },
+          bar: { backgroundColor: randomColor },
+          backdrop: { backgroundColor: randomColor + '80', width: '120px', height: '10px' },
         },
       }
 
