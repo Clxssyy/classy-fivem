@@ -26,9 +26,7 @@ const LayoutPage = ({
 }
 
 const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSettingsProps) => {
-  const [activePage, setActivePage] = useState<JSX.Element>(
-    <LayoutPage editMode={editMode} setEditMode={setEditMode} />,
-  )
+  const [activePage, setActivePage] = useState<string>('Layout')
 
   return (
     <div className='absolute grid place-items-center h-screen w-screen'>
@@ -42,25 +40,24 @@ const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSett
         <section className='grow flex divide-x divide-neutral-800 overflow-hidden'>
           <div className='flex flex-col divide-y divide-neutral-800 w-1/6'>
             <div>
-              <button
-                className='p-2'
-                onClick={() =>
-                  setActivePage(<LayoutPage editMode={editMode} setEditMode={setEditMode} />)
-                }
-              >
+              <button className='p-2' onClick={() => setActivePage('Layout')}>
                 Layout
               </button>
             </div>
             <div>
-              <button
-                className='p-2'
-                onClick={() => setActivePage(<GroupsPage groups={groups} setGroups={setGroups} />)}
-              >
+              <button className='p-2' onClick={() => setActivePage('Groups')}>
                 Groups
               </button>
             </div>
           </div>
-          <div className='grow overflow-y-auto custom-scroll'>{activePage}</div>
+          <div className='grow overflow-y-auto custom-scroll'>
+            {
+              {
+                Layout: <LayoutPage editMode={editMode} setEditMode={setEditMode} />,
+                Groups: <GroupsPage groups={groups} setGroups={setGroups} />,
+              }[activePage]
+            }
+          </div>
         </section>
       </div>
     </div>

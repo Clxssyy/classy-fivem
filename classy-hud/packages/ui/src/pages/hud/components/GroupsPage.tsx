@@ -1,6 +1,6 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { group } from '../Hud'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface GroupsPageProps {
   groups: group[]
@@ -8,7 +8,40 @@ interface GroupsPageProps {
 }
 
 const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
-  const [activeGroup, setActiveGroup] = useState<group>(groups[0])
+  const [activeGroup, setActiveGroup] = useState<group>()
+  const [activeItem, setActiveItem] = useState<group['items'][0]>()
+
+  const handleAddGroup = () => {
+    const newGroup: group = { name: 'New Group', items: [] }
+    setGroups((prevGroups) => [...prevGroups, newGroup])
+  }
+
+  const handleRemoveGroup = () => {
+    if (activeGroup) {
+      setGroups((prevGroups) => {
+        return prevGroups.filter((group) => group !== activeGroup)
+      })
+      setActiveGroup(undefined)
+    }
+  }
+
+  const handleRemoveItem = () => {
+    if (activeGroup && activeItem) {
+      setGroups((prevGroups) => {
+        return prevGroups.map((group) => {
+          if (group === activeGroup) {
+            group.items = group.items.filter((item) => item !== activeItem)
+          }
+          return group
+        })
+      })
+      setActiveItem(undefined)
+    }
+  }
+
+  useEffect(() => {
+    if (activeItem) setActiveItem(undefined)
+  }, [activeGroup])
 
   return (
     <>
@@ -41,7 +74,10 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
             className='flex divide-x divide-neutral-900 justify-between'
           >
             <div className='grow flex justify-center'>
-              <button className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'>
+              <button
+                className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'
+                onClick={handleAddGroup}
+              >
                 <PlusIcon className='h-6 w-6' />
               </button>
             </div>
@@ -49,7 +85,10 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
               <button className='p-2 grow hover:bg-white/10 active:scale-95'>Edit</button>
             </div>
             <div className='grow flex justify-center'>
-              <button className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'>
+              <button
+                className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'
+                onClick={handleRemoveGroup}
+              >
                 <MinusIcon className='h-6 w-6' />
               </button>
             </div>
@@ -57,23 +96,27 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
         </div>
         <h2 className='font-bold text-xl text-neutral-600'>Items</h2>
         <div
-          id='stat-bar-groups-container'
+          id='stat-bar-items-container'
           className='rounded overflow-hidden bg-neutral-800 flex flex-col divide-y-2 divide-neutral-900 shadow-lg'
         >
           <div
-            id='stat-bar-groups'
-            className='overflow-y-auto custom-scroll h-48 divide-y divide-neutral-900'
+            id='stat-bar-items'
+            className='overflow-y-auto custom-scroll h-48 divide-y divide-neutral-900 flex flex-col'
           >
-            {activeGroup.items.map((item, index) => {
+            {activeGroup?.items.map((item, index) => {
               return (
-                <div key={index} className='text-sm px-2'>
+                <button
+                  key={index}
+                  className={`${activeItem === item ? 'bg-white/10' : ''} text-sm px-2`}
+                  onClick={() => setActiveItem(item)}
+                >
                   <h3>{item.id}</h3>
-                </div>
+                </button>
               )
             })}
           </div>
           <div
-            id='stat-bar-groups-options'
+            id='stat-bar-items-options'
             className='flex divide-x divide-neutral-900 justify-between'
           >
             <div className='grow flex justify-center'>
@@ -85,7 +128,10 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
               <button className='p-2 grow hover:bg-white/10 active:scale-95'>Edit</button>
             </div>
             <div className='grow flex justify-center'>
-              <button className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'>
+              <button
+                className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'
+                onClick={handleRemoveItem}
+              >
                 <MinusIcon className='h-6 w-6' />
               </button>
             </div>
