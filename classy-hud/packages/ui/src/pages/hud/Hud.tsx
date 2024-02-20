@@ -99,7 +99,7 @@ const Hud = () => {
 
   return (
     <main
-      className={`h-screen w-screen absolute ${
+      className={`h-screen w-screen absolute overflow-hidden ${
         editMode || settings ? 'bg-black/70' : 'bg-black/0'
       }`}
     >
