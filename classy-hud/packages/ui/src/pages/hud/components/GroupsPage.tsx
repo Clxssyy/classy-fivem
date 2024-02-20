@@ -12,11 +12,14 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
   const [activeItem, setActiveItem] = useState<group['items'][0]>()
 
   useEffect(() => {
-    setActiveGroup(groups[activeGroup?.id || 0])
+    if (activeGroup) setActiveGroup(groups[activeGroup?.id || 0])
   }, [groups])
 
   useEffect(() => {
-    setActiveItem(undefined)
+    if (activeGroup === undefined) setActiveItem(undefined)
+    else if (activeItem && !activeGroup?.items.includes(activeItem)) {
+      setActiveItem(undefined)
+    }
   }, [activeGroup])
 
   const handleAddGroup = () => {
@@ -29,6 +32,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
       gap: '0',
     }
     setGroups((prevGroups) => [...prevGroups, newGroup])
+    setActiveGroup(newGroup)
   }
 
   const handleRemoveGroup = () => {
@@ -36,7 +40,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
       setGroups((prevGroups) => {
         return prevGroups.filter((group) => group !== activeGroup)
       })
-      setActiveGroup(undefined)
+      setActiveGroup(() => groups[activeGroup.id - 1] || undefined)
     }
   }
 
@@ -50,7 +54,10 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
           return group
         })
       })
-      setActiveItem(undefined)
+      setActiveItem(() => {
+        const newActiveItem = activeItem?.id - 1
+        return activeGroup?.items[newActiveItem] || undefined
+      })
     }
   }
 
@@ -109,6 +116,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
       })
 
       setGroups(updatedGroups)
+      setActiveItem(newItem)
     }
   }
 
