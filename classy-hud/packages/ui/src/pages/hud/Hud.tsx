@@ -18,8 +18,9 @@ export interface group {
   id: number
   name: string
   items: {
+    id: number
     type: string
-    id: string
+    name: string
     stat: string
     styles?: {
       backdrop?: {
@@ -48,7 +49,8 @@ const exmapleSettings = {
       items: [
         {
           type: 'bar',
-          id: 'health',
+          id: 0,
+          name: 'health',
           stat: 'health',
           styles: {
             backdrop: {
@@ -56,11 +58,15 @@ const exmapleSettings = {
               width: '96px',
               height: '10px',
             },
+            bar: {
+              backgroundColor: '#00ff00',
+            },
           },
         },
         {
           type: 'bar',
-          id: 'armor',
+          id: 1,
+          name: 'armor',
           stat: 'armor',
           styles: {
             backdrop: {
@@ -68,11 +74,15 @@ const exmapleSettings = {
               width: '96px',
               height: '10px',
             },
+            bar: {
+              backgroundColor: '#00ff00',
+            },
           },
         },
         {
           type: 'bar',
-          id: 'stamina',
+          id: 2,
+          name: 'stamina',
           stat: 'stamina',
           styles: {
             backdrop: {
@@ -80,11 +90,15 @@ const exmapleSettings = {
               width: '96px',
               height: '10px',
             },
+            bar: {
+              backgroundColor: '#00ff00',
+            },
           },
         },
         {
           type: 'bar',
-          id: 'health2',
+          id: 3,
+          name: 'oxygen',
           stat: 'health',
           styles: {
             backdrop: {
@@ -111,37 +125,49 @@ const exmapleSettings = {
       items: [
         {
           type: 'bar',
-          id: 'health',
+          id: 0,
           stat: 'health',
+          name: 'health',
           styles: {
             backdrop: {
               backgroundColor: '#ff000080',
               width: '96px',
               height: '10px',
             },
+            bar: {
+              backgroundColor: '#00ff00',
+            },
           },
         },
         {
           type: 'bar',
-          id: 'armor',
+          id: 1,
           stat: 'armor',
+          name: 'armor',
           styles: {
             backdrop: {
               backgroundColor: '#ff000080',
               width: '96px',
               height: '10px',
             },
+            bar: {
+              backgroundColor: '#00ff00',
+            },
           },
         },
         {
           type: 'bar',
-          id: 'stamina',
+          id: 2,
           stat: 'stamina',
+          name: 'stamina',
           styles: {
             backdrop: {
               backgroundColor: '#ff000080',
               width: '96px',
               height: '10px',
+            },
+            bar: {
+              backgroundColor: '#00ff00',
             },
           },
         },

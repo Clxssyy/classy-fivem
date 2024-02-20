@@ -11,6 +11,10 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
   const [activeGroup, setActiveGroup] = useState<group>()
   const [activeItem, setActiveItem] = useState<group['items'][0]>()
 
+  useEffect(() => {
+    setActiveGroup(groups[activeGroup?.id || 0])
+  }, [groups])
+
   const handleAddGroup = () => {
     const newGroup: group = {
       id: groups.length + 1,
@@ -52,7 +56,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
       setGroups((prevGroups) => {
         return prevGroups.map((group) => {
           if (group.id === activeGroup.id) {
-            group = activeGroup
+            return activeGroup
           }
           return group
         })
@@ -60,9 +64,25 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
     }
   }
 
-  useEffect(() => {
-    if (activeItem) setActiveItem(undefined)
-  }, [activeGroup])
+  const handleItemEdit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (activeGroup && activeItem) {
+      setGroups((prevGroups) => {
+        return prevGroups.map((group) => {
+          if (group === activeGroup) {
+            const updatedItems = group.items.map((item) => {
+              if (item.id === activeItem.id) {
+                return activeItem
+              }
+              return item
+            })
+            return { ...group, items: updatedItems }
+          }
+          return group
+        })
+      })
+    }
+  }
 
   return (
     <>
@@ -84,7 +104,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                     group.id === activeGroup?.id ? 'bg-white/10' : ''
                   } text-sm px-2 hover:bg-white/10`}
                   onClick={() => {
-                    if (activeGroup === group) setActiveGroup(undefined)
+                    if (activeGroup?.id === group.id) setActiveGroup(undefined)
                     else setActiveGroup(group)
                   }}
                 >
@@ -204,10 +224,13 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
               return (
                 <button
                   key={index}
-                  className={`${activeItem === item ? 'bg-white/10' : ''} text-sm px-2`}
-                  onClick={() => setActiveItem(item)}
+                  className={`${activeItem?.id === item.id ? 'bg-white/10' : ''} text-sm px-2`}
+                  onClick={() => {
+                    if (activeItem?.id === item.id) setActiveItem(undefined)
+                    else setActiveItem(item)
+                  }}
                 >
-                  <h3>{item.id}</h3>
+                  <h3>{item.name}</h3>
                 </button>
               )
             })}
@@ -234,6 +257,178 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
             </div>
           </div>
         </div>
+        {activeItem ? (
+          <div>
+            <form onSubmit={handleItemEdit}>
+              <input
+                type='text'
+                name='name'
+                id='name'
+                placeholder='Name'
+                value={activeItem?.name}
+                onChange={(e) => {
+                  setActiveItem({ ...activeItem, name: e.target.value })
+                }}
+              />
+              <select
+                name='type'
+                id='type'
+                value={activeItem.type}
+                onChange={(e) => {
+                  setActiveItem({ ...activeItem, type: e.target.value })
+                }}
+              >
+                <option value='bar'>Bar</option>
+                <option value='circle'>Circle</option>
+              </select>
+              {activeItem.type === 'bar' ? (
+                <>
+                  <input
+                    type='color'
+                    name='fill-color'
+                    id='fill-color'
+                    value={activeItem.styles?.bar?.backgroundColor || '#000000'}
+                    onChange={(e) => {
+                      setActiveItem({
+                        ...activeItem,
+                        styles: {
+                          ...activeItem.styles,
+                          bar: { backgroundColor: e.target.value },
+                        },
+                      })
+                    }}
+                  />
+                  <input
+                    type='color'
+                    name='backdrop-color'
+                    id='backdrop-color'
+                    value={
+                      activeItem.styles?.backdrop?.backgroundColor?.replace('80', '') || '#000000'
+                    }
+                    onChange={(e) => {
+                      setActiveItem({
+                        ...activeItem,
+                        styles: {
+                          ...activeItem.styles,
+                          backdrop: {
+                            ...activeItem.styles?.backdrop,
+                            backgroundColor: e.target.value + '80',
+                          },
+                        },
+                      })
+                    }}
+                  />
+                  <input
+                    type='number'
+                    name='width'
+                    id='width'
+                    value={activeItem.styles?.backdrop?.width?.replace('px', '') || '10'}
+                    onChange={(e) => {
+                      setActiveItem({
+                        ...activeItem,
+                        styles: {
+                          ...activeItem.styles,
+                          backdrop: {
+                            ...activeItem.styles?.backdrop,
+                            width: e.target.value + 'px',
+                          },
+                        },
+                      })
+                    }}
+                  />
+                  <input
+                    type='number'
+                    name='height'
+                    id='height'
+                    value={activeItem.styles?.backdrop?.height?.replace('px', '') || '10'}
+                    onChange={(e) => {
+                      setActiveItem({
+                        ...activeItem,
+                        styles: {
+                          ...activeItem.styles,
+                          backdrop: {
+                            ...activeItem.styles?.backdrop,
+                            height: e.target.value + 'px',
+                          },
+                        },
+                      })
+                    }}
+                  />
+                </>
+              ) : (
+                <>
+                  <input
+                    type='color'
+                    name='fill-color'
+                    id='fill-color'
+                    value={activeItem.styles?.bar?.backgroundColor || '#000000'}
+                    onChange={(e) => {
+                      setActiveItem({
+                        ...activeItem,
+                        styles: {
+                          ...activeItem.styles,
+                          bar: { backgroundColor: e.target.value },
+                        },
+                      })
+                    }}
+                  />
+                  <input
+                    type='color'
+                    name='backdrop-color'
+                    id='backdrop-color'
+                    value={
+                      activeItem.styles?.backdrop?.backgroundColor?.replace('80', '') || '#000000'
+                    }
+                    onChange={(e) => {
+                      setActiveItem({
+                        ...activeItem,
+                        styles: {
+                          ...activeItem.styles,
+                          backdrop: {
+                            ...activeItem.styles?.backdrop,
+                            backgroundColor: e.target.value + '80',
+                          },
+                        },
+                      })
+                    }}
+                  />
+                  <input
+                    type='number'
+                    name='size'
+                    id='size'
+                    value={activeItem.styles?.backdrop?.width?.replace('px', '') || '10'}
+                    onChange={(e) => {
+                      setActiveItem({
+                        ...activeItem,
+                        styles: {
+                          ...activeItem.styles,
+                          backdrop: {
+                            ...activeItem.styles?.backdrop,
+                            width: e.target.value + 'px',
+                            height: e.target.value + 'px',
+                          },
+                        },
+                      })
+                    }}
+                  />
+                </>
+              )}
+              <select
+                name='stat'
+                id='stat'
+                onChange={(e) => {
+                  setActiveItem({ ...activeItem, stat: e.target.value })
+                }}
+              >
+                <option value='health'>Health</option>
+                <option value='armor'>Armor</option>
+                <option value='stamina'>Stamina</option>
+                <option value='oxygen'>Oxygen</option>
+              </select>
+              <button type='submit'>Save</button>
+            </form>
+          </div>
+        ) : null}
       </section>
     </>
   )
