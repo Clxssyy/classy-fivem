@@ -15,9 +15,13 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
     setActiveGroup(groups[activeGroup?.id || 0])
   }, [groups])
 
+  useEffect(() => {
+    setActiveItem(undefined)
+  }, [activeGroup])
+
   const handleAddGroup = () => {
     const newGroup: group = {
-      id: groups.length + 1,
+      id: groups.length,
       name: 'New Group',
       items: [],
       position: { x: '0', y: '0' },
@@ -81,6 +85,30 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
           return group
         })
       })
+    }
+  }
+
+  const handleItemAdd = () => {
+    if (activeGroup) {
+      const newItem = {
+        id: activeGroup.items.length,
+        name: 'New Item',
+        type: 'bar',
+        stat: 'health',
+        styles: {
+          bar: { backgroundColor: '#000000' },
+          backdrop: { backgroundColor: '#00000080', width: '10px', height: '10px' },
+        },
+      }
+
+      const updatedGroups = groups.map((group) => {
+        if (group === activeGroup) {
+          return { ...group, items: [...group.items, newItem] }
+        }
+        return group
+      })
+
+      setGroups(updatedGroups)
     }
   }
 
@@ -240,7 +268,10 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
             className='flex divide-x divide-neutral-900 justify-between'
           >
             <div className='grow flex justify-center'>
-              <button className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'>
+              <button
+                className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'
+                onClick={handleItemAdd}
+              >
                 <PlusIcon className='h-6 w-6' />
               </button>
             </div>
