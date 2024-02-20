@@ -30,7 +30,7 @@ const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSett
 
   return (
     <div className='absolute grid place-items-center h-screen w-screen'>
-      <div className='w-1/2 h-3/4 bg-neutral-700 rounded shadow-lg flex-col flex divide-y divide-neutral-800 z-10'>
+      <div className='w-1/2 h-3/4 bg-neutral-700 rounded shadow-lg flex-col flex divide-y divide-neutral-800 z-10 overflow-hidden'>
         <header className='flex justify-between text-neutral-600'>
           <h1 className='p-2 font-bold text-3xl'>Settings</h1>
           <button className='p-2' onClick={exit}>
