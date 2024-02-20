@@ -1,21 +1,45 @@
 import { HeartIcon } from '@heroicons/react/24/solid'
+import { GiKevlarVest } from 'react-icons/gi'
+import { FaRunning } from 'react-icons/fa'
+import { RiBubbleChartFill } from 'react-icons/ri'
 
 interface StatCircleProps {
   statPercent: number
-  id: string
+  item: {
+    id: number
+    type: string
+    name: string
+    stat: string
+    styles?: {
+      backdrop?: {
+        backgroundColor?: string
+        width?: string
+        height?: string
+      }
+      bar?: {
+        backgroundColor: string
+      }
+    }
+  }
 }
 
-const StatCircle = ({ statPercent, id }: StatCircleProps) => {
+const StatCircle = ({ statPercent, item }: StatCircleProps) => {
   return (
     <div
-      id={id + '-backdrop'}
-      className='w-10 h-10 rounded-full overflow-hidden bg-green-400/50 flex place-items-center justify-center'
+      className='w-10 h-10 rounded-full overflow-hidden flex place-items-center justify-center'
+      style={item.styles?.backdrop}
     >
-      <HeartIcon className='w-6 h-6 absolute' />
+      {
+        {
+          health: <HeartIcon className='w-6 h-6 absolute' />,
+          armor: <GiKevlarVest className='w-6 h-6 absolute' />,
+          stamina: <FaRunning className='w-6 h-6 absolute' />,
+          oxygen: <RiBubbleChartFill className='w-6 h-6 absolute' />,
+        }[item.stat]
+      }
       <div
-        id={id}
-        style={{ height: `${statPercent}%` }}
-        className='bg-green-400 w-full place-self-end'
+        style={{ height: `${statPercent}%`, ...item.styles?.bar }}
+        className='w-full place-self-end'
       ></div>
     </div>
   )

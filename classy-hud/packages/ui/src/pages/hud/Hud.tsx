@@ -266,20 +266,11 @@ const Hud = () => {
             group={group}
             setGroups={setGroups}
           >
-            {group.items.map((item, index) => {
+            {group.items.map((item) => {
               if (item.type === 'bar') {
-                return (
-                  <StatBar
-                    key={index}
-                    statPercent={stats[item.stat]}
-                    id={item.id + '-bar'}
-                    styles={item.styles}
-                  />
-                )
+                return <StatBar key={item.id} statPercent={stats[item.stat]} item={item} />
               } else if (item.type === 'circle') {
-                return (
-                  <StatCircle key={index} statPercent={stats[item.stat]} id={item.id + '-circle'} />
-                )
+                return <StatCircle key={item.id} statPercent={stats[item.stat]} item={item} />
               }
             })}
           </DragWrapper>

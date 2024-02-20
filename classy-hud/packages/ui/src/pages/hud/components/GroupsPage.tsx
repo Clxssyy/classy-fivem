@@ -351,7 +351,22 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                           value={activeItem.type}
                           className='rounded grow'
                           onChange={(e) => {
-                            setActiveItem({ ...activeItem, type: e.target.value })
+                            if (e.target.value === 'circle') {
+                              setActiveItem({
+                                ...activeItem,
+                                type: e.target.value,
+                                styles: {
+                                  ...activeItem.styles,
+                                  backdrop: {
+                                    ...activeItem.styles?.backdrop,
+                                    width: '40px',
+                                    height: '40px',
+                                  },
+                                },
+                              })
+                            } else {
+                              setActiveItem({ ...activeItem, type: e.target.value })
+                            }
                           }}
                         >
                           <option value='bar'>Bar</option>
