@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { group } from '../Hud'
 
 interface DragWrapperProps {
@@ -108,7 +107,7 @@ const DragWrapper = ({ children, editMode, id, group, setGroups }: DragWrapperPr
       <p
         className={`${editMode ? '' : 'hidden'} absolute text-blue-400 font-bold whitespace-nowrap`}
       >
-        {id}
+        {group.name}
       </p>
       <div
         className={`flex gap-2 flex-wrap ${editMode ? 'invisible' : ''} ${

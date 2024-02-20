@@ -200,8 +200,6 @@ const Hud = () => {
   }, [editMode])
 
   useEffect(() => {
-    setGroups(exmapleSettings.groups as group[])
-
     window.addEventListener('message', (event) => {
       if (event.data.action === 'toggleSettings') {
         setSettings(!settings)
@@ -264,7 +262,7 @@ const Hud = () => {
           <DragWrapper
             key={index}
             editMode={editMode}
-            id={group.name}
+            id={group.id.toString()}
             group={group}
             setGroups={setGroups}
           >
