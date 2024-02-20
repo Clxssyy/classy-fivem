@@ -551,7 +551,12 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                           </div>
                         </>
                       )}
-                      <button type='submit'>Save</button>
+                      <button
+                        type='submit'
+                        className='bg-neutral-600 rounded shadow-lg hover:scale-[101%] active:scale-[99%]'
+                      >
+                        Save
+                      </button>
                     </form>
                   </div>
                 </div>
