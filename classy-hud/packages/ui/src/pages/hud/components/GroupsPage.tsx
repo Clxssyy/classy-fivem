@@ -12,7 +12,14 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
   const [activeItem, setActiveItem] = useState<group['items'][0]>()
 
   const handleAddGroup = () => {
-    const newGroup: group = { name: 'New Group', items: [] }
+    const newGroup: group = {
+      id: groups.length + 1,
+      name: 'New Group',
+      items: [],
+      position: { x: '0', y: '0' },
+      vertical: false,
+      gap: '0',
+    }
     setGroups((prevGroups) => [...prevGroups, newGroup])
   }
 
@@ -39,6 +46,20 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
     }
   }
 
+  const handleGroupEdit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (activeGroup) {
+      setGroups((prevGroups) => {
+        return prevGroups.map((group) => {
+          if (group.id === activeGroup.id) {
+            group = activeGroup
+          }
+          return group
+        })
+      })
+    }
+  }
+
   useEffect(() => {
     if (activeItem) setActiveItem(undefined)
   }, [activeGroup])
@@ -60,9 +81,12 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                 <button
                   key={index}
                   className={`${
-                    activeGroup === group ? 'bg-white/10' : ''
+                    group.id === activeGroup?.id ? 'bg-white/10' : ''
                   } text-sm px-2 hover:bg-white/10`}
-                  onClick={() => setActiveGroup(group)}
+                  onClick={() => {
+                    if (activeGroup === group) setActiveGroup(undefined)
+                    else setActiveGroup(group)
+                  }}
                 >
                   <h3>{group.name}</h3>
                 </button>
@@ -94,6 +118,79 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
             </div>
           </div>
         </div>
+        {activeGroup ? (
+          <div>
+            <form onSubmit={handleGroupEdit}>
+              <input
+                type='text'
+                name='name'
+                id='name'
+                placeholder='Name'
+                value={activeGroup?.name}
+                onChange={(e) => {
+                  setActiveGroup({ ...activeGroup, name: e.target.value })
+                }}
+              />
+              <input
+                type='number'
+                min={0}
+                max={window.innerHeight}
+                name='x-pos'
+                id='x-pos'
+                placeholder='X Position'
+                value={activeGroup?.position?.x}
+                onChange={(e) => {
+                  setActiveGroup({
+                    ...activeGroup,
+                    position: { ...activeGroup.position, x: e.target.value },
+                  })
+                }}
+              />
+              <input
+                type='number'
+                min={0}
+                max={window.innerWidth}
+                name='y-pos'
+                id='y-pos'
+                placeholder='Y Position'
+                value={activeGroup?.position?.y}
+                onChange={(e) => {
+                  setActiveGroup({
+                    ...activeGroup,
+                    position: { ...activeGroup.position, y: e.target.value },
+                  })
+                }}
+              />
+              <input
+                type='checkbox'
+                min={0}
+                max={window.innerHeight}
+                name='x-pos'
+                id='x-pos'
+                checked={activeGroup?.vertical}
+                onChange={(e) => {
+                  setActiveGroup({
+                    ...activeGroup,
+                    vertical: !activeGroup.vertical,
+                  })
+                }}
+              />
+              <input
+                type='range'
+                name='x-pos'
+                id='x-pos'
+                value={activeGroup?.gap}
+                onChange={(e) => {
+                  setActiveGroup({
+                    ...activeGroup,
+                    gap: e.target.value,
+                  })
+                }}
+              />
+              <button type='submit'>Save</button>
+            </form>
+          </div>
+        ) : null}
         <h2 className='font-bold text-xl text-neutral-600'>Items</h2>
         <div
           id='stat-bar-items-container'

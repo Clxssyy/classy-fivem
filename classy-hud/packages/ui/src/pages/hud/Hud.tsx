@@ -15,6 +15,7 @@ interface PlayerStats {
 }
 
 export interface group {
+  id: number
   name: string
   items: {
     type: string
@@ -31,19 +32,18 @@ export interface group {
       }
     }
   }[]
-  options?: {
-    position?: {
-      x: string
-      y: string
-    }
-    vertical?: boolean
-    gap?: string
+  position: {
+    x: string
+    y: string
   }
+  vertical: boolean
+  gap: string
 }
 
 const exmapleSettings = {
   groups: [
     {
+      id: 0,
       name: 'default',
       items: [
         {
@@ -98,16 +98,15 @@ const exmapleSettings = {
           },
         },
       ],
-      options: {
-        position: {
-          x: '200',
-          y: '300',
-        },
-        vertical: true,
-        gap: '8',
+      position: {
+        x: '200',
+        y: '300',
       },
+      vertical: true,
+      gap: '8',
     },
     {
+      id: 1,
       name: 'test',
       items: [
         {
@@ -147,6 +146,12 @@ const exmapleSettings = {
           },
         },
       ],
+      position: {
+        x: '0',
+        y: '0',
+      },
+      vertical: false,
+      gap: '8',
     },
   ],
 }
@@ -230,7 +235,7 @@ const Hud = () => {
       ) : null}
       {groups.map((group, index) => {
         return (
-          <DragWrapper key={index} editMode={editMode} id={group.name} options={group.options}>
+          <DragWrapper key={index} editMode={editMode} id={group.name} group={group}>
             {group.items.map((item, index) => {
               if (item.type === 'bar') {
                 return (
