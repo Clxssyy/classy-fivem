@@ -1,5 +1,11 @@
-import { EllipsisVerticalIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
-import { group } from '../Hud'
+import {
+  ClipboardDocumentListIcon,
+  DocumentDuplicateIcon,
+  EllipsisVerticalIcon,
+  MinusIcon,
+  PlusIcon,
+} from '@heroicons/react/24/solid'
+import { group, item } from '../Hud'
 import { useEffect, useState } from 'react'
 
 interface GroupsPageProps {
@@ -334,6 +340,45 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
     return el
   }
 
+  const handleGroupCopy = () => {
+    if (activeGroup) {
+      localStorage.setItem('activeGroup', JSON.stringify(activeGroup))
+    }
+  }
+
+  const handleGroupPaste = () => {
+    const group = localStorage.getItem('activeGroup')
+    if (group) {
+      let pastedGroup = JSON.parse(group) as group
+      pastedGroup.id = Math.random() * 1000
+      setGroups((prevGroups) => {
+        return [...prevGroups, pastedGroup]
+      })
+    }
+  }
+
+  const handleItemCopy = () => {
+    if (activeItem) {
+      localStorage.setItem('activeItem', JSON.stringify(activeItem))
+    }
+  }
+
+  const handleItemPaste = () => {
+    const item = localStorage.getItem('activeItem')
+    if (item) {
+      let pastedItem = JSON.parse(item) as item
+      pastedItem.id = Math.random() * 1000
+      setGroups((prevGroups) => {
+        return prevGroups.map((group) => {
+          if (group === activeGroup) {
+            return { ...group, items: [...group.items, pastedItem] }
+          }
+          return group
+        })
+      })
+    }
+  }
+
   return (
     <>
       <h1 className='font-bold text-2xl'>Groups</h1>
@@ -390,6 +435,24 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
             >
               <PlusIcon className='h-6 w-6' />
             </button>
+          </div>
+          <div className='flex'>
+            <div className='grow flex justify-center'>
+              <button
+                className='p-2 grow flex justify-center hover:bg-white/10 active:scale-[99%]'
+                onClick={handleGroupCopy}
+              >
+                <DocumentDuplicateIcon className='h-6 w-6' />
+              </button>
+            </div>
+            <div className='grow flex justify-center'>
+              <button
+                className='p-2 grow flex justify-center hover:bg-white/10 active:scale-[99%]'
+                onClick={handleGroupPaste}
+              >
+                <ClipboardDocumentListIcon className='h-6 w-6' />
+              </button>
+            </div>
           </div>
           <div className='grow flex justify-center'>
             <button
@@ -561,6 +624,24 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                   >
                     <PlusIcon className='h-6 w-6' />
                   </button>
+                </div>
+                <div className='flex'>
+                  <div className='grow flex justify-center'>
+                    <button
+                      className='p-2 grow flex justify-center hover:bg-white/10 active:scale-[99%]'
+                      onClick={handleItemCopy}
+                    >
+                      <DocumentDuplicateIcon className='h-6 w-6' />
+                    </button>
+                  </div>
+                  <div className='grow flex justify-center'>
+                    <button
+                      className='p-2 grow flex justify-center hover:bg-white/10 active:scale-[99%]'
+                      onClick={handleItemPaste}
+                    >
+                      <ClipboardDocumentListIcon className='h-6 w-6' />
+                    </button>
+                  </div>
                 </div>
                 <div className='grow flex justify-center'>
                   <button
