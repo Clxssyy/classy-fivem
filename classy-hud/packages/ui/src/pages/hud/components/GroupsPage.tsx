@@ -128,7 +128,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
     <>
       <h1 className='font-bold text-2xl'>Groups</h1>
       <div className='rounded overflow-hidden flex flex-col main-colors divide-y-2 divide-neutral-800 shadow-lg border border-neutral-800'>
-        <div className='overflow-y-auto secondary-scroll h-48 divide-y divide-neutral-800 flex flex-col shadow-lg'>
+        <div className='overflow-y-scroll secondary-scroll h-48 divide-y divide-neutral-800 flex flex-col shadow-lg'>
           {groups.map((group, index) => {
             return (
               <button
@@ -172,7 +172,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
           <div className='p-2'>
             <h2 className='font-bold text-xl'>Options</h2>
             <form
-              className='flex flex-col p-2 gap-2 main-colors rounded'
+              className='flex flex-col p-2 gap-2 main-colors rounded shadow-lg'
               onSubmit={handleGroupEdit}
             >
               <div className='w-full flex gap-1'>
@@ -318,7 +318,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
               <div className='p-2'>
                 <h2 className='font-bold text-xl'>Options</h2>
                 <form
-                  className='flex flex-col p-2 gap-2 main-colors rounded'
+                  className='flex flex-col p-2 gap-2 main-colors rounded shadow-lg'
                   onSubmit={handleItemEdit}
                 >
                   <div className='w-full flex gap-1'>

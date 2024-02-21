@@ -28,10 +28,6 @@
   @apply rounded;
 }
 
-.custom-scroll::-webkit-scrollbar-track {
-  @apply rounded-br;
-}
-
 .secondary-scroll::-webkit-scrollbar {
   @apply w-2;
 }
@@ -39,10 +35,6 @@
 .secondary-scroll::-webkit-scrollbar-thumb {
   background-color: var(--secondary-bg-color);
   @apply rounded;
-}
-
-.secondary-scroll::-webkit-scrollbar-track {
-  @apply rounded-br;
 }
 
 .input {
