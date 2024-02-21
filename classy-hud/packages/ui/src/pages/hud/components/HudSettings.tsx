@@ -19,9 +19,10 @@ const LayoutPage = ({
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   return (
-    <button className='p-2' onClick={() => setEditMode(!editMode)}>
-      <PencilIcon className='h-6 w-6' />
-    </button>
+    <>
+      <h1>Layout</h1>
+      <button onClick={() => setEditMode(!editMode)}>Edit Mode</button>
+    </>
   )
 }
 
