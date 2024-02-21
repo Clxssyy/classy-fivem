@@ -26,7 +26,7 @@ const LayoutPage = ({
 }
 
 const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSettingsProps) => {
-  const [activePage, setActivePage] = useState<string>('Layout')
+  const [activePage, setActivePage] = useState<string>('Groups')
 
   return (
     <div className='absolute grid place-items-center h-screen w-screen'>
@@ -42,16 +42,6 @@ const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSett
             <div className='flex flex-col divide-y divide-neutral-800 overflow-y-auto custom-scroll'>
               <button
                 className={`${
-                  activePage === 'Layout'
-                    ? 'secondary-colors cursor-not-allowed'
-                    : 'hover:bg-white/10'
-                } flex p-2 grow`}
-                onClick={() => setActivePage('Layout')}
-              >
-                Layout
-              </button>
-              <button
-                className={`${
                   activePage === 'Groups'
                     ? 'secondary-colors cursor-not-allowed'
                     : 'hover:bg-white/10'
@@ -59,6 +49,16 @@ const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSett
                 onClick={() => setActivePage('Groups')}
               >
                 Groups
+              </button>
+              <button
+                className={`${
+                  activePage === 'Layout'
+                    ? 'secondary-colors cursor-not-allowed'
+                    : 'hover:bg-white/10'
+                } flex p-2 grow`}
+                onClick={() => setActivePage('Layout')}
+              >
+                Layout
               </button>
             </div>
             <div className='flex justify-between divide-x divide-neutral-800'>

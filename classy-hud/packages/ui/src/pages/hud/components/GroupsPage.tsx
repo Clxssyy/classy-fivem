@@ -22,6 +22,8 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
     }
   }, [activeGroup])
 
+  // TODO: Add / Removing groups with ids set to the length of the array needs to be changed
+  // TODO: Change to work with database instead of state
   const handleAddGroup = () => {
     const newGroup: group = {
       id: groups.length,
