@@ -58,11 +58,10 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
     }
   }, [activeGroup])
 
-  // TODO: Add / Removing groups with ids set to the length of the array needs to be changed
   // TODO: Change to work with database instead of state
   const handleAddGroup = () => {
     const newGroup: group = {
-      id: groups.length,
+      id: Math.random() * 1000,
       name: 'New Group',
       items: [],
       position: { x: '0', y: '0' },
@@ -75,15 +74,20 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
 
   const handleRemoveGroup = () => {
     if (activeGroup) {
+      const index = groups.findIndex((group) => group === activeGroup)
       setGroups((prevGroups) => {
         return prevGroups.filter((group) => group !== activeGroup)
       })
-      setActiveGroup(() => groups[activeGroup.id - 1] || undefined)
+      setActiveGroup(() => {
+        const newActiveGroup = index === 0 ? 0 : index - 1
+        return groups[newActiveGroup]
+      })
     }
   }
 
   const handleRemoveItem = () => {
     if (activeGroup && activeItem) {
+      const index = activeGroup.items.findIndex((item) => item === activeItem)
       setGroups((prevGroups) => {
         return prevGroups.map((group) => {
           if (group === activeGroup) {
@@ -93,8 +97,8 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
         })
       })
       setActiveItem(() => {
-        const newActiveItem = activeItem?.id - 1
-        return activeGroup?.items[newActiveItem] || undefined
+        const newActiveItem = index === 0 ? 0 : index - 1
+        return activeGroup?.items[newActiveItem]
       })
     }
   }
@@ -139,7 +143,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
         return (~~(Math.random() * 16)).toString(16)
       })
       const newItem = {
-        id: activeGroup.items.length,
+        id: Math.random() * 1000,
         name: 'New Item',
         type: 'bar',
         stat: 'health',
