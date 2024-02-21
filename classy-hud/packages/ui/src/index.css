@@ -2,14 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --main-bg-color: rgb(31 31 31);
+  --main-text-color: rgb(144 143 143);
+  --secondary-bg-color: rgb(25 25 25);
+  --secondary-text-color: rgb(114, 116, 114);
+}
+
+.main-colors {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+}
+
+.secondary-colors {
+  background-color: var(--secondary-bg-color);
+  color: var(--secondary-text-color);
+}
+
 .custom-scroll::-webkit-scrollbar {
   @apply w-2;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
-  @apply rounded bg-neutral-600;
+  background-color: var(--main-bg-color);
+  @apply rounded;
 }
 
 .custom-scroll::-webkit-scrollbar-track {
   @apply rounded-br;
+}
+
+.secondary-scroll::-webkit-scrollbar {
+  @apply w-2;
+}
+
+.secondary-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-bg-color);
+  @apply rounded;
+}
+
+.secondary-scroll::-webkit-scrollbar-track {
+  @apply rounded-br;
+}
+
+.input {
+  @apply rounded grow secondary-colors;
 }

@@ -126,465 +126,411 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
 
   return (
     <>
-      <section className='p-2'>
-        <h1 className='font-bold text-2xl text-neutral-600'>Groups</h1>
-        <div
-          id='stat-bar-groups-container'
-          className='rounded overflow-hidden bg-neutral-800 flex flex-col divide-y-2 divide-neutral-900 shadow-lg'
-        >
-          <div
-            id='stat-bar-groups'
-            className='overflow-y-auto custom-scroll h-48 divide-y divide-neutral-900 flex flex-col'
-          >
-            {groups.map((group, index) => {
-              return (
-                <button
-                  key={index}
-                  className={`${
-                    group.id === activeGroup?.id ? 'bg-neutral-600' : ''
-                  } text-sm px-2 hover:bg-neutral-600 transition-colors`}
-                  onClick={() => {
-                    if (activeGroup?.id === group.id) setActiveGroup(undefined)
-                    else setActiveGroup(group)
-                  }}
-                >
-                  <h3>{group.name}</h3>
-                </button>
-              )
-            })}
+      <h1 className='font-bold text-2xl'>Groups</h1>
+      <div className='rounded overflow-hidden flex flex-col main-colors divide-y-2 divide-neutral-800 shadow-lg border border-neutral-800'>
+        <div className='overflow-y-auto secondary-scroll h-48 divide-y divide-neutral-800 flex flex-col shadow-lg'>
+          {groups.map((group, index) => {
+            return (
+              <button
+                key={index}
+                className={`${
+                  group.id === activeGroup?.id ? 'secondary-colors' : ''
+                } text-sm px-2 hover:bg-white/10`}
+                onClick={() => {
+                  if (activeGroup?.id === group.id) setActiveGroup(undefined)
+                  else setActiveGroup(group)
+                }}
+              >
+                <p className='text-xs p-2'>
+                  {group.name} ({group.items.length})
+                </p>
+              </button>
+            )
+          })}
+        </div>
+        <div className='flex divide-x divide-neutral-800 justify-between'>
+          <div className='grow flex justify-center'>
+            <button
+              className='p-2 grow flex justify-center hover:bg-white/10 active:scale-[99%]'
+              onClick={handleAddGroup}
+            >
+              <PlusIcon className='h-6 w-6' />
+            </button>
           </div>
-          <div
-            id='stat-bar-groups-options'
-            className='flex divide-x divide-neutral-900 justify-between'
-          >
-            <div className='grow flex justify-center'>
-              <button
-                className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'
-                onClick={handleAddGroup}
-              >
-                <PlusIcon className='h-6 w-6' />
-              </button>
-            </div>
-            <div className='grow flex justify-center'>
-              <button
-                className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'
-                onClick={handleRemoveGroup}
-              >
-                <MinusIcon className='h-6 w-6' />
-              </button>
-            </div>
+          <div className='grow flex justify-center'>
+            <button
+              className='p-2 grow flex justify-center hover:bg-white/10 active:scale-[99%]'
+              onClick={handleRemoveGroup}
+            >
+              <MinusIcon className='h-6 w-6' />
+            </button>
           </div>
         </div>
-        {activeGroup ? (
-          <>
-            <div className='p-2'>
-              <h2 className='font-bold text-xl text-neutral-600'>Options</h2>
-              <form className='flex flex-col p-2 gap-2' onSubmit={handleGroupEdit}>
-                <div className='w-full flex gap-1'>
-                  <label htmlFor='name'>Name:</label>
-                  <input
-                    type='text'
-                    name='name'
-                    id='name'
-                    placeholder='Name'
-                    value={activeGroup?.name}
-                    className='rounded grow'
-                    onChange={(e) => {
-                      setActiveGroup({ ...activeGroup, name: e.target.value })
-                    }}
-                  />
-                </div>
-                <div className='w-full flex gap-1'>
-                  <label htmlFor='x-pos'>X Position:</label>
-                  <input
-                    type='number'
-                    min={0}
-                    max={window.innerHeight}
-                    name='x-pos'
-                    id='x-pos'
-                    placeholder='X Position'
-                    className='rounded grow'
-                    value={activeGroup?.position.x.replace('px', '')}
-                    onChange={(e) => {
-                      setActiveGroup({
-                        ...activeGroup,
-                        position: { ...activeGroup.position, x: e.target.value + 'px' },
-                      })
-                    }}
-                  />
-                </div>
-                <div className='w-full flex gap-1'>
-                  <label htmlFor='y-pos'>Y Position:</label>
-                  <input
-                    type='number'
-                    min={0}
-                    max={window.innerWidth}
-                    name='y-pos'
-                    id='y-pos'
-                    placeholder='Y Position'
-                    className='rounded grow'
-                    value={activeGroup?.position.y.replace('px', '')}
-                    onChange={(e) => {
-                      setActiveGroup({
-                        ...activeGroup,
-                        position: { ...activeGroup.position, y: e.target.value + 'px' },
-                      })
-                    }}
-                  />
-                </div>
-                <div className='w-full flex gap-1'>
-                  <label htmlFor='y-pos'>Gap:</label>
-                  <input
-                    type='number'
-                    min={0}
-                    max={100}
-                    name='gap'
-                    id='gap'
-                    value={activeGroup?.gap}
-                    className='rounded grow'
-                    onChange={(e) => {
-                      setActiveGroup({
-                        ...activeGroup,
-                        gap: e.target.value,
-                      })
-                    }}
-                  />
-                </div>
-                <div className='w-full flex gap-1'>
-                  <label htmlFor='y-pos'>Column Stack:</label>
-                  <input
-                    type='checkbox'
-                    min={0}
-                    max={window.innerHeight}
-                    name='vertical'
-                    id='vertical'
-                    checked={activeGroup?.vertical}
-                    className='rounded'
-                    onChange={(e) => {
-                      setActiveGroup({
-                        ...activeGroup,
-                        vertical: !activeGroup.vertical,
-                      })
-                    }}
-                  />
-                </div>
-                <button
-                  type='submit'
-                  className='bg-neutral-600 rounded shadow-lg hover:scale-[101%] active:scale-[99%]'
-                >
-                  Save
-                </button>
-              </form>
-            </div>
-            <div className='p-2'>
-              <h2 className='font-bold text-xl text-neutral-600'>Items</h2>
-              <div
-                id='stat-bar-items-container'
-                className='rounded overflow-hidden bg-neutral-800 flex flex-col divide-y-2 divide-neutral-900 shadow-lg'
+      </div>
+      {activeGroup ? (
+        <>
+          <div className='p-2'>
+            <h2 className='font-bold text-xl'>Options</h2>
+            <form
+              className='flex flex-col p-2 gap-2 main-colors rounded'
+              onSubmit={handleGroupEdit}
+            >
+              <div className='w-full flex gap-1'>
+                <label htmlFor='name'>Name:</label>
+                <input
+                  type='text'
+                  name='name'
+                  id='name'
+                  placeholder='Name'
+                  autoFocus
+                  value={activeGroup?.name}
+                  className='input'
+                  onChange={(e) => {
+                    setActiveGroup({ ...activeGroup, name: e.target.value })
+                  }}
+                />
+              </div>
+              <div className='w-full flex gap-1'>
+                <label htmlFor='x-pos'>X Position:</label>
+                <input
+                  type='number'
+                  min={0}
+                  max={window.innerHeight}
+                  name='x-pos'
+                  id='x-pos'
+                  placeholder='X Position'
+                  className='input'
+                  value={activeGroup?.position.x.replace('px', '')}
+                  onChange={(e) => {
+                    setActiveGroup({
+                      ...activeGroup,
+                      position: { ...activeGroup.position, x: e.target.value + 'px' },
+                    })
+                  }}
+                />
+              </div>
+              <div className='w-full flex gap-1'>
+                <label htmlFor='y-pos'>Y Position:</label>
+                <input
+                  type='number'
+                  min={0}
+                  max={window.innerWidth}
+                  name='y-pos'
+                  id='y-pos'
+                  placeholder='Y Position'
+                  className='input'
+                  value={activeGroup?.position.y.replace('px', '')}
+                  onChange={(e) => {
+                    setActiveGroup({
+                      ...activeGroup,
+                      position: { ...activeGroup.position, y: e.target.value + 'px' },
+                    })
+                  }}
+                />
+              </div>
+              <div className='w-full flex gap-1'>
+                <label htmlFor='item-gap'>Item gap:</label>
+                <input
+                  type='number'
+                  min={0}
+                  max={100}
+                  name='item-gap'
+                  id='item-gap'
+                  value={activeGroup?.gap}
+                  className='input'
+                  onChange={(e) => {
+                    setActiveGroup({
+                      ...activeGroup,
+                      gap: e.target.value,
+                    })
+                  }}
+                />
+              </div>
+              <div className='w-full flex gap-1'>
+                <label htmlFor='vertical'>Column Stack:</label>
+                <input
+                  type='checkbox'
+                  min={0}
+                  max={window.innerHeight}
+                  name='vertical'
+                  id='vertical'
+                  checked={activeGroup?.vertical}
+                  className='rounded'
+                  onChange={(e) => {
+                    setActiveGroup({
+                      ...activeGroup,
+                      vertical: !activeGroup.vertical,
+                    })
+                  }}
+                />
+              </div>
+              <button
+                type='submit'
+                className='secondary-colors rounded shadow-lg hover:bg-white/10 hover:scale-[101%] active:scale-[99%]'
               >
-                <div
-                  id='stat-bar-items'
-                  className='overflow-y-auto custom-scroll h-48 divide-y divide-neutral-900 flex flex-col'
-                >
-                  {activeGroup?.items.map((item, index) => {
-                    return (
-                      <button
-                        key={index}
-                        className={`${
-                          activeItem?.id === item.id ? 'bg-neutral-600' : ''
-                        } text-sm px-2 hover:bg-neutral-600 transition-colors`}
-                        onClick={() => {
-                          if (activeItem?.id === item.id) setActiveItem(undefined)
-                          else setActiveItem(item)
-                        }}
-                      >
-                        <h3>{item.name}</h3>
-                      </button>
-                    )
-                  })}
+                Save
+              </button>
+            </form>
+          </div>
+          <div className='p-2'>
+            <h2 className='font-bold text-xl'>Items</h2>
+            <div className='rounded overflow-hidden main-colors flex flex-col divide-y-2 divide-neutral-800 shadow-lg border border-neutral-800'>
+              <div className='overflow-y-scroll secondary-scroll h-48 divide-y divide-neutral-800 flex flex-col shadow-lg'>
+                {activeGroup?.items.map((item, index) => {
+                  return (
+                    <button
+                      key={index}
+                      className={`${
+                        activeItem?.id === item.id ? 'secondary-colors' : ''
+                      } text-sm px-2 hover:bg-white/10`}
+                      onClick={() => {
+                        if (activeItem?.id === item.id) setActiveItem(undefined)
+                        else setActiveItem(item)
+                      }}
+                    >
+                      <p className='text-xs p-2'>
+                        {item.name} ({item.type})
+                      </p>
+                    </button>
+                  )
+                })}
+              </div>
+              <div className='flex divide-x divide-neutral-800 justify-between'>
+                <div className='grow flex justify-center'>
+                  <button
+                    className='p-2 grow flex justify-center hover:bg-white/10 active:scale-[99%]'
+                    onClick={handleItemAdd}
+                  >
+                    <PlusIcon className='h-6 w-6' />
+                  </button>
                 </div>
-                <div
-                  id='stat-bar-items-options'
-                  className='flex divide-x divide-neutral-900 justify-between'
-                >
-                  <div className='grow flex justify-center'>
-                    <button
-                      className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'
-                      onClick={handleItemAdd}
-                    >
-                      <PlusIcon className='h-6 w-6' />
-                    </button>
-                  </div>
-                  <div className='grow flex justify-center'>
-                    <button
-                      className='p-2 grow flex justify-center hover:bg-white/10 active:scale-95'
-                      onClick={handleRemoveItem}
-                    >
-                      <MinusIcon className='h-6 w-6' />
-                    </button>
-                  </div>
+                <div className='grow flex justify-center'>
+                  <button
+                    className='p-2 grow flex justify-center hover:bg-white/10 active:scale-[99%]'
+                    onClick={handleRemoveItem}
+                  >
+                    <MinusIcon className='h-6 w-6' />
+                  </button>
                 </div>
               </div>
-              {activeItem ? (
-                <div className='p-2'>
-                  <h2 className='font-bold text-xl text-neutral-600'>Options</h2>
-                  <div className='p-2'>
-                    <form className='flex flex-col gap-2' onSubmit={handleItemEdit}>
+            </div>
+            {activeItem ? (
+              <div className='p-2'>
+                <h2 className='font-bold text-xl'>Options</h2>
+                <form
+                  className='flex flex-col p-2 gap-2 main-colors rounded'
+                  onSubmit={handleItemEdit}
+                >
+                  <div className='w-full flex gap-1'>
+                    <label htmlFor='item-name'>Name:</label>
+                    <input
+                      type='text'
+                      name='name'
+                      id='item-name'
+                      placeholder='Name'
+                      autoFocus
+                      className='input'
+                      value={activeItem.name}
+                      onChange={(e) => {
+                        setActiveItem({ ...activeItem, name: e.target.value })
+                      }}
+                    />
+                  </div>
+                  <div className='w-full flex gap-1'>
+                    <label htmlFor='type'>Type:</label>
+                    <select
+                      name='type'
+                      id='type'
+                      value={activeItem.type}
+                      className='input'
+                      onChange={(e) => {
+                        if (e.target.value === 'circle') {
+                          setActiveItem({
+                            ...activeItem,
+                            type: e.target.value,
+                            styles: {
+                              ...activeItem.styles,
+                              backdrop: {
+                                ...activeItem.styles?.backdrop,
+                                width: '40px',
+                                height: '40px',
+                              },
+                            },
+                          })
+                        } else {
+                          setActiveItem({ ...activeItem, type: e.target.value })
+                        }
+                      }}
+                    >
+                      <option value='bar'>Bar</option>
+                      <option value='circle'>Circle</option>
+                    </select>
+                  </div>
+                  <div className='flex justify-center gap-1'>
+                    <label htmlFor='stat'>Stat:</label>
+                    <select
+                      name='stat'
+                      id='stat'
+                      className='input'
+                      value={activeItem.stat}
+                      onChange={(e) => {
+                        setActiveItem({ ...activeItem, stat: e.target.value })
+                      }}
+                    >
+                      <option value='health'>Health</option>
+                      <option value='armor'>Armor</option>
+                      <option value='stamina'>Stamina</option>
+                      <option value='oxygen'>Oxygen</option>
+                    </select>
+                  </div>
+                  <div className='flex justify-center gap-1'>
+                    <label htmlFor='stat-direction'>Stat Drain:</label>
+                    <select
+                      name='stat'
+                      id='stat-direction'
+                      className='input'
+                      value={activeItem.statDirection || 'r-l'}
+                      onChange={(e) => {
+                        setActiveItem({
+                          ...activeItem,
+                          statDirection: e.target.value,
+                        })
+                      }}
+                    >
+                      <option value='t-b'>Top down</option>
+                      <option value='r-l'>Right left</option>
+                    </select>
+                  </div>
+                  {activeItem.type === 'bar' ? (
+                    <>
                       <div className='w-full flex gap-1'>
-                        <label htmlFor='item-name'>Name:</label>
+                        <label htmlFor='width'>Width:</label>
                         <input
-                          type='text'
-                          name='name'
-                          id='item-name'
-                          placeholder='Name'
-                          className='rounded grow'
-                          value={activeItem.name}
+                          type='number'
+                          name='width'
+                          id='width'
+                          className='input'
+                          value={activeItem.styles?.backdrop?.width?.replace('px', '') || '10'}
                           onChange={(e) => {
-                            setActiveItem({ ...activeItem, name: e.target.value })
+                            setActiveItem({
+                              ...activeItem,
+                              styles: {
+                                ...activeItem.styles,
+                                backdrop: {
+                                  ...activeItem.styles?.backdrop,
+                                  width: e.target.value + 'px',
+                                },
+                              },
+                            })
                           }}
                         />
                       </div>
                       <div className='w-full flex gap-1'>
-                        <label htmlFor='type'>Type:</label>
-                        <select
-                          name='type'
-                          id='type'
-                          value={activeItem.type}
-                          className='rounded grow'
-                          onChange={(e) => {
-                            if (e.target.value === 'circle') {
-                              setActiveItem({
-                                ...activeItem,
-                                type: e.target.value,
-                                styles: {
-                                  ...activeItem.styles,
-                                  backdrop: {
-                                    ...activeItem.styles?.backdrop,
-                                    width: '40px',
-                                    height: '40px',
-                                  },
-                                },
-                              })
-                            } else {
-                              setActiveItem({ ...activeItem, type: e.target.value })
-                            }
-                          }}
-                        >
-                          <option value='bar'>Bar</option>
-                          <option value='circle'>Circle</option>
-                        </select>
-                      </div>
-                      <div className='flex justify-center gap-1'>
-                        <label htmlFor='stat'>Stat:</label>
-                        <select
-                          name='stat'
-                          id='stat'
-                          className='rounded grow'
-                          value={activeItem.stat}
-                          onChange={(e) => {
-                            setActiveItem({ ...activeItem, stat: e.target.value })
-                          }}
-                        >
-                          <option value='health'>Health</option>
-                          <option value='armor'>Armor</option>
-                          <option value='stamina'>Stamina</option>
-                          <option value='oxygen'>Oxygen</option>
-                        </select>
-                      </div>
-                      <div className='flex justify-center gap-1'>
-                        <label htmlFor='stat-direction'>Stat Drain:</label>
-                        <select
-                          name='stat'
-                          id='stat-direction'
-                          className='rounded grow'
-                          value={activeItem.statDirection || 'r-l'}
+                        <label htmlFor='height'>Height:</label>
+                        <input
+                          type='number'
+                          name='height'
+                          id='height'
+                          className='input'
+                          value={activeItem.styles?.backdrop?.height?.replace('px', '') || '10'}
                           onChange={(e) => {
                             setActiveItem({
                               ...activeItem,
-                              statDirection: e.target.value,
+                              styles: {
+                                ...activeItem.styles,
+                                backdrop: {
+                                  ...activeItem.styles?.backdrop,
+                                  height: e.target.value + 'px',
+                                },
+                              },
                             })
                           }}
-                        >
-                          <option value='t-b'>Top down</option>
-                          <option value='r-l'>Right left</option>
-                        </select>
+                        />
                       </div>
-                      {activeItem.type === 'bar' ? (
-                        <>
-                          <div className='w-full flex gap-1'>
-                            <label htmlFor='width'>Width:</label>
-                            <input
-                              type='number'
-                              name='width'
-                              id='width'
-                              className='rounded grow'
-                              value={activeItem.styles?.backdrop?.width?.replace('px', '') || '10'}
-                              onChange={(e) => {
-                                setActiveItem({
-                                  ...activeItem,
-                                  styles: {
-                                    ...activeItem.styles,
-                                    backdrop: {
-                                      ...activeItem.styles?.backdrop,
-                                      width: e.target.value + 'px',
-                                    },
-                                  },
-                                })
-                              }}
-                            />
-                          </div>
-                          <div className='w-full flex gap-1'>
-                            <label htmlFor='height'>Height:</label>
-                            <input
-                              type='number'
-                              name='height'
-                              id='height'
-                              className='rounded grow'
-                              value={activeItem.styles?.backdrop?.height?.replace('px', '') || '10'}
-                              onChange={(e) => {
-                                setActiveItem({
-                                  ...activeItem,
-                                  styles: {
-                                    ...activeItem.styles,
-                                    backdrop: {
-                                      ...activeItem.styles?.backdrop,
-                                      height: e.target.value + 'px',
-                                    },
-                                  },
-                                })
-                              }}
-                            />
-                          </div>
-                          <div className='w-full flex justify-evenly'>
-                            <div className='flex justify-center gap-1'>
-                              <label htmlFor='fill-color'>Fill:</label>
-                              <input
-                                type='color'
-                                name='fill-color'
-                                id='fill-color'
-                                value={activeItem.styles?.bar?.backgroundColor || '#000000'}
-                                onChange={(e) => {
-                                  setActiveItem({
-                                    ...activeItem,
-                                    styles: {
-                                      ...activeItem.styles,
-                                      bar: { backgroundColor: e.target.value },
-                                    },
-                                  })
-                                }}
-                              />
-                            </div>
-                            <div className='flex justify-center gap-1'>
-                              <label htmlFor='backdrop-color'>Backdrop:</label>
-                              <input
-                                type='color'
-                                name='backdrop-color'
-                                id='backdrop-color'
-                                value={
-                                  activeItem.styles?.backdrop?.backgroundColor?.replace('80', '') ||
-                                  '#000000'
-                                }
-                                onChange={(e) => {
-                                  setActiveItem({
-                                    ...activeItem,
-                                    styles: {
-                                      ...activeItem.styles,
-                                      backdrop: {
-                                        ...activeItem.styles?.backdrop,
-                                        backgroundColor: e.target.value + '80',
-                                      },
-                                    },
-                                  })
-                                }}
-                              />
-                            </div>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className='flex justify-center gap-1'>
-                            <label htmlFor='size'>Size:</label>
-                            <input
-                              type='number'
-                              name='size'
-                              id='size'
-                              className='rounded grow'
-                              value={activeItem.styles?.backdrop?.width?.replace('px', '') || '10'}
-                              onChange={(e) => {
-                                setActiveItem({
-                                  ...activeItem,
-                                  styles: {
-                                    ...activeItem.styles,
-                                    backdrop: {
-                                      ...activeItem.styles?.backdrop,
-                                      width: e.target.value + 'px',
-                                      height: e.target.value + 'px',
-                                    },
-                                  },
-                                })
-                              }}
-                            />
-                          </div>
-                          <div className='w-full flex justify-evenly'>
-                            <div className='flex justify-center gap-1'>
-                              <label htmlFor='circle-fill-color'>Fill:</label>
-                              <input
-                                type='color'
-                                name='fill-color'
-                                id='circle-fill-color'
-                                value={activeItem.styles?.bar?.backgroundColor || '#000000'}
-                                onChange={(e) => {
-                                  setActiveItem({
-                                    ...activeItem,
-                                    styles: {
-                                      ...activeItem.styles,
-                                      bar: { backgroundColor: e.target.value },
-                                    },
-                                  })
-                                }}
-                              />
-                            </div>
-                            <div className='flex justify-center gap-1'>
-                              <label htmlFor='circle-backdrop-color'>Backdrop:</label>
-                              <input
-                                type='color'
-                                name='backdrop-color'
-                                id='circle-backdrop-color'
-                                value={
-                                  activeItem.styles?.backdrop?.backgroundColor?.replace('80', '') ||
-                                  '#000000'
-                                }
-                                onChange={(e) => {
-                                  setActiveItem({
-                                    ...activeItem,
-                                    styles: {
-                                      ...activeItem.styles,
-                                      backdrop: {
-                                        ...activeItem.styles?.backdrop,
-                                        backgroundColor: e.target.value + '80',
-                                      },
-                                    },
-                                  })
-                                }}
-                              />
-                            </div>
-                          </div>
-                        </>
-                      )}
-                      <button
-                        type='submit'
-                        className='bg-neutral-600 rounded shadow-lg hover:scale-[101%] active:scale-[99%]'
-                      >
-                        Save
-                      </button>
-                    </form>
+                    </>
+                  ) : (
+                    <>
+                      <div className='flex justify-center gap-1'>
+                        <label htmlFor='size'>Size:</label>
+                        <input
+                          type='number'
+                          name='size'
+                          id='size'
+                          className='input'
+                          value={activeItem.styles?.backdrop?.width?.replace('px', '') || '10'}
+                          onChange={(e) => {
+                            setActiveItem({
+                              ...activeItem,
+                              styles: {
+                                ...activeItem.styles,
+                                backdrop: {
+                                  ...activeItem.styles?.backdrop,
+                                  width: e.target.value + 'px',
+                                  height: e.target.value + 'px',
+                                },
+                              },
+                            })
+                          }}
+                        />
+                      </div>
+                    </>
+                  )}
+                  <div className='w-full flex justify-evenly'>
+                    <div className='flex justify-center gap-1'>
+                      <label htmlFor='fill-color'>Fill:</label>
+                      <input
+                        type='color'
+                        name='fill-color'
+                        id='fill-color'
+                        value={activeItem.styles?.bar?.backgroundColor || '#000000'}
+                        onChange={(e) => {
+                          setActiveItem({
+                            ...activeItem,
+                            styles: {
+                              ...activeItem.styles,
+                              bar: { backgroundColor: e.target.value },
+                            },
+                          })
+                        }}
+                      />
+                    </div>
+                    <div className='flex justify-center gap-1'>
+                      <label htmlFor='backdrop-color'>Backdrop:</label>
+                      <input
+                        type='color'
+                        name='backdrop-color'
+                        id='backdrop-color'
+                        value={
+                          activeItem.styles?.backdrop?.backgroundColor?.replace('80', '') ||
+                          '#000000'
+                        }
+                        onChange={(e) => {
+                          setActiveItem({
+                            ...activeItem,
+                            styles: {
+                              ...activeItem.styles,
+                              backdrop: {
+                                ...activeItem.styles?.backdrop,
+                                backgroundColor: e.target.value + '80',
+                              },
+                            },
+                          })
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
-              ) : null}
-            </div>
-          </>
-        ) : null}
-      </section>
+                  <button
+                    type='submit'
+                    className='secondary-colors hover:bg-white/10 rounded shadow-lg hover:scale-[101%] active:scale-[99%]'
+                  >
+                    Save
+                  </button>
+                </form>
+              </div>
+            ) : null}
+          </div>
+        </>
+      ) : null}
     </>
   )
 }
