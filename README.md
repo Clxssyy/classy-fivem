@@ -6,6 +6,7 @@ I'm new to FiveM resource creation so any tips / improvements you might have are
 
 - `classy-base`
 - `classy-admin`
+- `classy-hud` - Customizable hud
 
 ## Warning
 
