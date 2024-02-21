@@ -14,26 +14,28 @@ interface PlayerStats {
   [key: string]: number
 }
 
+export interface item {
+  id: number
+  type: string
+  name: string
+  stat: string
+  statDirection: string
+  styles: {
+    backdrop: {
+      backgroundColor: string
+      width: string
+      height: string
+    }
+    bar: {
+      backgroundColor: string
+    }
+  }
+}
+
 export interface group {
   id: number
   name: string
-  items: {
-    id: number
-    type: string
-    name: string
-    stat: string
-    statDirection: string
-    styles: {
-      backdrop: {
-        backgroundColor: string
-        width: string
-        height: string
-      }
-      bar: {
-        backgroundColor: string
-      }
-    }
-  }[]
+  items: item[]
   position: {
     x: string
     y: string

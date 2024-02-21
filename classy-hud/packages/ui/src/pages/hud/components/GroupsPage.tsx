@@ -1,10 +1,19 @@
-import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
+import { EllipsisVerticalIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { group } from '../Hud'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 interface GroupsPageProps {
   groups: group[]
   setGroups: React.Dispatch<React.SetStateAction<group[]>>
+}
+
+const DropIndicator = ({ before }: { before: string }) => {
+  return (
+    <div
+      data-before={before || '-1'}
+      className='w-full h-1 my-1 bg-green-400 opacity-0 rounded'
+    ></div>
+  )
 }
 
 const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
@@ -126,6 +135,99 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
     }
   }
 
+  const handleitemDragStart = (e: React.DragEvent<HTMLDivElement>, itemCardId: string) => {
+    e.dataTransfer.setData('itemCardId', itemCardId)
+    setActiveItem(activeGroup?.items.find((item) => item.id === Number(itemCardId.slice(-1))))
+  }
+
+  const handleitemDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+    clearHighlights()
+
+    const itemCardId = e.dataTransfer.getData('itemCardId')
+    const indicators = getIndicators()
+    const nearestIndicator = getNearestIndicator(e, indicators).element as HTMLElement
+
+    const before = nearestIndicator.dataset.before || '-1'
+
+    if (before !== itemCardId) {
+      const itemToMove = activeGroup?.items.find((item) => item.id === Number(itemCardId.slice(-1)))
+      if (!itemToMove) return
+
+      let newItems = activeGroup?.items.filter((item) => item.id !== Number(itemCardId.slice(-1)))
+
+      const back = before === '-1'
+
+      if (back) {
+        newItems = newItems ? [...newItems, itemToMove] : [itemToMove]
+      } else {
+        const index = newItems?.findIndex((item) => item.id === Number(before))
+        if (index !== undefined && newItems) {
+          newItems = [
+            ...newItems.slice(0, index),
+            itemToMove,
+            ...newItems.slice(index, newItems.length),
+          ]
+        }
+      }
+
+      setGroups((prevGroups) => {
+        return prevGroups.map((group) => {
+          if (group === activeGroup) {
+            return { ...group, items: newItems || [] }
+          }
+          return group
+        })
+      })
+    }
+  }
+
+  const handleitemDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    highlistIndicator(e)
+  }
+
+  const handleitemDragLeave = () => {
+    clearHighlights()
+  }
+
+  const getIndicators = () => {
+    return Array.from(document.querySelectorAll(`[data-before]`))
+  }
+
+  const highlistIndicator = (e: React.DragEvent<HTMLDivElement>) => {
+    const indicators = getIndicators()
+    clearHighlights(indicators)
+    const el = getNearestIndicator(e, indicators).element as HTMLElement
+    el.style.opacity = '1'
+  }
+
+  const clearHighlights = (indicators?: Element[]) => {
+    const elements = indicators || getIndicators()
+    elements.forEach((element) => {
+      element.setAttribute('style', 'opacity: 0;')
+    })
+  }
+
+  const getNearestIndicator = (e: React.DragEvent<HTMLDivElement>, indicators: Element[]) => {
+    const DISTANCE_OFFSET = 20
+    const el = indicators.reduce(
+      (closest, child) => {
+        const box = child.getBoundingClientRect()
+        const offset = e.clientY - (box.top + DISTANCE_OFFSET)
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child }
+        } else {
+          return closest
+        }
+      },
+      {
+        offset: Number.NEGATIVE_INFINITY,
+        element: indicators[indicators.length - 1],
+      },
+    )
+    return el
+  }
+
   return (
     <>
       <h1 className='font-bold text-2xl'>Groups</h1>
@@ -137,7 +239,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                 key={index}
                 className={`${
                   group.id === activeGroup?.id ? 'secondary-colors' : ''
-                } text-sm px-2 hover:bg-white/10`}
+                } text-sm hover:bg-white/10`}
                 onClick={() => {
                   if (activeGroup?.id === group.id) setActiveGroup(undefined)
                   else setActiveGroup(group)
@@ -274,28 +376,50 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
               </button>
             </form>
           </div>
-          <div className='p-2'>
+          <div
+            className='p-2'
+            onDragOver={handleitemDragOver}
+            onDrop={handleitemDragEnd}
+            onDragLeave={handleitemDragLeave}
+          >
             <h2 className='font-bold text-xl'>Items</h2>
             <div className='rounded overflow-hidden main-colors flex flex-col divide-y-2 divide-neutral-800 shadow-lg border border-neutral-800'>
-              <div className='overflow-y-scroll secondary-scroll h-48 divide-y divide-neutral-800 flex flex-col shadow-lg'>
-                {activeGroup?.items.map((item, index) => {
+              <div className='overflow-y-scroll secondary-scroll h-48 flex flex-col shadow-lg'>
+                {activeGroup?.items.map((item) => {
                   return (
-                    <button
-                      key={index}
-                      className={`${
-                        activeItem?.id === item.id ? 'secondary-colors' : ''
-                      } text-sm px-2 hover:bg-white/10`}
-                      onClick={() => {
-                        if (activeItem?.id === item.id) setActiveItem(undefined)
-                        else setActiveItem(item)
-                      }}
-                    >
-                      <p className='text-xs p-2'>
-                        {item.name} ({item.type})
-                      </p>
-                    </button>
+                    <div key={item.id}>
+                      <DropIndicator before={String(item.id)} />
+                      <div
+                        id={String(item.id)}
+                        className={`${
+                          activeItem?.id === item.id ? 'secondary-colors' : ''
+                        } flex hover:bg-white/10 place-items-center`}
+                      >
+                        <button
+                          className='text-sm grow'
+                          onClick={() => {
+                            if (activeItem?.id === item.id) setActiveItem(undefined)
+                            else setActiveItem(item)
+                          }}
+                        >
+                          <p className='text-xs p-2'>
+                            {item.name} ({item.type})
+                          </p>
+                        </button>
+                        {activeGroup.items.length === 1 ? null : (
+                          <div
+                            className='cursor-grab  h-full'
+                            draggable
+                            onDragStart={(e) => handleitemDragStart(e, String(item.id))}
+                          >
+                            <EllipsisVerticalIcon className='h-6 w-6' />
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   )
                 })}
+                <DropIndicator before={'-1'} />
               </div>
               <div className='flex divide-x divide-neutral-800 justify-between'>
                 <div className='grow flex justify-center'>
