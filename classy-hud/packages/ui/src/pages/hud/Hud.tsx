@@ -44,6 +44,101 @@ export interface group {
   gap: string
 }
 
+export const DEFAULT_GROUPS: group[] = [
+  {
+    id: 1,
+    name: 'Group 1',
+    items: [
+      {
+        id: 1,
+        type: 'bar',
+        name: 'Health',
+        stat: 'health',
+        statDirection: 'r-l',
+        styles: {
+          backdrop: {
+            backgroundColor: '#f4433680',
+            width: '120px',
+            height: '12px',
+          },
+          bar: {
+            backgroundColor: '#f44336',
+          },
+        },
+      },
+      {
+        id: 2,
+        type: 'bar',
+        name: 'Armor',
+        stat: 'armor',
+        statDirection: 'r-l',
+        styles: {
+          backdrop: {
+            backgroundColor: '#a0aec080',
+            width: '120px',
+            height: '12px',
+          },
+          bar: {
+            backgroundColor: '#a0aec0',
+          },
+        },
+      },
+    ],
+    position: {
+      x: '0px',
+      y: '1064px',
+    },
+    vertical: false,
+    gap: '2',
+  },
+  {
+    id: 2,
+    name: 'Group 2',
+    items: [
+      {
+        id: 3,
+        type: 'circle',
+        name: 'Stamina',
+        stat: 'stamina',
+        statDirection: 'b-t',
+        styles: {
+          backdrop: {
+            backgroundColor: '#f59e0b80',
+            width: '40px',
+            height: '40px',
+          },
+          bar: {
+            backgroundColor: '#f59e0b',
+          },
+        },
+      },
+      {
+        id: 4,
+        type: 'circle',
+        name: 'Oxygen',
+        stat: 'oxygen',
+        statDirection: 'b-t',
+        styles: {
+          backdrop: {
+            backgroundColor: '#4299e180',
+            width: '40px',
+            height: '40px',
+          },
+          bar: {
+            backgroundColor: '#4299e1',
+          },
+        },
+      },
+    ],
+    position: {
+      x: '0px',
+      y: '980px',
+    },
+    vertical: true,
+    gap: '2',
+  },
+]
+
 const Hud = () => {
   const [stats, setStats] = useState<PlayerStats>({
     health: 100,
@@ -53,100 +148,7 @@ const Hud = () => {
   })
   const [editMode, setEditMode] = useState<boolean>(false)
   const [settings, setSettings] = useState<boolean>(true)
-  const [groups, setGroups] = useState<group[]>([
-    {
-      id: 1,
-      name: 'Group 1',
-      items: [
-        {
-          id: 1,
-          type: 'bar',
-          name: 'Health',
-          stat: 'health',
-          statDirection: 'r-l',
-          styles: {
-            backdrop: {
-              backgroundColor: '#f4433680',
-              width: '120px',
-              height: '12px',
-            },
-            bar: {
-              backgroundColor: '#f44336',
-            },
-          },
-        },
-        {
-          id: 2,
-          type: 'bar',
-          name: 'Armor',
-          stat: 'armor',
-          statDirection: 'r-l',
-          styles: {
-            backdrop: {
-              backgroundColor: '#a0aec080',
-              width: '120px',
-              height: '12px',
-            },
-            bar: {
-              backgroundColor: '#a0aec0',
-            },
-          },
-        },
-      ],
-      position: {
-        x: '0px',
-        y: '1064px',
-      },
-      vertical: false,
-      gap: '2',
-    },
-    {
-      id: 2,
-      name: 'Group 2',
-      items: [
-        {
-          id: 3,
-          type: 'circle',
-          name: 'Stamina',
-          stat: 'stamina',
-          statDirection: 'b-t',
-          styles: {
-            backdrop: {
-              backgroundColor: '#f59e0b80',
-              width: '40px',
-              height: '40px',
-            },
-            bar: {
-              backgroundColor: '#f59e0b',
-            },
-          },
-        },
-        {
-          id: 4,
-          type: 'circle',
-          name: 'Oxygen',
-          stat: 'oxygen',
-          statDirection: 'b-t',
-          styles: {
-            backdrop: {
-              backgroundColor: '#4299e180',
-              width: '40px',
-              height: '40px',
-            },
-            bar: {
-              backgroundColor: '#4299e1',
-            },
-          },
-        },
-      ],
-      position: {
-        x: '0px',
-        y: '980px',
-      },
-      vertical: true,
-      gap: '2',
-    },
-  ])
+  const [groups, setGroups] = useState<group[]>(DEFAULT_GROUPS)
 
   useEffect(() => {
     if (editMode) {

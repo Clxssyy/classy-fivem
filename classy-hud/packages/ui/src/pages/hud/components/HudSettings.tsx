@@ -1,7 +1,7 @@
 import { ArrowPathIcon, PencilIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
 import GroupsPage from './GroupsPage'
-import { group } from '../Hud'
+import { DEFAULT_GROUPS, group } from '../Hud'
 
 interface HudSettingsProps {
   editMode: boolean
@@ -69,7 +69,10 @@ const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSett
               >
                 <PencilIcon className='h-6 w-6' />
               </button>
-              <button className='p-2 grow flex justify-center'>
+              <button
+                className='p-2 grow flex justify-center'
+                onClick={() => setGroups(DEFAULT_GROUPS)}
+              >
                 <ArrowPathIcon className='h-6 w-6' />
               </button>
             </div>
