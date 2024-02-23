@@ -239,7 +239,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                           ref={provided.innerRef}
                         >
                           <button
-                            className='text-sm grow overflow-hidden'
+                            className='text-sm grow overflow-hidden active:scale-[99%]'
                             onClick={() => {
                               if (activeGroup?.id === group.id) setActiveGroup(undefined)
                               else setActiveGroup(group)
@@ -310,7 +310,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
               className='flex flex-col p-2 gap-2 main-colors rounded shadow-lg'
               onSubmit={handleGroupEdit}
             >
-              <div className='w-full flex gap-1'>
+              <div className='w-full flex gap-1 place-items-center'>
                 <label htmlFor='name'>Name:</label>
                 <input
                   type='text'
@@ -324,7 +324,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                   }}
                 />
               </div>
-              <div className='w-full flex gap-1'>
+              <div className='w-full flex gap-1 place-items-center'>
                 <label htmlFor='x-pos'>X Position:</label>
                 <input
                   type='number'
@@ -343,7 +343,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                   }}
                 />
               </div>
-              <div className='w-full flex gap-1'>
+              <div className='w-full flex gap-1 place-items-center'>
                 <label htmlFor='y-pos'>Y Position:</label>
                 <input
                   type='number'
@@ -362,7 +362,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                   }}
                 />
               </div>
-              <div className='w-full flex gap-1'>
+              <div className='w-full flex gap-1 place-items-center'>
                 <label htmlFor='item-gap'>Item gap:</label>
                 <input
                   type='number'
@@ -380,7 +380,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                   }}
                 />
               </div>
-              <div className='w-full flex gap-1'>
+              <div className='w-full flex gap-1 place-items-center'>
                 <label htmlFor='vertical'>Column Stack:</label>
                 <input
                   type='checkbox'
@@ -430,7 +430,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                                 ref={provided.innerRef}
                               >
                                 <button
-                                  className='text-sm grow overflow-hidden'
+                                  className='text-sm grow overflow-hidden active:scale-[99%]'
                                   onClick={() => {
                                     if (activeItem?.id === item.id) setActiveItem(undefined)
                                     else setActiveItem(item)
@@ -500,7 +500,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                   className='flex flex-col p-2 gap-2 main-colors rounded shadow-lg'
                   onSubmit={handleItemEdit}
                 >
-                  <div className='w-full flex gap-1'>
+                  <div className='w-full flex gap-1 place-items-center'>
                     <label htmlFor='item-name'>Name:</label>
                     <input
                       type='text'
@@ -514,7 +514,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                       }}
                     />
                   </div>
-                  <div className='w-full flex gap-1'>
+                  <div className='w-full flex gap-1 place-items-center'>
                     <label htmlFor='type'>Type:</label>
                     <select
                       name='type'
@@ -544,7 +544,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                       <option value='circle'>Circle</option>
                     </select>
                   </div>
-                  <div className='flex justify-center gap-1'>
+                  <div className='flex place-items-center gap-1'>
                     <label htmlFor='stat'>Stat:</label>
                     <select
                       name='stat'
@@ -561,7 +561,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                       <option value='oxygen'>Oxygen</option>
                     </select>
                   </div>
-                  <div className='flex justify-center gap-1'>
+                  <div className='flex place-items-center gap-1'>
                     <label htmlFor='stat-direction'>Stat Drain:</label>
                     <select
                       name='stat'
@@ -581,7 +581,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                   </div>
                   {activeItem.type === 'bar' ? (
                     <>
-                      <div className='w-full flex gap-1'>
+                      <div className='w-full flex gap-1 place-items-center'>
                         <label htmlFor='width'>Width:</label>
                         <input
                           type='number'
@@ -603,7 +603,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                           }}
                         />
                       </div>
-                      <div className='w-full flex gap-1'>
+                      <div className='w-full flex gap-1 place-items-center'>
                         <label htmlFor='height'>Height:</label>
                         <input
                           type='number'
@@ -628,7 +628,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                     </>
                   ) : (
                     <>
-                      <div className='flex justify-center gap-1'>
+                      <div className='flex place-items-center gap-1'>
                         <label htmlFor='size'>Size:</label>
                         <input
                           type='number'

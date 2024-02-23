@@ -38,5 +38,5 @@
 }
 
 .input {
-  @apply rounded grow secondary-colors;
+  @apply rounded grow secondary-colors p-2;
 }
