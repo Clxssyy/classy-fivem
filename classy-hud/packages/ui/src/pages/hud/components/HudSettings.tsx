@@ -74,7 +74,7 @@ const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSett
               </button>
             </div>
           </nav>
-          <section className='grow overflow-y-scroll custom-scroll secondary-colors p-2'>
+          <section className='w-5/6 overflow-y-scroll custom-scroll secondary-colors p-2 space-y-2'>
             {
               {
                 Layout: <LayoutPage editMode={editMode} setEditMode={setEditMode} />,

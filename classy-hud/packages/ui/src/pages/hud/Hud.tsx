@@ -52,7 +52,7 @@ const Hud = () => {
     oxygen: 10,
   })
   const [editMode, setEditMode] = useState<boolean>(false)
-  const [settings, setSettings] = useState<boolean>(false)
+  const [settings, setSettings] = useState<boolean>(true)
   const [groups, setGroups] = useState<group[]>([
     {
       id: 1,

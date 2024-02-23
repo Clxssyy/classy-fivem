@@ -18,17 +18,9 @@ interface GroupsPageProps {
 const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
   const [activeGroup, setActiveGroup] = useState<group>()
   const [activeItem, setActiveItem] = useState<group['items'][0]>()
-  const [color, setColor] = useState<string>('#ffffff')
 
   useEffect(() => {
     if (activeGroup) setActiveGroup(groups.find((group) => group.id === activeGroup.id))
-
-    setColor(() => {
-      const randomColor = '#000000'.replace(/0/g, function () {
-        return (~~(Math.random() * 16)).toString(16)
-      })
-      return randomColor
-    })
   }, [groups])
 
   useEffect(() => {
@@ -247,14 +239,14 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                           ref={provided.innerRef}
                         >
                           <button
-                            className='text-sm grow'
+                            className='text-sm grow overflow-hidden'
                             onClick={() => {
                               if (activeGroup?.id === group.id) setActiveGroup(undefined)
                               else setActiveGroup(group)
                             }}
                           >
-                            <p className='text-xs p-2'>
-                              {group.name} ({group.items.length})
+                            <p className='text-xs p-2 overflow-hidden flex justify-center'>
+                              <span className='truncate'>{group.name}</span>({group.items.length})
                             </p>
                           </button>
                           <div
@@ -312,7 +304,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
       </div>
       {activeGroup ? (
         <>
-          <div className='p-2'>
+          <div className='p-2 flex flex-col gap-2'>
             <h2 className='font-bold text-xl'>Options</h2>
             <form
               className='flex flex-col p-2 gap-2 main-colors rounded shadow-lg'
@@ -325,7 +317,6 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                   name='name'
                   id='name'
                   placeholder='Name'
-                  autoFocus
                   value={activeGroup?.name}
                   className='input'
                   onChange={(e) => {
@@ -415,7 +406,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
               </button>
             </form>
           </div>
-          <div className='p-2'>
+          <div className='p-2 flex flex-col gap-2'>
             <h2 className='font-bold text-xl'>Items</h2>
             <div className='rounded overflow-hidden main-colors flex flex-col divide-y-2 divide-neutral-800 shadow-lg border border-neutral-800'>
               <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
@@ -439,14 +430,14 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                                 ref={provided.innerRef}
                               >
                                 <button
-                                  className='text-sm grow'
+                                  className='text-sm grow overflow-hidden'
                                   onClick={() => {
                                     if (activeItem?.id === item.id) setActiveItem(undefined)
                                     else setActiveItem(item)
                                   }}
                                 >
-                                  <p className='text-xs p-2'>
-                                    {item.name} ({item.type})
+                                  <p className='text-xs p-2 overflow-hidden flex justify-center'>
+                                    <span className='truncate'>{item.name}</span>({item.type})
                                   </p>
                                 </button>
                                 <div
@@ -503,7 +494,7 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
               </div>
             </div>
             {activeItem ? (
-              <div className='p-2'>
+              <div className='p-2 flex flex-col gap-2'>
                 <h2 className='font-bold text-xl'>Options</h2>
                 <form
                   className='flex flex-col p-2 gap-2 main-colors rounded shadow-lg'
@@ -516,7 +507,6 @@ const GroupsPage = ({ groups, setGroups }: GroupsPageProps) => {
                       name='name'
                       id='item-name'
                       placeholder='Name'
-                      autoFocus
                       className='input'
                       value={activeItem.name}
                       onChange={(e) => {
