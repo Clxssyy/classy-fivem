@@ -14,14 +14,43 @@ interface HudSettingsProps {
 const LayoutPage = ({
   editMode,
   setEditMode,
+  groups,
+  setGroups,
 }: {
   editMode: boolean
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>
+  groups: group[]
+  setGroups: React.Dispatch<React.SetStateAction<group[]>>
 }) => {
   return (
     <>
-      <h1>Layout</h1>
-      <button onClick={() => setEditMode(!editMode)}>Edit Mode</button>
+      <div className='flex flex-col'>
+        <h1 className='font-bold text-2xl'>Layout</h1>
+        <button onClick={() => setEditMode(!editMode)}>Edit Mode</button>
+        <textarea
+          name='import'
+          id='import'
+          className='main-colors'
+          placeholder='import text'
+        ></textarea>
+        <button onClick={() => navigator.clipboard.writeText(JSON.stringify(groups))}>
+          Export
+        </button>
+        <button
+          onClick={() => {
+            const importElement = document.getElementById('import') as HTMLTextAreaElement
+            const importData = importElement.value
+
+            if (importData === '') return
+            const newGroups = JSON.parse(importData)
+
+            setGroups(newGroups)
+            importElement.value = ''
+          }}
+        >
+          Import
+        </button>
+      </div>
     </>
   )
 }
@@ -80,7 +109,14 @@ const HudSettings = ({ editMode, setEditMode, exit, groups, setGroups }: HudSett
           <section className='w-5/6 overflow-y-scroll custom-scroll secondary-colors p-2 space-y-2'>
             {
               {
-                Layout: <LayoutPage editMode={editMode} setEditMode={setEditMode} />,
+                Layout: (
+                  <LayoutPage
+                    editMode={editMode}
+                    setEditMode={setEditMode}
+                    groups={groups}
+                    setGroups={setGroups}
+                  />
+                ),
                 Groups: <GroupsPage groups={groups} setGroups={setGroups} />,
               }[activePage]
             }
